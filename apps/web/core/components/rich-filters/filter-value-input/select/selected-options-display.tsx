@@ -9,6 +9,7 @@ import { Transition } from "@headlessui/react";
 // plane imports
 import type { SingleOrArray, IFilterOption, TFilterValue } from "@plane/types";
 import { cn, toFilterArray } from "@plane/utils";
+import { useTranslation } from "@plane/i18n";
 import { EMPTY_FILTER_PLACEHOLDER_TEXT } from "../../shared";
 
 type TSelectedOptionsDisplayProps<V extends TFilterValue> = {
@@ -21,6 +22,7 @@ type TSelectedOptionsDisplayProps<V extends TFilterValue> = {
 
 export function SelectedOptionsDisplay<V extends TFilterValue>(props: TSelectedOptionsDisplayProps<V>) {
   const { selectedValue, options, displayCount = 2, emptyValue = EMPTY_FILTER_PLACEHOLDER_TEXT, fallbackText } = props;
+  const { t } = useTranslation();
   // derived values
   const selectedArray = toFilterArray(selectedValue);
   const remainingCount = selectedArray.length - displayCount;
@@ -35,7 +37,15 @@ export function SelectedOptionsDisplay<V extends TFilterValue>(props: TSelectedO
 
   // When no options are found but we have a fallback text
   if (options.length === 0) {
-    return <span className="text-placeholder">{fallbackText ?? `${selectedArray.length} option(s) selected`}</span>;
+    return (
+      <span className="text-placeholder">
+        {fallbackText ??
+          t("common.options_selected", {
+            count: selectedArray.length,
+            defaultValue: `${selectedArray.length} option(s) selected`,
+          })}
+      </span>
+    );
   }
 
   return (
@@ -43,7 +53,7 @@ export function SelectedOptionsDisplay<V extends TFilterValue>(props: TSelectedO
       {selectedOptions.slice(0, displayCount).map((option, index) => (
         <React.Fragment key={index}>
           <div className="flex items-center whitespace-nowrap">
-            {option?.icon && <span className={cn("mr-1", option.iconClassName)}>{option.icon}</span>}
+            {option?.icon && <span className={cn("me-1", option.iconClassName)}>{option.icon}</span>}
             <span className="max-w-24 truncate">{option?.label}</span>
           </div>
           {index < Math.min(displayCount, selectedOptions.length) - 1 && <span className="mx-1 text-tertiary">,</span>}
@@ -56,9 +66,12 @@ export function SelectedOptionsDisplay<V extends TFilterValue>(props: TSelectedO
           enter="transition-opacity duration-300"
           enterFrom="opacity-0"
           enterTo="opacity-100"
-          className="ml-1 whitespace-nowrap text-tertiary"
+          className="ms-1 whitespace-nowrap text-tertiary"
         >
-          +{remainingCount} more
+          {t("common.n_more", {
+            count: remainingCount,
+            defaultValue: `+${remainingCount} more`,
+          })}
         </Transition>
       )}
     </div>

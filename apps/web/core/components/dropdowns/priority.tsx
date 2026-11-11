@@ -52,6 +52,34 @@ type ButtonProps = {
   renderToolTipByDefault?: boolean;
 };
 
+export const getPriorityTitle = (
+  key: string | undefined | null,
+  t: (key: string) => string,
+  defaultTitle?: string
+) => {
+  if (!key) return defaultTitle;
+  if (key === "none") {
+    const noneText = t("common.none");
+    if (noneText && noneText !== "common.none") return noneText;
+    const directNone = t("none");
+    if (directNone && directNone !== "none") return directNone;
+    return defaultTitle ?? "None";
+  }
+  const translatedIssue = t(`issue.priority.${key}`);
+  if (translatedIssue && translatedIssue !== `issue.priority.${key}`) {
+    return translatedIssue;
+  }
+  const translatedPriority = t(`priority.${key}`);
+  if (translatedPriority && translatedPriority !== `priority.${key}`) {
+    return translatedPriority;
+  }
+  const direct = t(key);
+  if (direct && direct !== key) {
+    return direct;
+  }
+  return defaultTitle ?? key;
+};
+
 function BorderButton(props: ButtonProps) {
   const {
     className,
@@ -82,7 +110,7 @@ function BorderButton(props: ButtonProps) {
   return (
     <Tooltip
       tooltipHeading={t("priority")}
-      tooltipContent={priorityDetails?.title ?? t("common.none")}
+      tooltipContent={priorityDetails ? (getPriorityTitle(priorityDetails.key, t, priorityDetails.title) ?? t("common.none")) : t("common.none")}
       disabled={!showTooltip}
       isMobile={isMobile}
       renderByDefault={renderToolTipByDefault}
@@ -132,7 +160,7 @@ function BorderButton(props: ButtonProps) {
               "text-placeholder": !priority || priority === "none",
             })}
           >
-            {priorityDetails?.title ?? placeholder}
+            {priorityDetails ? (getPriorityTitle(priorityDetails.key, t, priorityDetails.title) ?? placeholder) : placeholder}
           </span>
         )}
         {dropdownArrow && (
@@ -173,7 +201,7 @@ function BackgroundButton(props: ButtonProps) {
   return (
     <Tooltip
       tooltipHeading={t("priority")}
-      tooltipContent={t(priorityDetails?.key ?? "none")}
+      tooltipContent={priorityDetails ? (getPriorityTitle(priorityDetails.key, t, priorityDetails.title) ?? t("common.none")) : t("common.none")}
       disabled={!showTooltip}
       isMobile={isMobile}
       renderByDefault={renderToolTipByDefault}
@@ -223,7 +251,7 @@ function BackgroundButton(props: ButtonProps) {
               "text-placeholder": !priority || priority === "none",
             })}
           >
-            {priorityDetails?.title ?? t("common.priority") ?? placeholder}
+            {priorityDetails ? (getPriorityTitle(priorityDetails.key, t, priorityDetails.title) ?? (t("common.priority") ?? placeholder)) : (t("common.priority") ?? placeholder)}
           </span>
         )}
         {dropdownArrow && (
@@ -257,7 +285,7 @@ function TransparentButton(props: ButtonProps) {
   return (
     <Tooltip
       tooltipHeading={t("priority")}
-      tooltipContent={priorityDetails?.title ?? t("common.none")}
+      tooltipContent={priorityDetails ? (getPriorityTitle(priorityDetails.key, t, priorityDetails.title) ?? t("common.none")) : t("common.none")}
       disabled={!showTooltip}
       isMobile={isMobile}
       renderByDefault={renderToolTipByDefault}
@@ -307,7 +335,7 @@ function TransparentButton(props: ButtonProps) {
               "text-placeholder": !priority || priority === "none",
             })}
           >
-            {priorityDetails?.title ?? t("common.priority") ?? placeholder}
+            {priorityDetails ? (getPriorityTitle(priorityDetails.key, t, priorityDetails.title) ?? (t("common.priority") ?? placeholder)) : (t("common.priority") ?? placeholder)}
           </span>
         )}
         {dropdownArrow && (
@@ -350,9 +378,19 @@ export function PriorityDropdown(props: Props) {
   // popper-js refs
   const [referenceElement, setReferenceElement] = useState<HTMLButtonElement | null>(null);
   const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(null);
+
+  const isRTL = typeof document !== "undefined" && (document.documentElement.dir === "rtl" || document.dir === "rtl");
+  const resolvedPlacement = placement
+    ? isRTL && placement === "bottom-start"
+      ? "bottom-end"
+      : placement
+    : isRTL
+      ? "bottom-end"
+      : "bottom-start";
+
   // popper-js init
   const { styles, attributes } = usePopper(referenceElement, popperElement, {
-    placement: placement ?? "bottom-start",
+    placement: resolvedPlacement,
     modifiers: [
       {
         name: "preventOverflow",
@@ -363,16 +401,19 @@ export function PriorityDropdown(props: Props) {
     ],
   });
 
-  const options = ISSUE_PRIORITIES.map((priority) => ({
-    value: priority.key,
-    query: priority.key,
-    content: (
-      <div className="flex items-center gap-2">
-        <PriorityIcon priority={priority.key} size={14} withContainer />
-        <span className="flex-grow truncate">{priority.title}</span>
-      </div>
-    ),
-  }));
+  const options = ISSUE_PRIORITIES.map((priority) => {
+    const priorityTitle = getPriorityTitle(priority.key, t, priority.title);
+    return {
+      value: priority.key,
+      query: `${priority.key} ${priorityTitle}`,
+      content: (
+        <div className="flex items-center gap-2">
+          <PriorityIcon priority={priority.key} size={14} withContainer />
+          <span className="flex-grow truncate">{priorityTitle}</span>
+        </div>
+      ),
+    };
+  });
 
   const filteredOptions =
     query === "" ? options : options.filter((o) => o.query.toLowerCase().includes(query.toLowerCase()));

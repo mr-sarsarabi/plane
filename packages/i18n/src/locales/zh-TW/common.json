@@ -504,7 +504,8 @@
     "archive": "封存",
     "access": {
       "public": "公開",
-      "private": "私人"
+      "private": "私人",
+      "label": "Access"
     },
     "done": "完成",
     "sub_work_items": "子工作事項",
@@ -776,10 +777,19 @@
   "view": {
     "label": "{count, plural, one {檢視} other {檢視}}",
     "create": {
-      "label": "建立檢視"
+      "label": "建立檢視",
+      "success": "View created successfully.",
+      "error": "Failed to create view. Please try again."
     },
     "update": {
-      "label": "更新檢視"
+      "label": "更新檢視",
+      "success": "View updated successfully.",
+      "error": "Failed to update view. Please try again."
+    },
+    "delete": {
+      "label": "Delete View",
+      "success": "View deleted successfully.",
+      "error": "Failed to delete the view. Please try again."
     }
   },
   "role_details": {
@@ -867,5 +877,61 @@
       "description": "將工作事項匯出為 JSON 檔案。",
       "short_description": "匯出為 JSON"
     }
-  }
+  },
+  "search_commands": "搜尋指令...",
+  "then": "然後",
+  "set_the_state_to": "set the state to",
+  "added_a_new_assignee": "added a new assignee",
+  "removed_the_assignee": "removed the assignee",
+  "set_the_due_date_to": "set the due date to",
+  "removed_the_due_date": "removed the due date",
+  "set_the_start_date_to": "set the start date to",
+  "removed_the_start_date": "removed the start date",
+  "set_the_priority_to": "set the priority to",
+  "added_a_new_label": "added a new label",
+  "removed_the_label": "removed the label",
+  "added_this_work_item_to_the_cycle": "added this work item to the cycle",
+  "set_the_cycle_to": "set the cycle to",
+  "removed_the_work_item_from_the_cycle": "removed the work item from the cycle",
+  "added_this_work_item_to_the_module": "added this work item to the module",
+  "set_the_module_to": "set the module to",
+  "removed_the_work_item_from_the_module": "removed the work item from the module",
+  "set_the_parent_to": "set the parent to",
+  "removed_the_parent": "removed the parent",
+  "uploaded_a_new_attachment": "uploaded a new attachment",
+  "removed_an_attachment": "removed an attachment",
+  "added_link": "added",
+  "updated_the_link": "updated the",
+  "removed_this_link": "removed this",
+  "set_the_name_to": "set the name to",
+  "updated_the_description": "updated the description",
+  "set_the_estimate_point_to": "set the estimate point to",
+  "removed_the_estimate_point": "removed the estimate point",
+  "restored_the_work_item": "restored the work item",
+  "archived_the_work_item": "archived the work item",
+  "declined_from_intake": "declined this work item from intake.",
+  "snoozed_work_item": "snoozed this work item.",
+  "accepted_from_intake": "accepted this work item from intake.",
+  "declined_intake_duplicate": "declined this work item from intake by marking a duplicate work item.",
+  "updated_intake_status": "updated intake work item status.",
+  "created_the_work_item_via": "created the work item via",
+  "created_the_work_item": "created the work item.",
+  "deleted_a_work_item": "deleted a work item.",
+  "marked_blocking": "marked this work item is blocking work item",
+  "removed_blocking": "removed the blocking work item",
+  "marked_blocked_by": "marked this work item is being blocked by",
+  "removed_blocked_by": "removed this work item being blocked by work item",
+  "marked_duplicate": "marked this work item as duplicate of",
+  "removed_duplicate": "removed this work item as a duplicate of",
+  "marked_relates_to": "marked that this work item relates to",
+  "removed_relates_to": "removed the relation from",
+  "for": "for",
+  "from": "from",
+  "of": "of",
+  "add_reaction": "Add reaction",
+  "reaction_created_successfully": "Reaction created successfully",
+  "reaction_creation_failed": "Reaction creation failed",
+  "reaction_removed_successfully": "Reaction removed successfully",
+  "reaction_remove_failed": "Reaction remove failed",
+  "and_more": "and {count} more"
 }

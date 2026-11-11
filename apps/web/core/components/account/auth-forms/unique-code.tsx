@@ -98,7 +98,7 @@ export function AuthUniqueCodeForm(props: TAuthUniqueCodeForm) {
         <label htmlFor="email" className="text-13 font-medium text-tertiary">
           {t("auth.common.email.label")}
         </label>
-        <div className={`relative flex items-center rounded-md border border-strong bg-surface-1`}>
+        <div dir="ltr" className={`relative flex items-center rounded-md border border-strong bg-surface-1`}>
           <Input
             id="email"
             name="email"
@@ -113,7 +113,7 @@ export function AuthUniqueCodeForm(props: TAuthUniqueCodeForm) {
           {uniqueCodeFormData.email.length > 0 && (
             <button
               type="button"
-              className="absolute right-3 grid size-5 place-items-center"
+              className="absolute end-3 grid size-5 place-items-center"
               aria-label={t("aria_labels.auth_forms.clear_email")}
               onClick={handleEmailClear}
             >
@@ -130,10 +130,11 @@ export function AuthUniqueCodeForm(props: TAuthUniqueCodeForm) {
         <Input
           name="code"
           id="unique-code"
+          dir="ltr"
           value={uniqueCodeFormData.code}
           onChange={(e) => handleFormChange("code", e.target.value)}
           placeholder={t("auth.common.unique_code.placeholder")}
-          className="h-10 w-full border border-strong !bg-surface-1 pr-12 disable-autofill-style placeholder:text-placeholder"
+          className="h-10 w-full border border-strong !bg-surface-1 pe-12 text-center font-mono tracking-widest disable-autofill-style placeholder:font-sans placeholder:text-placeholder"
           autoComplete="off"
           autoFocus
         />

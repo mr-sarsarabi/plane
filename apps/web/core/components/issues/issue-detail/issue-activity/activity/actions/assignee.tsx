@@ -5,6 +5,7 @@
  */
 
 import { observer } from "mobx-react";
+import { useTranslation } from "@plane/i18n";
 // icons
 import { MembersPropertyIcon } from "@plane/propel/icons";
 // hooks;
@@ -16,6 +17,7 @@ type TIssueAssigneeActivity = { activityId: string; showIssue?: boolean; ends: "
 
 export const IssueAssigneeActivity = observer(function IssueAssigneeActivity(props: TIssueAssigneeActivity) {
   const { activityId, ends, showIssue = true } = props;
+  const { t } = useTranslation();
   // hooks
   const {
     activity: { getActivityById },
@@ -31,7 +33,9 @@ export const IssueAssigneeActivity = observer(function IssueAssigneeActivity(pro
       ends={ends}
     >
       <>
-        {activity.old_value === "" ? `added a new assignee ` : `removed the assignee `}
+        {activity.old_value === ""
+          ? `${t("added_a_new_assignee", "added a new assignee")} `
+          : `${t("removed_the_assignee", "removed the assignee")} `}
         <a
           href={`/${activity.workspace_detail?.slug}/profile/${activity.new_identifier ?? activity.old_identifier}`}
           target="_blank"
@@ -40,7 +44,7 @@ export const IssueAssigneeActivity = observer(function IssueAssigneeActivity(pro
         >
           {activity.new_value && activity.new_value !== "" ? activity.new_value : activity.old_value}
         </a>
-        {showIssue && (activity.old_value === "" ? ` to ` : ` from `)}
+        {showIssue && (activity.old_value === "" ? ` ${t("to", "to")} ` : ` ${t("from", "from")} `)}
         {showIssue && <IssueLink activityId={activityId} />}.
       </>
     </IssueActivityBlockComponent>

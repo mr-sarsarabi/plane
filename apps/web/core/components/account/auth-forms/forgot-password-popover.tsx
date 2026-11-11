@@ -12,12 +12,13 @@ import { useTranslation } from "@plane/i18n";
 import { CloseIcon } from "@plane/propel/icons";
 
 export function ForgotPasswordPopover() {
+  const isRTL = typeof document !== "undefined" && (document.documentElement.dir === "rtl" || document.dir === "rtl");
   // popper-js refs
   const [referenceElement, setReferenceElement] = useState<HTMLButtonElement | null>(null);
   const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(null);
   // popper-js init
   const { styles, attributes } = usePopper(referenceElement, popperElement, {
-    placement: "right-start",
+    placement: isRTL ? "left-start" : "right-start",
     modifiers: [
       {
         name: "preventOverflow",
@@ -44,7 +45,7 @@ export function ForgotPasswordPopover() {
       <Popover.Panel className="fixed z-10">
         {({ close }) => (
           <div
-            className="z-10 ml-3 flex w-64 items-start gap-3 rounded-sm border border-strong bg-surface-1 px-2 py-1 text-left break-words"
+            className="z-10 ms-3 flex w-64 items-start gap-3 rounded-sm border border-strong bg-surface-1 px-2 py-1 text-start break-words"
             ref={setPopperElement}
             style={styles.popper}
             {...attributes.popper}

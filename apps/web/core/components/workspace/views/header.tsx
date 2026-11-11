@@ -76,9 +76,14 @@ export const GlobalViewsHeader = observer(function GlobalViewsHeader() {
     if (globalViewId && currentWorkspaceViews) {
       const activeTabElement = document.querySelector(`#global-view-${globalViewId.toString()}`);
       if (activeTabElement && containerRef.current) {
+        const isRTL =
+          typeof document !== "undefined" &&
+          (document.dir === "rtl" || document.documentElement.dir === "rtl");
         const containerRect = containerRef.current.getBoundingClientRect();
         const activeTabRect = activeTabElement.getBoundingClientRect();
-        const diff = containerRect.right - activeTabRect.right;
+        const diff = isRTL
+          ? activeTabRect.left - containerRect.left
+          : containerRect.right - activeTabRect.right;
         activeTabElement.scrollIntoView({ behavior: "smooth", inline: diff > 500 ? "center" : "nearest" });
       }
     }
@@ -108,7 +113,7 @@ export const GlobalViewsHeader = observer(function GlobalViewsHeader() {
       {isAuthorizedUser ? (
         <button
           type="button"
-          className="sticky -right-4 flex flex-shrink-0 items-center justify-center border-transparent bg-surface-1 py-3 hover:border-subtle hover:text-placeholder"
+          className="sticky -end-4 flex flex-shrink-0 items-center justify-center border-transparent bg-surface-1 py-3 hover:border-subtle hover:text-placeholder"
           onClick={() => setCreateViewModal(true)}
         >
           <PlusIcon className="h-4 w-4 text-accent-secondary" />

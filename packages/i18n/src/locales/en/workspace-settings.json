@@ -45,6 +45,12 @@
         "pending_invites": "Pending invites",
         "invitations_sent_successfully": "Invitations sent successfully",
         "leave_confirmation": "Are you sure you want to leave the workspace? You will no longer have access to this workspace. This action cannot be undone.",
+        "roles": {
+          "admin": "Admin",
+          "member": "Member",
+          "guest": "Guest",
+          "suspended": "Suspended"
+        },
         "details": {
           "full_name": "Full name",
           "display_name": "Display name",
@@ -116,6 +122,28 @@
         "options": {
           "all": "Send me everything",
           "individual": "Select individual events"
+        },
+        "events": {
+          "project": {
+            "title": "Projects",
+            "description": "Project created, updated, or deleted"
+          },
+          "cycle": {
+            "title": "Cycles",
+            "description": "Cycle created, updated, or deleted"
+          },
+          "issue": {
+            "title": "Work items",
+            "description": "Work item created, updated, deleted, added to a cycle or module"
+          },
+          "module": {
+            "title": "Modules",
+            "description": "Module created, updated, or deleted"
+          },
+          "issue_comment": {
+            "title": "Work item comments",
+            "description": "Comment posted, updated, or deleted"
+          }
         },
         "toasts": {
           "created": {

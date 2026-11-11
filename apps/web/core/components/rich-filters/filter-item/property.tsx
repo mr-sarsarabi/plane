@@ -52,9 +52,10 @@ type TPropertyButtonProps<P extends TFilterProperty, E extends TExternalFilter> 
 
 function PropertyButton<P extends TFilterProperty, E extends TExternalFilter>(props: TPropertyButtonProps<P, E>) {
   const { icon: Icon, label, tooltipContent, className } = props;
+  const isRTL = typeof document !== "undefined" && (document.dir === "rtl" || document.documentElement.dir === "rtl");
 
   return (
-    <Tooltip tooltipContent={tooltipContent} position="bottom-start" disabled={!tooltipContent}>
+    <Tooltip tooltipContent={tooltipContent} position={isRTL ? "bottom-end" : "bottom-start"} disabled={!tooltipContent}>
       <div
         className={cn(
           "flex h-full min-w-0 items-center gap-1 px-2 py-[5px] text-11 text-tertiary",

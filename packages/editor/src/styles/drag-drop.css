@@ -102,6 +102,37 @@ ol > li:nth-child(n + 100).ProseMirror-selectednode:not(.dragging)::after {
   margin-left: -35px;
 }
 
+/* RTL drag-drop selected list items */
+[dir="rtl"] li.ProseMirror-selectednode:not(.dragging)[data-checked]::after,
+.ProseMirror[dir="rtl"] li.ProseMirror-selectednode:not(.dragging)[data-checked]::after {
+  margin-left: 0;
+  margin-right: -5px;
+}
+
+[dir="rtl"] ul > li.ProseMirror-selectednode:not(.dragging)::after,
+.ProseMirror[dir="rtl"] ul > li.ProseMirror-selectednode:not(.dragging)::after {
+  margin-left: 0;
+  margin-right: -10px;
+}
+
+[dir="rtl"] ol > li.ProseMirror-selectednode:not(.dragging)::after,
+.ProseMirror[dir="rtl"] ol > li.ProseMirror-selectednode:not(.dragging)::after {
+  margin-left: 0;
+  margin-right: -18px;
+}
+
+[dir="rtl"] ol > li:nth-child(n + 10).ProseMirror-selectednode:not(.dragging)::after,
+.ProseMirror[dir="rtl"] ol > li:nth-child(n + 10).ProseMirror-selectednode:not(.dragging)::after {
+  margin-left: 0;
+  margin-right: -25px;
+}
+
+[dir="rtl"] ol > li:nth-child(n + 100).ProseMirror-selectednode:not(.dragging)::after,
+.ProseMirror[dir="rtl"] ol > li:nth-child(n + 100).ProseMirror-selectednode:not(.dragging)::after {
+  margin-left: 0;
+  margin-right: -35px;
+}
+
 .ProseMirror node-image,
 .ProseMirror node-imageComponent {
   transition: filter 0.1s ease-in-out;

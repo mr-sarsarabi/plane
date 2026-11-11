@@ -266,6 +266,11 @@
       "click_to_downvote": "Натисніть, щоб проголосувати проти",
       "click_to_view_upvotes": "Натисніть, щоб переглянути голоси за",
       "click_to_view_downvotes": "Натисніть, щоб переглянути голоси проти"
+    },
+    "drag_drop": {
+      "cannot_move": "Cannot move work item",
+      "not_allowed": "You are not allowed to move this work item",
+      "grouping_disabled": "Drag and drop is disabled for the current grouping"
     }
   },
   "sub_work_item": {

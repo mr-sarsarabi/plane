@@ -6,6 +6,7 @@
 
 import { Briefcase, FileText, Layers, LayoutGrid } from "lucide-react";
 // plane imports
+import { useTranslation } from "@plane/i18n";
 import { ContrastIcon, DiceIcon } from "@plane/propel/icons";
 import type {
   IWorkspaceDefaultSearchResult,
@@ -28,7 +29,9 @@ export type TPowerKSearchResultGroupDetails = {
   title: string;
 };
 
-export const POWER_K_SEARCH_RESULTS_GROUPS_MAP: Record<TPowerKSearchResultsKeys, TPowerKSearchResultGroupDetails> = {
+export const getPowerKSearchResultsGroupsMap = (
+  t: (key: string) => string
+): Record<TPowerKSearchResultsKeys, TPowerKSearchResultGroupDetails> => ({
   cycle: {
     icon: ContrastIcon,
     itemName: (cycle: IWorkspaceDefaultSearchResult) => (
@@ -38,7 +41,7 @@ export const POWER_K_SEARCH_RESULTS_GROUPS_MAP: Record<TPowerKSearchResultsKeys,
     ),
     path: (cycle: IWorkspaceDefaultSearchResult) =>
       `/${cycle?.workspace__slug}/projects/${cycle?.project_id}/cycles/${cycle?.id}`,
-    title: "Cycles",
+    title: t("cycles"),
   },
   issue: {
     itemName: (workItem: IWorkspaceIssueSearchResult) => (
@@ -61,7 +64,7 @@ export const POWER_K_SEARCH_RESULTS_GROUPS_MAP: Record<TPowerKSearchResultsKeys,
         projectIdentifier: workItem.project__identifier,
         sequenceId: workItem?.sequence_id,
       }),
-    title: "Work items",
+    title: t("work_items"),
   },
   issue_view: {
     icon: Layers,
@@ -72,7 +75,7 @@ export const POWER_K_SEARCH_RESULTS_GROUPS_MAP: Record<TPowerKSearchResultsKeys,
     ),
     path: (view: IWorkspaceDefaultSearchResult) =>
       `/${view?.workspace__slug}/projects/${view?.project_id}/views/${view?.id}`,
-    title: "Views",
+    title: t("views"),
   },
   module: {
     icon: DiceIcon,
@@ -83,7 +86,7 @@ export const POWER_K_SEARCH_RESULTS_GROUPS_MAP: Record<TPowerKSearchResultsKeys,
     ),
     path: (module: IWorkspaceDefaultSearchResult) =>
       `/${module?.workspace__slug}/projects/${module?.project_id}/modules/${module?.id}`,
-    title: "Modules",
+    title: t("modules"),
   },
   page: {
     icon: FileText,
@@ -99,19 +102,46 @@ export const POWER_K_SEARCH_RESULTS_GROUPS_MAP: Record<TPowerKSearchResultsKeys,
         ? `/${page?.workspace__slug}/projects/${redirectProjectId}/pages/${page?.id}`
         : `/${page?.workspace__slug}/wiki/${page?.id}`;
     },
-    title: "Pages",
+    title: t("pages"),
   },
   project: {
     icon: Briefcase,
     itemName: (project: IWorkspaceProjectSearchResult) => project?.name,
     path: (project: IWorkspaceProjectSearchResult) => `/${project?.workspace__slug}/projects/${project?.id}/issues/`,
-    title: "Projects",
+    title: t("projects"),
   },
   workspace: {
     icon: LayoutGrid,
     itemName: (workspace: IWorkspaceSearchResult) => workspace?.name,
     path: (workspace: IWorkspaceSearchResult) => `/${workspace?.slug}/`,
-    title: "Workspaces",
+    title: t("workspaces"),
   },
   ...SEARCH_RESULTS_GROUPS_MAP_EXTENDED,
+});
+
+export const usePowerKSearchResultsGroupsMap = (): Record<TPowerKSearchResultsKeys, TPowerKSearchResultGroupDetails> => {
+  const { t } = useTranslation();
+  return getPowerKSearchResultsGroupsMap(t);
 };
+
+export const POWER_K_SEARCH_RESULTS_GROUPS_MAP: Record<TPowerKSearchResultsKeys, TPowerKSearchResultGroupDetails> =
+  getPowerKSearchResultsGroupsMap((key) => {
+    switch (key) {
+      case "cycles":
+        return "Cycles";
+      case "work_items":
+        return "Work items";
+      case "views":
+        return "Views";
+      case "modules":
+        return "Modules";
+      case "pages":
+        return "Pages";
+      case "projects":
+        return "Projects";
+      case "workspaces":
+        return "Workspaces";
+      default:
+        return key;
+    }
+  });

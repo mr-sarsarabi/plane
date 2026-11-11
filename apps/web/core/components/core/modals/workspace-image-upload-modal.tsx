@@ -124,7 +124,7 @@ export const WorkspaceImageUploadModal = observer(function WorkspaceImageUploadM
                 <>
                   <button
                     type="button"
-                    className="absolute top-0 right-0 z-40 translate-x-1/2 -translate-y-1/2 rounded-sm bg-surface-2 px-2 py-0.5 text-11 font-medium text-secondary"
+                    className="absolute top-0 end-0 z-40 translate-x-1/2 rtl:-translate-x-1/2 -translate-y-1/2 rounded-sm bg-surface-2 px-2 py-0.5 text-11 font-medium text-secondary"
                   >
                     Edit
                   </button>

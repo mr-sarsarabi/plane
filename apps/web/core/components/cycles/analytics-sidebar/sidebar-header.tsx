@@ -127,7 +127,7 @@ export const CycleSidebarHeader = observer(function CycleSidebarHeader(props: Pr
             className="flex size-6 flex-shrink-0 items-center justify-center rounded-full bg-layer-3 hover:bg-layer-3-hover"
             onClick={() => handleClose()}
           >
-            <ChevronRightIcon className="size-4 stroke-2 text-secondary" />
+            <ChevronRightIcon className="size-4 stroke-2 text-secondary rtl:rotate-180" />
           </button>
         </div>
       </div>
@@ -179,7 +179,7 @@ export const CycleSidebarHeader = observer(function CycleSidebarHeader(props: Pr
                     customTooltipContent={
                       <span className="flex gap-1">
                         {renderFormattedDateInUserTimezone(cycleDetails.start_date ?? "")}
-                        <ArrowRight className="my-auto h-3 w-3 flex-shrink-0" />
+                        <ArrowRight className="my-auto h-3 w-3 flex-shrink-0 rtl:rotate-180" />
                         {renderFormattedDateInUserTimezone(cycleDetails.end_date ?? "")}
                       </span>
                     }

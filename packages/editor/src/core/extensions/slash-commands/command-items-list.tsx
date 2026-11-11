@@ -54,6 +54,26 @@ export type TSlashCommandSection = {
   items: ISlashCommandItem[];
 };
 
+const normalizeSearchQuery = (str: string) =>
+  str
+    .toLowerCase()
+    .trim()
+    .replace(/ي/g, "ی")
+    .replace(/ك/g, "ک")
+    .replace(/ة/g, "ه")
+    .replace(/[\u200B-\u200D\uFEFF]/g, "");
+
+const PERSIAN_COLOR_TERMS: Record<string, string[]> = {
+  gray: ["خاکستری", "طوسی"],
+  peach: ["هلویی"],
+  pink: ["صورتی"],
+  orange: ["نارنجی"],
+  green: ["سبز"],
+  "light-blue": ["آبی روشن", "فیروزه‌ای"],
+  "dark-blue": ["آبی تیره", "سرمه‌ای"],
+  purple: ["بنفش"],
+};
+
 export const getSlashCommandFilteredSections =
   (args: TExtensionProps) =>
   ({ query }: { query: string }): TSlashCommandSection[] => {
@@ -67,7 +87,7 @@ export const getSlashCommandFilteredSections =
             key: "text",
             title: "Text",
             description: "Just start typing with plain text.",
-            searchTerms: ["p", "paragraph"],
+            searchTerms: ["p", "paragraph", "متن", "پاراگراف", "نوشته", "متن ساده"],
             icon: <CaseSensitive className="size-3.5" />,
             command: ({ editor, range }) => setText(editor, range),
           },
@@ -76,7 +96,7 @@ export const getSlashCommandFilteredSections =
             key: "h1",
             title: "Heading 1",
             description: "Big section heading.",
-            searchTerms: ["title", "big", "large"],
+            searchTerms: ["title", "big", "large", "heading", "تیتر", "تیتر ۱", "تیتر یک", "تیتر بزرگ", "سرتیتر", "عنوان", "عنوان ۱", "سرتیتر ۱"],
             icon: <Heading1 className="size-3.5" />,
             command: ({ editor, range }) => toggleHeading(editor, 1, range),
           },
@@ -85,7 +105,7 @@ export const getSlashCommandFilteredSections =
             key: "h2",
             title: "Heading 2",
             description: "Medium section heading.",
-            searchTerms: ["subtitle", "medium"],
+            searchTerms: ["subtitle", "medium", "heading", "تیتر", "تیتر ۲", "تیتر دو", "تیتر متوسط", "سرتیتر", "عنوان", "عنوان ۲", "سرتیتر ۲"],
             icon: <Heading2 className="size-3.5" />,
             command: ({ editor, range }) => toggleHeading(editor, 2, range),
           },
@@ -94,7 +114,7 @@ export const getSlashCommandFilteredSections =
             key: "h3",
             title: "Heading 3",
             description: "Small section heading.",
-            searchTerms: ["subtitle", "small"],
+            searchTerms: ["subtitle", "small", "heading", "تیتر", "تیتر ۳", "تیتر سه", "تیتر کوچک", "سرتیتر", "عنوان", "عنوان ۳", "سرتیتر ۳"],
             icon: <Heading3 className="size-3.5" />,
             command: ({ editor, range }) => toggleHeading(editor, 3, range),
           },
@@ -103,7 +123,7 @@ export const getSlashCommandFilteredSections =
             key: "h4",
             title: "Heading 4",
             description: "Small section heading.",
-            searchTerms: ["subtitle", "small"],
+            searchTerms: ["subtitle", "small", "heading", "تیتر", "تیتر ۴", "تیتر چهار", "سرتیتر", "عنوان", "عنوان ۴", "سرتیتر ۴"],
             icon: <Heading4 className="size-3.5" />,
             command: ({ editor, range }) => toggleHeading(editor, 4, range),
           },
@@ -112,7 +132,7 @@ export const getSlashCommandFilteredSections =
             key: "h5",
             title: "Heading 5",
             description: "Small section heading.",
-            searchTerms: ["subtitle", "small"],
+            searchTerms: ["subtitle", "small", "heading", "تیتر", "تیتر ۵", "تیتر پنج", "سرتیتر", "عنوان", "عنوان ۵", "سرتیتر ۵"],
             icon: <Heading5 className="size-3.5" />,
             command: ({ editor, range }) => toggleHeading(editor, 5, range),
           },
@@ -121,7 +141,7 @@ export const getSlashCommandFilteredSections =
             key: "h6",
             title: "Heading 6",
             description: "Small section heading.",
-            searchTerms: ["subtitle", "small"],
+            searchTerms: ["subtitle", "small", "heading", "تیتر", "تیتر ۶", "تیتر شش", "سرتیتر", "عنوان", "عنوان ۶", "سرتیتر ۶"],
             icon: <Heading6 className="size-3.5" />,
             command: ({ editor, range }) => toggleHeading(editor, 6, range),
           },
@@ -131,7 +151,7 @@ export const getSlashCommandFilteredSections =
             key: "numbered-list",
             title: "Numbered list",
             description: "Create a numbered list.",
-            searchTerms: ["ordered"],
+            searchTerms: ["ordered", "list", "لیست", "لیست شماره دار", "شماره دار", "لیست ترتیبی", "فهرست شماره دار", "شمارشی"],
             icon: <ListOrdered className="size-3.5" />,
             command: ({ editor, range }) => toggleOrderedList(editor, range),
           },
@@ -140,7 +160,7 @@ export const getSlashCommandFilteredSections =
             key: "bulleted-list",
             title: "Bulleted list",
             description: "Create a bulleted list.",
-            searchTerms: ["unordered", "point"],
+            searchTerms: ["unordered", "point", "list", "لیست", "لیست نشانه دار", "لیست گلوله ای", "نشانه دار", "فهرست", "بولت"],
             icon: <List className="size-3.5" />,
             command: ({ editor, range }) => toggleBulletList(editor, range),
           },
@@ -149,7 +169,7 @@ export const getSlashCommandFilteredSections =
             key: "to-do-list",
             title: "To-do list",
             description: "Create a to-do list.",
-            searchTerms: ["todo", "task", "list", "check", "checkbox"],
+            searchTerms: ["todo", "task", "list", "check", "checkbox", "لیست", "لیست کارها", "وظایف", "چک باکس", "تودو", "کارها"],
             icon: <ListTodo className="size-3.5" />,
             command: ({ editor, range }) => toggleTaskList(editor, range),
           },
@@ -158,7 +178,7 @@ export const getSlashCommandFilteredSections =
             key: "table",
             title: "Table",
             description: "Create a table",
-            searchTerms: ["table", "cell", "db", "data", "tabular"],
+            searchTerms: ["table", "cell", "db", "data", "tabular", "جدول", "ماتریس", "سلول", "سطر", "ستون", "داده"],
             icon: <Table className="size-3.5" />,
             command: ({ editor, range }) => insertTableCommand(editor, range),
           },
@@ -167,7 +187,7 @@ export const getSlashCommandFilteredSections =
             key: "quote",
             title: "Quote",
             description: "Capture a quote.",
-            searchTerms: ["blockquote"],
+            searchTerms: ["blockquote", "quote", "نقل قول", "گفتاورد", "کوت", "اقتباس"],
             icon: <TextQuote className="size-3.5" />,
             command: ({ editor, range }) => toggleBlockquote(editor, range),
           },
@@ -176,7 +196,7 @@ export const getSlashCommandFilteredSections =
             key: "code",
             title: "Code",
             description: "Capture a code snippet.",
-            searchTerms: ["codeblock"],
+            searchTerms: ["codeblock", "code", "کد", "قطعه کد", "بلوک کد", "برنامه"],
             icon: <Code2 className="size-3.5" />,
             command: ({ editor, range }) => editor.chain().focus().deleteRange(range).toggleCodeBlock().run(),
           },
@@ -186,7 +206,7 @@ export const getSlashCommandFilteredSections =
             title: "Callout",
             icon: <MessageSquareText className="size-3.5" />,
             description: "Insert callout",
-            searchTerms: ["callout", "comment", "message", "info", "alert"],
+            searchTerms: ["callout", "comment", "message", "info", "alert", "کال اوت", "پیام", "جعبه پیام", "هشدار", "اطلاعیه", "کادر", "توضیح"],
             command: ({ editor, range }: CommandProps) => insertCallout(editor, range),
           },
           {
@@ -194,7 +214,7 @@ export const getSlashCommandFilteredSections =
             key: "divider",
             title: "Divider",
             description: "Visually divide blocks.",
-            searchTerms: ["line", "divider", "horizontal", "rule", "separate"],
+            searchTerms: ["line", "divider", "horizontal", "rule", "separate", "خط جداکننده", "جداکننده", "خط افقی", "تقسیم"],
             icon: <MinusSquare className="size-3.5" />,
             command: ({ editor, range }) => editor.chain().focus().deleteRange(range).setHorizontalRule().run(),
           },
@@ -203,7 +223,7 @@ export const getSlashCommandFilteredSections =
             key: "emoji",
             title: "Emoji",
             description: "Insert an emoji",
-            searchTerms: ["emoji", "icons", "reaction", "emoticon", "emotags"],
+            searchTerms: ["emoji", "icons", "reaction", "emoticon", "emotags", "ایموجی", "شکلک", "واکنش", "صورتک"],
             icon: <Smile className="size-3.5" />,
             command: ({ editor, range }) => {
               openEmojiPicker(editor, range);
@@ -220,7 +240,7 @@ export const getSlashCommandFilteredSections =
             key: "text-color-default",
             title: "Default",
             description: "Change text color",
-            searchTerms: ["color", "text", "default"],
+            searchTerms: ["color", "text", "default", "رنگ", "رنگ متن", "پیش فرض"],
             icon: <ALargeSmall className="size-3.5 text-primary" />,
             command: ({ editor, range }) => toggleTextColor(undefined, editor, range),
           },
@@ -231,7 +251,7 @@ export const getSlashCommandFilteredSections =
                 key: `text-color-${color.key}`,
                 title: color.label,
                 description: "Change text color",
-                searchTerms: ["color", "text", color.label],
+                searchTerms: ["color", "text", color.label, "رنگ", "رنگ متن", ...(PERSIAN_COLOR_TERMS[color.key] ?? [])],
 
                 icon: (
                   <ALargeSmall
@@ -256,7 +276,7 @@ export const getSlashCommandFilteredSections =
             key: "background-color-default",
             title: "Default background",
             description: "Change background color",
-            searchTerms: ["color", "bg", "background", "default"],
+            searchTerms: ["color", "bg", "background", "default", "رنگ", "رنگ پس زمینه", "پس زمینه", "پیش فرض"],
             icon: <ALargeSmall className="size-3.5" />,
             iconContainerStyle: {
               borderRadius: "4px",
@@ -272,7 +292,7 @@ export const getSlashCommandFilteredSections =
                 key: `background-color-${color.key}`,
                 title: color.label,
                 description: "Change background color",
-                searchTerms: ["color", "bg", "background", color.label],
+                searchTerms: ["color", "bg", "background", color.label, "رنگ", "پس زمینه", "رنگ پس زمینه", ...(PERSIAN_COLOR_TERMS[color.key] ?? [])],
                 icon: <ALargeSmall className="size-3.5" />,
 
                 iconContainerStyle: {
@@ -295,7 +315,7 @@ export const getSlashCommandFilteredSections =
         title: "Image",
         icon: <ImageIcon className="size-3.5" />,
         description: "Insert an image",
-        searchTerms: ["img", "photo", "picture", "media", "upload"],
+        searchTerms: ["img", "photo", "picture", "media", "upload", "تصویر", "عکس", "بارگذاری عکس", "مدیا"],
         command: ({ editor, range }: CommandProps) => insertImage({ editor, event: "insert", range }),
         section: "general",
         pushAfter: "code",
@@ -324,11 +344,11 @@ export const getSlashCommandFilteredSections =
       items: section.items.filter((item) => {
         if (typeof query !== "string") return;
 
-        const lowercaseQuery = query.toLowerCase();
+        const normalizedQuery = normalizeSearchQuery(query);
         return (
-          item.title.toLowerCase().includes(lowercaseQuery) ||
-          item.description.toLowerCase().includes(lowercaseQuery) ||
-          item.searchTerms.some((t) => t.includes(lowercaseQuery))
+          normalizeSearchQuery(item.title).includes(normalizedQuery) ||
+          normalizeSearchQuery(item.description).includes(normalizedQuery) ||
+          item.searchTerms.some((t) => normalizeSearchQuery(t).includes(normalizedQuery))
         );
       }),
     }));

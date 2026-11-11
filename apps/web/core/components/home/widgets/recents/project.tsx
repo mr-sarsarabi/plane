@@ -5,6 +5,7 @@
  */
 
 import { useRouter } from "next/navigation";
+import { useTranslation } from "@plane/i18n";
 // plane types
 import { Logo } from "@plane/propel/emoji-icon-picker";
 import type { TActivityEntityData, TProjectEntityData } from "@plane/types";
@@ -23,6 +24,8 @@ export function RecentProject(props: BlockProps) {
   const { activity, ref, workspaceSlug } = props;
   // router
   const router = useRouter();
+  // hooks
+  const { t } = useTranslation();
   // derived values
   const projectDetails: TProjectEntityData = activity.entity_data as TProjectEntityData;
 
@@ -40,7 +43,9 @@ export function RecentProject(props: BlockProps) {
           <div className="grid size-8 flex-shrink-0 place-items-center rounded-sm bg-layer-2">
             <Logo logo={projectDetails?.logo_props} size={16} />
           </div>
-          <div className="text-13 font-medium whitespace-nowrap text-placeholder">{projectDetails?.identifier}</div>
+          <div className="text-13 font-medium whitespace-nowrap text-placeholder">
+            <span dir="ltr">{projectDetails?.identifier}</span>
+          </div>
         </div>
       }
       appendTitleElement={
@@ -63,7 +68,7 @@ export function RecentProject(props: BlockProps) {
                 }
                 buttonClassName={projectDetails?.project_members?.length > 0 ? "hover:bg-transparent px-0" : ""}
                 showTooltip={projectDetails?.project_members?.length === 0}
-                placeholder="Assignees"
+                placeholder={t("assignees")}
                 optionsClassName="z-10"
                 tooltipContent=""
               />

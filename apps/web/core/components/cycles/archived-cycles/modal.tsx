@@ -5,6 +5,8 @@
  */
 
 import { useState } from "react";
+// types
+import { useTranslation } from "@plane/i18n";
 // ui
 import { Button } from "@plane/propel/button";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
@@ -30,6 +32,7 @@ export function ArchiveCycleModal(props: Props) {
   const [isArchiving, setIsArchiving] = useState(false);
   // store hooks
   const { getCycleNameById, archiveCycle } = useCycle();
+  const { t } = useTranslation();
 
   const cycleName = getCycleNameById(cycleId);
 
@@ -44,8 +47,8 @@ export function ArchiveCycleModal(props: Props) {
       .then(() => {
         setToast({
           type: TOAST_TYPE.SUCCESS,
-          title: "Archive success",
-          message: "Your archives can be found in project archives.",
+          title: t("project_cycles.action.archive.success.title"),
+          message: t("project_cycles.action.archive.success.description"),
         });
         onClose();
         router.push(`/${workspaceSlug}/projects/${projectId}/cycles`);
@@ -54,8 +57,8 @@ export function ArchiveCycleModal(props: Props) {
       .catch(() => {
         setToast({
           type: TOAST_TYPE.ERROR,
-          title: "Error!",
-          message: "Cycle could not be archived. Please try again.",
+          title: t("project_cycles.action.archive.failed.title"),
+          message: t("project_cycles.action.archive.failed.description"),
         });
       })
       .finally(() => setIsArchiving(false));
@@ -64,16 +67,18 @@ export function ArchiveCycleModal(props: Props) {
   return (
     <ModalCore isOpen={isOpen} handleClose={onClose} position={EModalPosition.CENTER} width={EModalWidth.LG}>
       <div className="px-5 py-4">
-        <h3 className="text-18 font-medium 2xl:text-20">Archive cycle {cycleName}</h3>
+        <h3 className="text-18 font-medium 2xl:text-20">
+          {t("project_cycles.action.archive.title", { name: cycleName })}
+        </h3>
         <p className="mt-3 text-13 text-secondary">
-          Are you sure you want to archive the cycle? All your archives can be restored later.
+          {t("project_cycles.action.archive.description")}
         </p>
         <div className="mt-3 flex justify-end gap-2">
           <Button variant="secondary" size="lg" onClick={onClose}>
-            Cancel
+            {t("cancel")}
           </Button>
           <Button variant="primary" size="lg" tabIndex={1} onClick={handleArchiveCycle} loading={isArchiving}>
-            {isArchiving ? "Archiving" : "Archive"}
+            {isArchiving ? t("project_cycles.action.archive.submitting") : t("project_cycles.action.archive.button")}
           </Button>
         </div>
       </div>

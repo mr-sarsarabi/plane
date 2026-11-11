@@ -72,7 +72,7 @@ function Breadcrumbs({ className, children, onBack, isLoading = false }: Breadcr
                 ...
               </span>
             )}
-            <ChevronRightIcon className="h-3.5 w-3.5 flex-shrink-0 text-placeholder" aria-hidden="true" />
+            <ChevronRightIcon className="h-3.5 w-3.5 flex-shrink-0 text-placeholder rtl:rotate-180" aria-hidden="true" />
           </div>
           <div className="flex items-center gap-2.5 p-1">
             {isLoading ? (
@@ -147,14 +147,14 @@ function BreadcrumbSeparator(props: BreadcrumbSeparatorProps) {
   const { className, containerClassName, iconClassName, showDivider = false } = props;
   return (
     <div className={cn("relative flex h-full items-center justify-center px-1.5 py-1", className)}>
-      {showDivider && <span className="absolute top-0 -left-0.5 h-full w-[1.8px] bg-surface-1" />}
+      {showDivider && <span className="absolute top-0 -left-0.5 rtl:-right-0.5 rtl:left-auto start-[-2px] h-full w-[1.8px] bg-surface-1" />}
       <div
         className={cn(
           "flex flex-shrink-0 items-center justify-center rounded-sm text-placeholder transition-all",
           containerClassName
         )}
       >
-        <ChevronRightIcon className={cn("h-3.5 w-3.5 flex-shrink-0", iconClassName)} />
+        <ChevronRightIcon className={cn("h-3.5 w-3.5 flex-shrink-0 rtl:rotate-180", iconClassName)} />
       </div>
     </div>
   );

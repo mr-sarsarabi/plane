@@ -41,7 +41,7 @@ export function LinearProgressIndicator({
     else
       return (
         <Tooltip key={item.id} tooltipContent={`${item.name} ${Math.round(item.value)}${inPercentage ? "%" : ""}`}>
-          <div style={style} className={cn("first:rounded-l-xs last:rounded-r-xs", barClassName)} />
+          <div style={style} className={cn("first:rounded-s-xs last:rounded-e-xs", barClassName)} />
         </Tooltip>
       );
   });

@@ -64,6 +64,10 @@ export const useEditor = (props: TEditorHookProps) => {
           editorClassName,
         }),
         ...editorProps,
+        attributes: {
+          ...CoreEditorProps({ editorClassName }).attributes,
+          ...editorProps?.attributes,
+        },
       },
       extensions: [
         ...CoreEditorExtensions({

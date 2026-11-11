@@ -141,7 +141,7 @@ export const IssueBlock = observer(function IssueBlock(props: IssueBlockProps) {
   const isSubIssue = nestingLevel !== 0;
   const canSelectIssues = canEditIssueProperties && !selectionHelpers.isSelectionDisabled;
 
-  const marginLeft = `${spacingLeft}px`;
+  const marginInlineStart = `${spacingLeft}px`;
 
   const handleToggleExpand = (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
@@ -209,7 +209,7 @@ export const IssueBlock = observer(function IssueBlock(props: IssueBlockProps) {
       >
         <div className="flex w-full gap-2 truncate">
           <div className="flex flex-grow items-center gap-0.5 truncate">
-            <div className="flex items-center gap-1" style={isSubIssue ? { marginLeft } : {}}>
+            <div className="flex items-center gap-1" style={isSubIssue ? { marginInlineStart } : {}}>
               {/* select checkbox */}
               {projectId && canSelectIssues && !isEpic && (
                 <Tooltip
@@ -222,7 +222,7 @@ export const IssueBlock = observer(function IssueBlock(props: IssueBlockProps) {
                   }
                   disabled={issue.project_id === projectId}
                 >
-                  <div className="absolute left-1 grid w-3.5 flex-shrink-0 place-items-center">
+                  <div className="absolute left-1 rtl:right-1 rtl:left-auto start-1 grid w-3.5 flex-shrink-0 place-items-center">
                     <MultipleSelectEntityAction
                       className={cn(
                         "pointer-events-none opacity-0 transition-opacity group-hover/list-block:pointer-events-auto group-hover/list-block:opacity-100",
@@ -261,8 +261,8 @@ export const IssueBlock = observer(function IssueBlock(props: IssueBlockProps) {
                     onClick={handleToggleExpand}
                   >
                     <ChevronRightIcon
-                      className={cn("size-4", {
-                        "rotate-90": isExpanded,
+                      className={cn("size-4 rtl:rotate-180", {
+                        "rotate-90 rtl:rotate-90": isExpanded,
                       })}
                       strokeWidth={2.5}
                     />

@@ -143,7 +143,7 @@ const ToolbarSubmitButton = React.forwardRef(function ToolbarSubmitButton(
   ref: React.ForwardedRef<HTMLButtonElement>
 ) {
   return (
-    <div className="sticky right-1">
+    <div className="sticky end-1">
       <button
         ref={ref}
         className={cn(

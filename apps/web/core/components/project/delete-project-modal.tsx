@@ -8,6 +8,7 @@ import { useParams } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 import { AlertTriangle } from "lucide-react";
 // Plane imports
+import { useTranslation } from "@plane/i18n";
 import { Button } from "@plane/propel/button";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
 import type { IProject } from "@plane/types";
@@ -29,6 +30,8 @@ const defaultValues = {
 
 export function DeleteProjectModal(props: DeleteProjectModal) {
   const { isOpen, project, onClose } = props;
+  // translation
+  const { t } = useTranslation();
   // store hooks
   const { deleteProject } = useProject();
   // router
@@ -63,14 +66,18 @@ export function DeleteProjectModal(props: DeleteProjectModal) {
       handleClose();
       setToast({
         type: TOAST_TYPE.SUCCESS,
-        title: "Success!",
-        message: "Project deleted successfully.",
+        title: t("common.success", { defaultValue: "Success!" }),
+        message: t("project_settings.general.delete_project.modal.success", {
+          defaultValue: "Project deleted successfully.",
+        }),
       });
     } catch (_error) {
       setToast({
         type: TOAST_TYPE.ERROR,
-        title: "Error!",
-        message: "Something went wrong. Please try again later.",
+        title: t("common.error", { defaultValue: "Error!" }),
+        message: t("common.something_went_wrong_please_try_again", {
+          defaultValue: "Something went wrong. Please try again later.",
+        }),
       });
     }
   };
@@ -83,18 +90,32 @@ export function DeleteProjectModal(props: DeleteProjectModal) {
             <AlertTriangle className="h-6 w-6 text-danger-primary" aria-hidden="true" />
           </span>
           <span className="flex items-center justify-start">
-            <h3 className="text-18 font-medium 2xl:text-20">Delete project</h3>
+            <h3 className="text-18 font-medium 2xl:text-20">
+              {t("project_settings.general.delete_project.modal.title", { defaultValue: "Delete project" })}
+            </h3>
           </span>
         </div>
         <span>
           <p className="text-13 leading-7 text-secondary">
-            Are you sure you want to delete project <span className="font-semibold break-words">{project?.name}</span>?
-            All of the data related to the project will be permanently removed. This action cannot be undone
+            {t("project_settings.general.delete_project.modal.confirmation_prefix", {
+              defaultValue: "Are you sure you want to delete project",
+            })}{" "}
+            <span className="font-semibold break-words">{project?.name}</span>
+            {t("project_settings.general.delete_project.modal.confirmation_suffix", {
+              defaultValue:
+                "? All of the data related to the project will be permanently removed. This action cannot be undone",
+            })}
           </p>
         </span>
         <div className="text-secondary">
           <p className="text-13 break-words">
-            Enter the project name <span className="font-medium text-primary">{project?.name}</span> to continue:
+            {t("project_settings.general.delete_project.modal.enter_project_name_prefix", {
+              defaultValue: "Enter the project name",
+            })}{" "}
+            <span className="font-medium text-primary">{project?.name}</span>{" "}
+            {t("project_settings.general.delete_project.modal.enter_project_name_suffix", {
+              defaultValue: "to continue:",
+            })}
           </p>
           <Controller
             control={control}
@@ -108,7 +129,9 @@ export function DeleteProjectModal(props: DeleteProjectModal) {
                 onChange={onChange}
                 ref={ref}
                 hasError={Boolean(errors.projectName)}
-                placeholder="Project name"
+                placeholder={t("project_settings.general.delete_project.modal.project_name_placeholder", {
+                  defaultValue: "Project name",
+                })}
                 className="mt-2 w-full"
                 autoComplete="off"
               />
@@ -117,7 +140,13 @@ export function DeleteProjectModal(props: DeleteProjectModal) {
         </div>
         <div className="text-secondary">
           <p className="text-13">
-            To confirm, type <span className="font-medium text-primary">delete my project</span> below:
+            {t("project_settings.general.delete_project.modal.type_to_confirm_prefix", {
+              defaultValue: "To confirm, type",
+            })}{" "}
+            <span className="font-medium text-primary">delete my project</span>{" "}
+            {t("project_settings.general.delete_project.modal.type_to_confirm_suffix", {
+              defaultValue: "below:",
+            })}
           </p>
           <Controller
             control={control}
@@ -131,7 +160,9 @@ export function DeleteProjectModal(props: DeleteProjectModal) {
                 onChange={onChange}
                 ref={ref}
                 hasError={Boolean(errors.confirmDelete)}
-                placeholder="Enter 'delete my project'"
+                placeholder={t("project_settings.general.delete_project.modal.confirm_placeholder", {
+                  defaultValue: "Enter 'delete my project'",
+                })}
                 className="mt-2 w-full"
                 autoComplete="off"
               />
@@ -140,10 +171,12 @@ export function DeleteProjectModal(props: DeleteProjectModal) {
         </div>
         <div className="flex justify-end gap-2">
           <Button variant="secondary" size="lg" onClick={handleClose}>
-            Cancel
+            {t("common.cancel", { defaultValue: "Cancel" })}
           </Button>
           <Button variant="error-fill" size="lg" type="submit" disabled={!canDelete} loading={isSubmitting}>
-            {isSubmitting ? "Deleting" : "Delete project"}
+            {isSubmitting
+              ? t("project_settings.general.delete_project.modal.deleting", { defaultValue: "Deleting" })
+              : t("project_settings.general.delete_project.modal.title", { defaultValue: "Delete project" })}
           </Button>
         </div>
       </form>

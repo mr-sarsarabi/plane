@@ -6,6 +6,7 @@
 
 import { observer } from "mobx-react";
 // types
+import { useTranslation } from "@plane/i18n";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
 import type { IProjectView } from "@plane/types";
 import { EIssuesStoreType } from "@plane/types";
@@ -31,6 +32,7 @@ type Props = {
 
 export const CreateUpdateProjectViewModal = observer(function CreateUpdateProjectViewModal(props: Props) {
   const { data, isOpen, onClose, preLoadedData, workspaceSlug, projectId } = props;
+  const { t } = useTranslation();
   // router
   const router = useAppRouter();
   // store hooks
@@ -51,14 +53,14 @@ export const CreateUpdateProjectViewModal = observer(function CreateUpdateProjec
       router.push(`/${workspaceSlug}/projects/${projectId}/views/${res.id}`);
       setToast({
         type: TOAST_TYPE.SUCCESS,
-        title: "Success!",
-        message: "View created successfully.",
+        title: t("toast.success", "Success!"),
+        message: t("view.create.success", "View created successfully."),
       });
     } catch (_error) {
       setToast({
         type: TOAST_TYPE.ERROR,
-        title: "Error!",
-        message: "Failed to create view. Please try again.",
+        title: t("toast.error", "Error!"),
+        message: t("view.create.error", "Failed to create view. Please try again."),
       });
     }
   };
@@ -69,11 +71,16 @@ export const CreateUpdateProjectViewModal = observer(function CreateUpdateProjec
       mutateFilters(workspaceSlug, viewDetails.id, viewDetails);
       resetExpression(EIssuesStoreType.PROJECT_VIEW, viewDetails.id, viewDetails.rich_filters);
       handleClose();
+      setToast({
+        type: TOAST_TYPE.SUCCESS,
+        title: t("toast.success", "Success!"),
+        message: t("view.update.success", "View updated successfully."),
+      });
     } catch (_error) {
       setToast({
         type: TOAST_TYPE.ERROR,
-        title: "Error!",
-        message: "Failed to update view. Please try again.",
+        title: t("toast.error", "Error!"),
+        message: t("view.update.error", "Failed to update view. Please try again."),
       });
     }
   };

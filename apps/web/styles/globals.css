@@ -5,6 +5,24 @@
 @import "./emoji.css";
 @plugin "@tailwindcss/typography";
 
+@font-face {
+  font-family: 'Vazirmatn';
+  src: url('/fonts/vazirmatn/Vazirmatn[wght].woff2') format('woff2-variations'),
+       url('/fonts/vazirmatn/Vazirmatn-Regular.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --font-body: "Vazirmatn", "Inter Variable", ui-sans-serif, system-ui, sans-serif !important;
+  --font-heading: "Vazirmatn", "Inter Variable", ui-sans-serif, system-ui, sans-serif !important;
+}
+
+[dir="rtl"], [dir="rtl"] body, [dir="rtl"] input, [dir="rtl"] button, [dir="rtl"] textarea {
+  font-family: "Vazirmatn", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+}
+
 /* stickies and editor colors */
 :root {
   /* text colors */

@@ -15,16 +15,22 @@ export type InsightCardProps = {
   isLoading?: boolean;
 };
 
+const toPersianDigits = (val: string | number): string => {
+  const fa = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
+  return String(val).replace(/\d/g, (d) => fa[Number(d)]);
+};
+
 function InsightCard(props: InsightCardProps) {
   const { data, label, isLoading = false } = props;
   const count = data?.count ?? 0;
+  const isRTL = typeof document !== "undefined" && (document.documentElement.dir === "rtl" || document.dir === "rtl");
 
   return (
     <div className="flex flex-col gap-3">
       <div className="text-13 text-tertiary">{label}</div>
       {!isLoading ? (
         <div className="flex flex-col gap-1">
-          <div className="text-20 font-bold text-primary">{count}</div>
+          <div className="text-20 font-bold text-primary">{isRTL ? toPersianDigits(count) : count}</div>
         </div>
       ) : (
         <Loader.Item height="50px" width="100%" />

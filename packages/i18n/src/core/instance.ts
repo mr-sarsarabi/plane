@@ -21,7 +21,10 @@ i18nInstance
   .use(resourcesToBackend((language: string, namespace: string) => import(`../locales/${language}/${namespace}.json`)));
 
 const initialLng =
-  typeof window !== "undefined" ? localStorage.getItem(LANGUAGE_STORAGE_KEY) || FALLBACK_LANGUAGE : FALLBACK_LANGUAGE;
+  typeof window !== "undefined"
+    ? localStorage.getItem(LANGUAGE_STORAGE_KEY) ||
+      (navigator.language?.toLowerCase().startsWith("fa") ? "fa" : FALLBACK_LANGUAGE)
+    : FALLBACK_LANGUAGE;
 
 export const initPromise = i18nInstance
   .init({

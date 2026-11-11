@@ -28,14 +28,19 @@ type Props = TDropdownProps & {
 };
 
 function DurationDropdown({ placeholder = "Duration", onChange, value }: Props) {
-  useTranslation();
+  const { t } = useTranslation();
+
+  const getOptionName = (option: (typeof ANALYTICS_DURATION_FILTER_OPTIONS)[number]) =>
+    option.i18nKey ? t(option.i18nKey) : option.name;
+
+  const selectedOption = ANALYTICS_DURATION_FILTER_OPTIONS.find((opt) => opt.value === value);
 
   const options = ANALYTICS_DURATION_FILTER_OPTIONS.map((option) => ({
     value: option.value,
-    query: option.name,
+    query: getOptionName(option),
     content: (
       <div className="flex max-w-[300px] items-center gap-2">
-        <span className="flex-grow truncate">{option.name}</span>
+        <span className="flex-grow truncate">{getOptionName(option)}</span>
       </div>
     ),
   }));
@@ -47,7 +52,7 @@ function DurationDropdown({ placeholder = "Duration", onChange, value }: Props) 
       label={
         <div className="flex items-center gap-2 p-1">
           <Calendar className="h-4 w-4" />
-          {value ? ANALYTICS_DURATION_FILTER_OPTIONS.find((opt) => opt.value === value)?.name : placeholder}
+          {selectedOption ? getOptionName(selectedOption) : placeholder}
         </div>
       }
     />

@@ -80,7 +80,10 @@ export const ForgotPasswordForm = observer(function ForgotPasswordForm() {
 
   return (
     <FormContainer>
-      <AuthFormHeader title="Reset password" description="Regain access to your account." />
+      <AuthFormHeader
+        title={t("auth.forgot_password.title")}
+        description={t("auth.forgot_password.description")}
+      />
       <form onSubmit={handleSubmit(handleForgotPassword)} className="space-y-4">
         <div className="space-y-1">
           <label className="text-13 font-medium text-tertiary" htmlFor="email">
@@ -103,7 +106,7 @@ export const ForgotPasswordForm = observer(function ForgotPasswordForm() {
                 ref={ref}
                 hasError={Boolean(errors.email)}
                 placeholder={t("auth.common.email.placeholder")}
-                className="h-10 w-full border border-strong !bg-surface-1 pr-12 placeholder:text-placeholder"
+                className="h-10 w-full border border-strong !bg-surface-1 pe-12 placeholder:text-placeholder"
                 autoComplete="off"
                 disabled={resendTimerCode > 0}
               />

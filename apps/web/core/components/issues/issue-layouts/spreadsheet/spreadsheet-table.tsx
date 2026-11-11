@@ -70,23 +70,32 @@ export const SpreadsheetTable = observer(function SpreadsheetTable(props: Props)
   const handleScroll = useCallback(() => {
     if (!containerRef.current) return;
     const scrollLeft = containerRef.current.scrollLeft;
+    const isRTL =
+      document.documentElement.dir === "rtl" ||
+      (typeof window !== "undefined" && getComputedStyle(containerRef.current).direction === "rtl");
 
-    const columnShadow = "8px 22px 22px 10px rgba(0, 0, 0, 0.05)"; // shadow for regular columns
-    const headerShadow = "8px -22px 22px 10px rgba(0, 0, 0, 0.05)"; // shadow for headers
+    const columnShadow = isRTL
+      ? "-8px 22px 22px 10px rgba(0, 0, 0, 0.05)"
+      : "8px 22px 22px 10px rgba(0, 0, 0, 0.05)"; // shadow for regular columns
+    const headerShadow = isRTL
+      ? "-8px -22px 22px 10px rgba(0, 0, 0, 0.05)"
+      : "8px -22px 22px 10px rgba(0, 0, 0, 0.05)"; // shadow for headers
+
+    const hasScrolled = Math.abs(scrollLeft) > 0;
 
     //The shadow styles are added this way to avoid re-render of all the rows of table, which could be costly
-    if (scrollLeft > 0 !== isScrolled.current) {
+    if (hasScrolled !== isScrolled.current) {
       const firstColumns = containerRef.current.querySelectorAll("table tr td:first-child, th:first-child");
 
       for (let i = 0; i < firstColumns.length; i++) {
         const shadow = i === 0 ? headerShadow : columnShadow;
-        if (scrollLeft > 0) {
+        if (hasScrolled) {
           (firstColumns[i] as HTMLElement).style.boxShadow = shadow;
         } else {
           (firstColumns[i] as HTMLElement).style.boxShadow = "none";
         }
       }
-      isScrolled.current = scrollLeft > 0;
+      isScrolled.current = hasScrolled;
     }
   }, [containerRef]);
 

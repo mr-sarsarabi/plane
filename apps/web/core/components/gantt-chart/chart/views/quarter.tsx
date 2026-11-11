@@ -5,6 +5,7 @@
  */
 
 import { observer } from "mobx-react";
+import { useTranslation } from "@plane/i18n";
 // plane utils
 import { cn } from "@plane/utils";
 // hooks
@@ -15,6 +16,7 @@ import type { IMonthBlock, IQuarterMonthBlock } from "../../views";
 import { groupMonthsToQuarters } from "../../views";
 
 export const QuarterChartView = observer(function QuarterChartView(_props: any) {
+  const { t } = useTranslation();
   const { currentViewData, renderView } = useTimeLineChartStore();
   const monthBlocks: IMonthBlock[] = renderView;
 
@@ -45,8 +47,8 @@ export const QuarterChartView = observer(function QuarterChartView(_props: any) 
                 >
                   {quarterBlock?.title}
                   {quarterBlock.today && (
-                    <span className={cn("ml-2 rounded-sm bg-accent-primary px-1 text-9 font-medium text-on-color")}>
-                      Current
+                    <span className={cn("ms-2 rounded-sm bg-accent-primary px-1 text-9 font-medium text-on-color")}>
+                      {t("common.current")}
                     </span>
                   )}
                 </div>

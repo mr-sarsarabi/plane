@@ -92,6 +92,13 @@ export const LineChart = React.memo(function LineChart<K extends string, T exten
     [activeLegend, lines]
   );
 
+  const isRTL =
+    typeof document !== "undefined" && (document.documentElement.dir === "rtl" || document.dir === "rtl");
+  const rawOffset = yAxis.offset ?? -24;
+  const rawDx = yAxis.dx ?? -16;
+  const yAxisOffset = isRTL ? (rawOffset < 0 ? -rawOffset : rawOffset) : rawOffset;
+  const yAxisDx = isRTL ? (rawDx < 0 ? -rawDx : rawDx) : rawDx;
+
   return (
     <div className={className}>
       <ResponsiveContainer width="100%" height="100%">
@@ -99,14 +106,15 @@ export const LineChart = React.memo(function LineChart<K extends string, T exten
           data={data}
           margin={{
             top: margin?.top === undefined ? 5 : margin.top,
-            right: margin?.right === undefined ? 30 : margin.right,
+            right: margin?.right === undefined ? (isRTL ? 20 : 30) : margin.right,
             bottom: margin?.bottom === undefined ? 5 : margin.bottom,
-            left: margin?.left === undefined ? 20 : margin.left,
+            left: margin?.left === undefined ? (isRTL ? 30 : 20) : margin.left,
           }}
         >
           <CartesianGrid stroke="var(--border-color-subtle)" vertical={false} />
           <XAxis
             dataKey={xAxis.key}
+            reversed={isRTL}
             tick={(props) => {
               const TickComponent = customTicks?.x || CustomXAxisTick;
               return <TickComponent {...props} />;
@@ -124,21 +132,22 @@ export const LineChart = React.memo(function LineChart<K extends string, T exten
           />
           <YAxis
             domain={yAxis.domain}
+            orientation={isRTL ? "right" : "left"}
             tickLine={false}
             axisLine={false}
             label={
               yAxis.label && {
                 value: yAxis.label,
-                angle: -90,
+                angle: isRTL ? 90 : -90,
                 position: "bottom",
-                offset: -24,
-                dx: yAxis.dx ?? -16,
+                offset: yAxisOffset,
+                dx: yAxisDx,
                 className: AXIS_LABEL_CLASSNAME,
               }
             }
             tick={(props) => {
               const TickComponent = customTicks?.y || CustomYAxisTick;
-              return <TickComponent {...props} />;
+              return <TickComponent {...props} isRTL={isRTL} />;
             }}
             tickCount={tickCount.y}
             allowDecimals={!!yAxis.allowDecimals}

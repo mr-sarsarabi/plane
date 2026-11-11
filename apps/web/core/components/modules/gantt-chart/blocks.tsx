@@ -7,6 +7,7 @@
 import { observer } from "mobx-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { useTranslation } from "@plane/i18n";
 // ui
 import { MODULE_STATUS } from "@plane/constants";
 import { ModuleStatusIcon } from "@plane/propel/icons";
@@ -26,6 +27,7 @@ type Props = {
 
 export const ModuleGanttBlock = observer(function ModuleGanttBlock(props: Props) {
   const { moduleId } = props;
+  const { t } = useTranslation();
   // router
   const router = useAppRouter();
   const { workspaceSlug } = useParams();
@@ -38,7 +40,8 @@ export const ModuleGanttBlock = observer(function ModuleGanttBlock(props: Props)
 
   const { message, blockStyle } = getBlockViewDetails(
     moduleDetails,
-    MODULE_STATUS.find((s) => s.value === moduleDetails?.status)?.color ?? ""
+    MODULE_STATUS.find((s) => s.value === moduleDetails?.status)?.color ?? "",
+    t
   );
 
   return (

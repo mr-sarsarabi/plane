@@ -266,6 +266,11 @@
       "click_to_downvote": "Clic pentru a vota negativ",
       "click_to_view_upvotes": "Clic pentru a vedea voturile pozitive",
       "click_to_view_downvotes": "Clic pentru a vedea voturile negative"
+    },
+    "drag_drop": {
+      "cannot_move": "Cannot move work item",
+      "not_allowed": "You are not allowed to move this work item",
+      "grouping_disabled": "Drag and drop is disabled for the current grouping"
     }
   },
   "sub_work_item": {

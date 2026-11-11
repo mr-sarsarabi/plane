@@ -18,7 +18,20 @@ export function formatModifierShortcut(e: KeyboardEvent): string {
   if (e.altKey) parts.push("alt");
   if (e.shiftKey) parts.push("shift");
 
-  const key = e.key.toLowerCase();
+  let key = e.key.toLowerCase();
+  // Support non-Latin (e.g. Persian) keyboard layout via e.code
+  if (e.code && e.code.startsWith("Key")) {
+    const codeKey = e.code.slice(3).toLowerCase();
+    if (key !== codeKey && (key.length !== 1 || key.charCodeAt(0) > 127)) {
+      key = codeKey;
+    }
+  } else if (e.code && e.code.startsWith("Digit")) {
+    const codeDigit = e.code.slice(5);
+    if (key !== codeDigit && (key.length !== 1 || key.charCodeAt(0) > 127)) {
+      key = codeDigit;
+    }
+  }
+
   parts.push(key === " " ? "space" : key);
 
   return parts.join("+");
@@ -71,11 +84,24 @@ export class ShortcutHandler {
   handleKeyDown = (e: KeyboardEvent): void => {
     if (!this.isEnabled) return;
 
-    const key = e.key.toLowerCase();
+    let key = e.key.toLowerCase();
+    // Resolve key from e.code if non-Latin (e.g. Persian) layout is active
+    if (e.code && e.code.startsWith("Key")) {
+      const codeKey = e.code.slice(3).toLowerCase();
+      if (key !== codeKey && (key.length !== 1 || key.charCodeAt(0) > 127)) {
+        key = codeKey;
+      }
+    } else if (e.code && e.code.startsWith("Digit")) {
+      const codeDigit = e.code.slice(5);
+      if (key !== codeDigit && (key.length !== 1 || key.charCodeAt(0) > 127)) {
+        key = codeDigit;
+      }
+    }
+
     const hasModifier = e.metaKey || e.ctrlKey || e.altKey || e.shiftKey;
 
-    // Special: Cmd+K always opens command palette
-    if ((e.metaKey || e.ctrlKey) && key === "k") {
+    // Special: Cmd+K always opens command palette (check e.code === "KeyK" alongside e.key)
+    if ((e.metaKey || e.ctrlKey) && (key === "k" || e.key.toLowerCase() === "k" || e.code === "KeyK")) {
       e.preventDefault();
       this.openPalette();
       return;

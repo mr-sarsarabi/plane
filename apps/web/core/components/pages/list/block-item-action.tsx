@@ -7,6 +7,7 @@
 import { observer } from "mobx-react";
 import { Earth, Info, Minus } from "lucide-react";
 // plane imports
+import { useTranslation } from "@plane/i18n";
 import { LockIcon } from "@plane/propel/icons";
 import { Tooltip } from "@plane/propel/tooltip";
 import { Avatar, FavoriteStar } from "@plane/ui";
@@ -29,6 +30,8 @@ type Props = {
 
 export const BlockItemAction = observer(function BlockItemAction(props: Props) {
   const { page, parentRef, storeType } = props;
+  // translation
+  const { t } = useTranslation();
   // store hooks
   const { getUserDetails } = useMember();
   // page operations
@@ -48,7 +51,7 @@ export const BlockItemAction = observer(function BlockItemAction(props: Props) {
         </Tooltip>
       </div>
       <div className="cursor-default text-tertiary">
-        <Tooltip tooltipContent={access === 0 ? "Public" : "Private"}>
+        <Tooltip tooltipContent={access === 0 ? t("common.access.public") : t("common.access.private")}>
           {access === 0 ? <Earth className="h-4 w-4" /> : <LockIcon className="h-4 w-4" />}
         </Tooltip>
       </div>

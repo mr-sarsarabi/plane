@@ -104,10 +104,10 @@ export const CalendarHeader = observer(function CalendarHeader(props: ICalendarH
     <Row className="mb-4 flex items-center justify-between gap-2">
       <div className="flex items-center gap-1.5">
         <button type="button" className="grid place-items-center" onClick={handlePrevious}>
-          <ChevronLeftIcon height={16} width={16} strokeWidth={2} />
+          <ChevronLeftIcon height={16} width={16} strokeWidth={2} className="rtl:rotate-180" />
         </button>
         <button type="button" className="grid place-items-center" onClick={handleNext}>
-          <ChevronRightIcon height={16} width={16} strokeWidth={2} />
+          <ChevronRightIcon height={16} width={16} strokeWidth={2} className="rtl:rotate-180" />
         </button>
         <CalendarMonthsDropdown issuesFilterStore={issuesFilterStore} />
       </div>

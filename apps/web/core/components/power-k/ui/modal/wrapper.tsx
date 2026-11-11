@@ -69,7 +69,7 @@ export const ProjectsAppPowerKModalWrapper = observer(function ProjectsAppPowerK
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
       // Cmd/Ctrl+K closes palette
-      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+      if ((e.metaKey || e.ctrlKey) && (e.key.toLowerCase() === "k" || e.code === "KeyK")) {
         e.preventDefault();
         onClose();
         return;

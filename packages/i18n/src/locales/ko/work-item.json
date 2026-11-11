@@ -266,6 +266,11 @@
       "click_to_downvote": "클릭하여 비추천",
       "click_to_view_upvotes": "클릭하여 추천 목록 보기",
       "click_to_view_downvotes": "클릭하여 비추천 목록 보기"
+    },
+    "drag_drop": {
+      "cannot_move": "Cannot move work item",
+      "not_allowed": "You are not allowed to move this work item",
+      "grouping_disabled": "Drag and drop is disabled for the current grouping"
     }
   },
   "sub_work_item": {

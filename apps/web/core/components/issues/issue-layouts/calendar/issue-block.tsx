@@ -126,13 +126,15 @@ export const CalendarIssueBlock = observer(
                       }}
                     />
                     {issue.project_id && (
-                      <IssueIdentifier
-                        issueId={issue.id}
-                        projectId={issue.project_id}
-                        size="xs"
-                        variant="tertiary"
-                        displayProperties={issuesFilter?.issueFilters?.displayProperties}
-                      />
+                      <span dir="ltr" className="inline-flex flex-shrink-0">
+                        <IssueIdentifier
+                          issueId={issue.id}
+                          projectId={issue.project_id}
+                          size="xs"
+                          variant="tertiary"
+                          displayProperties={issuesFilter?.issueFilters?.displayProperties}
+                        />
+                      </span>
                     )}
                     <div className="truncate text-13 font-medium md:text-11 md:font-regular">{issue.name}</div>
                   </div>

@@ -80,7 +80,7 @@ export const PrevExports = observer(function PrevExports(props: Props) {
               size="sm"
               disabled={!exporterServices?.prev_page_results}
               onClick={() => exporterServices?.prev_page_results && setCursor(exporterServices?.prev_cursor)}
-              prependIcon={<MoveLeft />}
+              prependIcon={<MoveLeft className="rtl:rotate-180" />}
             >
               {t("prev")}
             </Button>
@@ -89,7 +89,7 @@ export const PrevExports = observer(function PrevExports(props: Props) {
               size="sm"
               disabled={!exporterServices?.next_page_results}
               onClick={() => exporterServices?.next_page_results && setCursor(exporterServices?.next_cursor)}
-              appendIcon={<MoveRight />}
+              appendIcon={<MoveRight className="rtl:rotate-180" />}
             >
               {t("next")}
             </Button>
@@ -106,7 +106,7 @@ export const PrevExports = observer(function PrevExports(props: Props) {
                   data={exporterServices?.results ?? []}
                   keyExtractor={(rowData: RowData) => rowData?.id ?? ""}
                   tHeadClassName="border-b border-subtle"
-                  thClassName="text-left font-medium divide-x-0 text-placeholder"
+                  thClassName="text-start font-medium divide-x-0 text-placeholder"
                   tBodyClassName="divide-y-0"
                   tBodyTrClassName="divide-x-0 p-4 h-[40px] text-secondary"
                   tHeadTrClassName="divide-x-0"

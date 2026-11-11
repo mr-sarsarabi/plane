@@ -9,6 +9,7 @@ import { observer } from "mobx-react";
 import { Loader } from "lucide-react";
 import { CloseIcon } from "@plane/propel/icons";
 // plane imports
+import { useTranslation } from "@plane/i18n";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
 import { Tooltip } from "@plane/propel/tooltip";
 import type { IState, TStateOperationsCallbacks } from "@plane/types";
@@ -26,6 +27,8 @@ type TStateDelete = {
 
 export const StateDelete = observer(function StateDelete(props: TStateDelete) {
   const { totalStates, state, deleteStateCallback } = props;
+  // translation
+  const { t } = useTranslation();
   // hooks
   const { isMobile } = usePlatformOS();
   // states
@@ -47,15 +50,19 @@ export const StateDelete = observer(function StateDelete(props: TStateDelete) {
       if (errorStatus.status === 400) {
         setToast({
           type: TOAST_TYPE.ERROR,
-          title: "Error!",
-          message:
-            "This state contains some work items within it, please move them to some other state to delete this state.",
+          title: t("common.error", { defaultValue: "Error!" }),
+          message: t("project_settings.states.delete_state.has_work_items", {
+            defaultValue:
+              "This state contains some work items within it, please move them to some other state to delete this state.",
+          }),
         });
       } else {
         setToast({
           type: TOAST_TYPE.ERROR,
-          title: "Error!",
-          message: "State could not be deleted. Please try again.",
+          title: t("common.error", { defaultValue: "Error!" }),
+          message: t("project_settings.states.delete_state.failed", {
+            defaultValue: "State could not be deleted. Please try again.",
+          }),
         });
       }
       setIsDelete(false);
@@ -69,11 +76,17 @@ export const StateDelete = observer(function StateDelete(props: TStateDelete) {
         handleSubmit={handleDeleteState}
         isSubmitting={isDelete}
         isOpen={isDeleteModal}
-        title="Delete State"
+        title={t("project_settings.states.delete_state.title", { defaultValue: "Delete State" })}
         content={
           <>
-            Are you sure you want to delete state- <span className="font-medium text-primary">{state?.name}</span>? All
-            of the data related to the state will be permanently removed. This action cannot be undone.
+            {t("project_settings.states.delete_state.confirmation_prefix", {
+              defaultValue: "Are you sure you want to delete state-",
+            })}{" "}
+            <span className="font-medium text-primary">{state?.name}</span>
+            {t("project_settings.states.delete_state.confirmation_suffix", {
+              defaultValue:
+                "? All of the data related to the state will be permanently removed. This action cannot be undone.",
+            })}
           </>
         }
       />
@@ -89,7 +102,15 @@ export const StateDelete = observer(function StateDelete(props: TStateDelete) {
       >
         <Tooltip
           tooltipContent={
-            state.default ? "Cannot delete the default state." : totalStates === 1 ? `Cannot have an empty group.` : ``
+            state.default
+              ? t("project_settings.states.delete_state.cannot_delete_default", {
+                  defaultValue: "Cannot delete the default state.",
+                })
+              : totalStates === 1
+                ? t("project_settings.states.delete_state.cannot_empty_group", {
+                    defaultValue: "Cannot have an empty group.",
+                  })
+                : ""
           }
           isMobile={isMobile}
           disabled={!isDeleteDisabled}

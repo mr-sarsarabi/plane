@@ -18,6 +18,15 @@ import { useDropdownKeyDown } from "../hooks/use-dropdown-key-down";
 import { cn } from "../utils";
 import type { ICustomSearchSelectProps } from "./helper";
 
+const normalizeSearchQuery = (str: string): string =>
+  str
+    .toLowerCase()
+    .replace(/[\u200B\u200C\u200D\uFEFF]/g, "")
+    .replace(/[\u064A\u0649]/g, "\u06CC")
+    .replace(/[\u0643]/g, "\u06A9")
+    .replace(/[\u064B-\u065F\u0670]/g, "")
+    .trim();
+
 export function CustomSearchSelect(props: ICustomSearchSelectProps) {
   const {
     customButtonClassName = "",
@@ -51,12 +60,37 @@ export function CustomSearchSelect(props: ICustomSearchSelectProps) {
   // refs
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
+  const isRTL = typeof document !== "undefined" && (document.dir === "rtl" || document.documentElement.dir === "rtl");
+
+  const effectivePlacement = (() => {
+    if (!isRTL) return placement ?? "bottom-start";
+    if (!placement || placement === "bottom-start") return "bottom-end";
+    if (placement === "top-start") return "top-end";
+    return placement;
+  })();
+
   const { styles, attributes } = usePopper(referenceElement, popperElement, {
-    placement: placement ?? "bottom-start",
+    placement: effectivePlacement,
   });
 
+  const normalizedQuery = normalizeSearchQuery(query);
+  const normalizedQueryNoSpace = normalizedQuery.replace(/\s+/g, "");
+
   const filteredOptions =
-    query === "" ? options : options?.filter((option) => option.query.toLowerCase().includes(query.toLowerCase()));
+    query === ""
+      ? options
+      : options?.filter((option) => {
+          if (!option.query) return false;
+          const normalizedOption = normalizeSearchQuery(option.query);
+          if (normalizedOption.includes(normalizedQuery)) return true;
+          if (
+            normalizedQueryNoSpace &&
+            normalizedOption.replace(/\s+/g, "").includes(normalizedQueryNoSpace)
+          ) {
+            return true;
+          }
+          return false;
+        });
 
   const comboboxProps: any = {
     value,
@@ -90,7 +124,7 @@ export function CustomSearchSelect(props: ICustomSearchSelectProps) {
       as="div"
       ref={dropdownRef}
       tabIndex={tabIndex}
-      className={cn("relative flex-shrink-0 text-left", className)}
+      className={cn("relative flex-shrink-0 text-start", className)}
       onKeyDown={handleKeyDown}
       {...comboboxProps}
     >

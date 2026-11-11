@@ -8,6 +8,7 @@ import React, { useState } from "react";
 import { observer } from "mobx-react";
 import { usePopper } from "react-popper";
 import { Popover, Transition } from "@headlessui/react";
+import { useTranslation } from "@plane/i18n";
 import { ChevronLeftIcon, ChevronRightIcon } from "@plane/propel/icons";
 //hooks
 // icons
@@ -19,6 +20,7 @@ import type { ICycleIssuesFilter } from "@/store/issue/cycle";
 import type { IModuleIssuesFilter } from "@/store/issue/module";
 import type { IProjectIssuesFilter } from "@/store/issue/project";
 import type { IProjectViewIssuesFilter } from "@/store/issue/project-views";
+import { getLocalizedMonth } from "../utils";
 // helpers
 
 interface Props {
@@ -27,6 +29,7 @@ interface Props {
 export const CalendarMonthsDropdown = observer(function CalendarMonthsDropdown(props: Props) {
   const { issuesFilterStore } = props;
 
+  const { t, currentLocale } = useTranslation();
   const issueCalendarView = useCalendarView();
 
   const calendarLayout = issuesFilterStore.issueFilters?.displayFilters?.calendar?.layout ?? "month";
@@ -61,16 +64,22 @@ export const CalendarMonthsDropdown = observer(function CalendarMonthsDropdown(p
     if (!firstDay || !lastDay) return "Week view";
 
     if (firstDay.getMonth() === lastDay.getMonth() && firstDay.getFullYear() === lastDay.getFullYear())
-      return `${MONTHS_LIST[firstDay.getMonth() + 1].title} ${firstDay.getFullYear()}`;
+      return `${getLocalizedMonth(firstDay.getMonth() + 1, currentLocale, false, t)} ${firstDay.getFullYear()}`;
 
     if (firstDay.getFullYear() !== lastDay.getFullYear()) {
-      return `${MONTHS_LIST[firstDay.getMonth() + 1].shortTitle} ${firstDay.getFullYear()} - ${
-        MONTHS_LIST[lastDay.getMonth() + 1].shortTitle
-      } ${lastDay.getFullYear()}`;
+      return `${getLocalizedMonth(firstDay.getMonth() + 1, currentLocale, true, t)} ${firstDay.getFullYear()} - ${getLocalizedMonth(
+        lastDay.getMonth() + 1,
+        currentLocale,
+        true,
+        t
+      )} ${lastDay.getFullYear()}`;
     } else
-      return `${MONTHS_LIST[firstDay.getMonth() + 1].shortTitle} - ${
-        MONTHS_LIST[lastDay.getMonth() + 1].shortTitle
-      } ${lastDay.getFullYear()}`;
+      return `${getLocalizedMonth(firstDay.getMonth() + 1, currentLocale, true, t)} - ${getLocalizedMonth(
+        lastDay.getMonth() + 1,
+        currentLocale,
+        true,
+        t
+      )} ${lastDay.getFullYear()}`;
   };
 
   const handleDateChange = (date: Date) => {
@@ -89,7 +98,7 @@ export const CalendarMonthsDropdown = observer(function CalendarMonthsDropdown(p
           disabled={calendarLayout === "week"}
         >
           {calendarLayout === "month"
-            ? `${MONTHS_LIST[activeMonthDate.getMonth() + 1].title} ${activeMonthDate.getFullYear()}`
+            ? `${getLocalizedMonth(activeMonthDate.getMonth() + 1, currentLocale, false, t)} ${activeMonthDate.getFullYear()}`
             : getWeekLayoutHeader()}
         </button>
       </Popover.Button>
@@ -118,7 +127,7 @@ export const CalendarMonthsDropdown = observer(function CalendarMonthsDropdown(p
                   handleDateChange(previousYear);
                 }}
               >
-                <ChevronLeftIcon height={14} width={14} />
+                <ChevronLeftIcon height={14} width={14} className="rtl:rotate-180" />
               </button>
               <span className="text-11">{activeMonthDate.getFullYear()}</span>
               <button
@@ -129,7 +138,7 @@ export const CalendarMonthsDropdown = observer(function CalendarMonthsDropdown(p
                   handleDateChange(nextYear);
                 }}
               >
-                <ChevronRightIcon height={14} width={14} />
+                <ChevronRightIcon height={14} width={14} className="rtl:rotate-180" />
               </button>
             </div>
             <div className="grid grid-cols-4 items-stretch justify-items-stretch gap-4 pt-3">
@@ -143,7 +152,7 @@ export const CalendarMonthsDropdown = observer(function CalendarMonthsDropdown(p
                     handleDateChange(newDate);
                   }}
                 >
-                  {month.shortTitle}
+                  {getLocalizedMonth(index + 1, currentLocale, true, t)}
                 </button>
               ))}
             </div>

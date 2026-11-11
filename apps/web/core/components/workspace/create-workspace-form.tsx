@@ -160,8 +160,8 @@ export const CreateWorkspaceForm = observer(function CreateWorkspaceForm(props: 
             {t("workspace_creation.form.url.label")}
             <span className="ml-0.5 text-danger-primary">*</span>
           </label>
-          <div className="flex w-full items-center rounded-md border border-subtle bg-layer-2 px-3">
-            <span className="text-12 whitespace-nowrap text-secondary">{window && window.location.host}/</span>
+          <div className="flex w-full items-center rounded-md border border-subtle bg-layer-2 px-3" dir="ltr">
+            <span className="text-12 whitespace-nowrap text-secondary font-mono">{window && window.location.host}/</span>
             <Controller
               control={control}
               name="slug"
@@ -176,6 +176,7 @@ export const CreateWorkspaceForm = observer(function CreateWorkspaceForm(props: 
                 <Input
                   id="workspaceUrl"
                   type="text"
+                  dir="ltr"
                   value={value.toLocaleLowerCase().trim().replace(/ /g, "-")}
                   onChange={(e) => {
                     const validation = validateSlug(e.target.value);
@@ -186,7 +187,7 @@ export const CreateWorkspaceForm = observer(function CreateWorkspaceForm(props: 
                   ref={ref}
                   hasError={Boolean(errors.slug)}
                   placeholder={t("workspace_creation.form.url.placeholder")}
-                  className="block w-full rounded-md border-none bg-transparent !px-0 py-2 text-12"
+                  className="block w-full rounded-md border-none bg-transparent !px-0 py-2 text-12 font-mono text-left"
                 />
               )}
             />

@@ -166,13 +166,13 @@ export const WorkspaceDetails = observer(function WorkspaceDetails() {
           </div>
           <div className="flex flex-col gap-1">
             <div className="mb:-my-5 text-h5-semibold leading-6">{watch("name")}</div>
-            <button type="button" onClick={handleCopyUrl} className="text-left text-body-xs-regular tracking-tight">{`${
+            <button type="button" onClick={handleCopyUrl} dir="ltr" className="text-left font-mono text-body-xs-regular tracking-tight">{`${
               typeof window !== "undefined" && window.location.origin.replace("http://", "").replace("https://", "")
             }/${currentWorkspace.slug}`}</button>
             {isAdmin && (
               <button
                 type="button"
-                className="flex items-center gap-1.5 text-left text-caption-sm-medium text-accent-primary"
+                className="flex items-center gap-1.5 text-start text-caption-sm-medium text-accent-primary"
                 onClick={() => setIsImageUploadModalOpen(true)}
               >
                 {workspaceLogo && workspaceLogo !== "" ? (
@@ -252,6 +252,7 @@ export const WorkspaceDetails = observer(function WorkspaceDetails() {
                     id="url"
                     name="url"
                     type="url"
+                    dir="ltr"
                     value={`${
                       typeof window !== "undefined" &&
                       window.location.origin.replace("http://", "").replace("https://", "")
@@ -259,7 +260,7 @@ export const WorkspaceDetails = observer(function WorkspaceDetails() {
                     onChange={onChange}
                     ref={ref}
                     hasError={Boolean(errors.url)}
-                    className="w-full cursor-not-allowed rounded-md !bg-layer-1"
+                    className="w-full cursor-not-allowed rounded-md !bg-layer-1 text-left font-mono"
                     disabled
                   />
                 )}

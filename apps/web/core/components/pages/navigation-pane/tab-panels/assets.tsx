@@ -74,7 +74,7 @@ const AssetItem = observer(function AssetItem(props: AssetItemProps) {
         className="group/asset-item relative flex h-12 items-center gap-2 rounded-sm border border-subtle pr-2 transition-colors hover:bg-layer-1"
       >
         <div
-          className="h-12 w-11 flex-shrink-0 rounded-l-sm bg-cover bg-center bg-no-repeat"
+          className="h-12 w-11 flex-shrink-0 rounded-s-sm bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: `url('${assetSrc}')`,
           }}

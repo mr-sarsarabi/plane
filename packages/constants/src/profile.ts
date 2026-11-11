@@ -87,6 +87,6 @@ export const START_OF_THE_WEEK_OPTIONS = [
   },
   {
     value: EStartOfTheWeek.SATURDAY,
-    label: "Saturday",
+    label: "Saturday (شنبه)",
   },
 ];

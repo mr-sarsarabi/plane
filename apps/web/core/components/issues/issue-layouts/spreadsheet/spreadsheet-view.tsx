@@ -110,7 +110,7 @@ export const SpreadsheetView = observer(function SpreadsheetView(props: Props) {
               />
             </div>
             <div className="border-t border-subtle">
-              <div className="sticky bottom-0 left-0 z-5">
+              <div className="sticky bottom-0 start-0 rtl:right-0 rtl:left-auto z-5">
                 {enableQuickCreateIssue && !disableIssueCreation && (
                   <QuickAddIssueRoot
                     layout={EIssueLayoutTypes.SPREADSHEET}

@@ -133,7 +133,7 @@ export const ProjectSettingLabelGroup = observer(function ProjectSettingLabelGro
                       leaveTo="transform opacity-0"
                     >
                       <Disclosure.Panel>
-                        <div className="ml-6">
+                        <div className="ms-6">
                           {labelChildren.map((child, index) => (
                             <div key={child.id} className={`group flex w-full items-center text-13`}>
                               <div className="w-full">

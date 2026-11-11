@@ -21,7 +21,20 @@
     "in_your_timezone": "In your timezone",
     "transfer_work_items": "Transfer {count} work items",
     "transfer": {
-      "no_cycles_available": "No other cycles available to transfer work items to."
+      "title": "Transfer work items",
+      "search_placeholder": "Search for a cycle...",
+      "no_cycles_available": "No other cycles available to transfer work items to.",
+      "no_current_cycle": "You don’t have any current cycle. Please create one to transfer the work items.",
+      "completed_cycles_not_editable": "Completed cycles are not editable.",
+      "fetch_error": "Unable to fetch cycle details",
+      "success": {
+        "title": "Success!",
+        "description": "Work items have been transferred successfully"
+      },
+      "failed": {
+        "title": "Error!",
+        "description": "Unable to transfer work items. Please try again."
+      }
     },
     "date_range": "Date range",
     "add_date": "Add date",
@@ -97,6 +110,33 @@
         },
         "error": {
           "already_exists": "You already have a cycle on the given dates, if you want to create a draft cycle, you can do that by removing both the dates."
+        }
+      },
+      "delete": {
+        "title": "Delete cycle",
+        "confirmation_prefix": "Are you sure you want to delete cycle \"",
+        "confirmation_suffix": "\"? All of the data related to the cycle will be permanently removed. This action cannot be undone.",
+        "success": {
+          "title": "Success!",
+          "description": "Cycle deleted successfully."
+        },
+        "failed": {
+          "title": "Warning!",
+          "description": "Something went wrong please try again later."
+        }
+      },
+      "archive": {
+        "title": "Archive cycle {name}",
+        "description": "Are you sure you want to archive the cycle? All your archives can be restored later.",
+        "button": "Archive",
+        "submitting": "Archiving",
+        "success": {
+          "title": "Archive success",
+          "description": "Your archives can be found in project archives."
+        },
+        "failed": {
+          "title": "Error!",
+          "description": "Cycle could not be archived. Please try again."
         }
       }
     },
@@ -222,6 +262,16 @@
     "archive_module": "Archive Module",
     "restore_module": "Restore Module",
     "delete_module": "Delete module",
+    "delete_confirmation": {
+      "prefix": "Are you sure you want to delete module-",
+      "suffix": "All of the data related to the module will be permanently removed. This action cannot be undone."
+    },
+    "archive_confirmation": {
+      "description": "Are you sure you want to archive the module? All your archives can be restored later.",
+      "success_title": "Archive success",
+      "success_message": "Your archives can be found in project archives.",
+      "error_message": "Module could not be archived. Please try again."
+    },
     "empty_state": {
       "general": {
         "title": "Map your project milestones to Modules and track aggregated work easily.",

@@ -129,12 +129,12 @@ export const IssueMainContent = observer(function IssueMainContent(props: Props)
           issueOperations={issueOperations}
           disabled={isArchived || !isEditable}
           value={issue.name}
-          containerClassName="-ml-3"
+          containerClassName="-ms-3"
         />
 
         <DescriptionInput
           issueSequenceId={issue.sequence_id}
-          containerClassName="-ml-6 border-none p-0! pl-6!"
+          containerClassName="-ms-6 border-none p-0! ps-6!"
           disabled={isArchived || !isEditable}
           editorRef={editorRef}
           entityId={issue.id}

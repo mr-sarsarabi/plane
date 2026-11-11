@@ -111,13 +111,16 @@ export const SetPasswordForm = observer(function SetPasswordForm() {
 
   return (
     <FormContainer>
-      <AuthFormHeader title="Set password" description="Create a new password." />
+      <AuthFormHeader
+        title={t("auth.set_password.title")}
+        description={t("auth.set_password.description")}
+      />
       <form className="space-y-4" onSubmit={(e) => handleSubmit(e)}>
         <div className="space-y-1">
           <label className="text-13 font-medium text-tertiary" htmlFor="email">
             {t("auth.common.email.label")}
           </label>
-          <div className="relative flex items-center rounded-md bg-surface-1">
+          <div dir="ltr" className="relative flex items-center rounded-md bg-surface-1">
             <Input
               id="email"
               name="email"
@@ -125,7 +128,7 @@ export const SetPasswordForm = observer(function SetPasswordForm() {
               value={user?.email}
               //hasError={Boolean(errors.email)}
               placeholder={t("auth.common.email.placeholder")}
-              className="h-10 w-full cursor-not-allowed border border-strong !bg-surface-1 pr-12 text-placeholder"
+              className="h-10 w-full cursor-not-allowed border border-strong !bg-surface-1 pe-12 text-placeholder"
               autoComplete="off"
               disabled
             />
@@ -135,7 +138,7 @@ export const SetPasswordForm = observer(function SetPasswordForm() {
           <label className="text-13 font-medium text-tertiary" htmlFor="password">
             {t("auth.common.password.label")}
           </label>
-          <div className="relative flex items-center rounded-md bg-surface-1">
+          <div dir="ltr" className="relative flex items-center rounded-md bg-surface-1">
             <Input
               type={showPassword.password ? "text" : "password"}
               name="password"
@@ -143,7 +146,7 @@ export const SetPasswordForm = observer(function SetPasswordForm() {
               onChange={(e) => handleFormChange("password", e.target.value)}
               //hasError={Boolean(errors.password)}
               placeholder={t("auth.common.password.placeholder")}
-              className="h-10 w-full border border-strong !bg-surface-1 pr-12 placeholder:text-placeholder"
+              className="h-10 w-full border border-strong !bg-surface-1 pe-12 placeholder:text-placeholder"
               minLength={8}
               onFocus={() => setIsPasswordInputFocused(true)}
               onBlur={() => setIsPasswordInputFocused(false)}
@@ -152,12 +155,12 @@ export const SetPasswordForm = observer(function SetPasswordForm() {
             />
             {showPassword.password ? (
               <EyeOff
-                className="absolute right-3 h-5 w-5 stroke-placeholder hover:cursor-pointer"
+                className="absolute end-3 h-5 w-5 stroke-placeholder hover:cursor-pointer"
                 onClick={() => handleShowPassword("password")}
               />
             ) : (
               <Eye
-                className="absolute right-3 h-5 w-5 stroke-placeholder hover:cursor-pointer"
+                className="absolute end-3 h-5 w-5 stroke-placeholder hover:cursor-pointer"
                 onClick={() => handleShowPassword("password")}
               />
             )}
@@ -168,26 +171,26 @@ export const SetPasswordForm = observer(function SetPasswordForm() {
           <label className="text-13 font-medium text-tertiary" htmlFor="confirm_password">
             {t("auth.common.password.confirm_password.label")}
           </label>
-          <div className="relative flex items-center rounded-md bg-surface-1">
+          <div dir="ltr" className="relative flex items-center rounded-md bg-surface-1">
             <Input
               type={showPassword.retypePassword ? "text" : "password"}
               name="confirm_password"
               value={passwordFormData.confirm_password}
               onChange={(e) => handleFormChange("confirm_password", e.target.value)}
               placeholder={t("auth.common.password.confirm_password.placeholder")}
-              className="h-10 w-full border border-strong !bg-surface-1 pr-12 placeholder:text-placeholder"
+              className="h-10 w-full border border-strong !bg-surface-1 pe-12 placeholder:text-placeholder"
               onFocus={() => setIsRetryPasswordInputFocused(true)}
               onBlur={() => setIsRetryPasswordInputFocused(false)}
               autoComplete="new-password"
             />
             {showPassword.retypePassword ? (
               <EyeOff
-                className="absolute right-3 h-5 w-5 stroke-placeholder hover:cursor-pointer"
+                className="absolute end-3 h-5 w-5 stroke-placeholder hover:cursor-pointer"
                 onClick={() => handleShowPassword("retypePassword")}
               />
             ) : (
               <Eye
-                className="absolute right-3 h-5 w-5 stroke-placeholder hover:cursor-pointer"
+                className="absolute end-3 h-5 w-5 stroke-placeholder hover:cursor-pointer"
                 onClick={() => handleShowPassword("retypePassword")}
               />
             )}

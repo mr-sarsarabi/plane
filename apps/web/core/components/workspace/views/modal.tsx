@@ -7,6 +7,7 @@
 import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 // plane imports
+import { useTranslation } from "@plane/i18n";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
 import type { IWorkspaceView } from "@plane/types";
 import { EIssuesStoreType } from "@plane/types";
@@ -27,6 +28,7 @@ type Props = {
 
 export const CreateUpdateWorkspaceViewModal = observer(function CreateUpdateWorkspaceViewModal(props: Props) {
   const { isOpen, onClose, data, preLoadedData } = props;
+  const { t } = useTranslation();
   // router
   const router = useAppRouter();
   const { workspaceSlug: routerWorkspaceSlug } = useParams();
@@ -52,16 +54,16 @@ export const CreateUpdateWorkspaceViewModal = observer(function CreateUpdateWork
       const res = await createGlobalView(workspaceSlug, payloadData);
       setToast({
         type: TOAST_TYPE.SUCCESS,
-        title: "Success!",
-        message: "View created successfully.",
+        title: t("toast.success", "Success!"),
+        message: t("view.create.success", "View created successfully."),
       });
       router.push(`/${workspaceSlug}/workspace-views/${res.id}`);
       handleClose();
     } catch (_error) {
       setToast({
         type: TOAST_TYPE.ERROR,
-        title: "Error!",
-        message: "View could not be created. Please try again.",
+        title: t("toast.error", "Error!"),
+        message: t("view.create.error", "View could not be created. Please try again."),
       });
     }
   };
@@ -81,16 +83,16 @@ export const CreateUpdateWorkspaceViewModal = observer(function CreateUpdateWork
         resetExpression(EIssuesStoreType.GLOBAL, data.id, res.rich_filters);
         setToast({
           type: TOAST_TYPE.SUCCESS,
-          title: "Success!",
-          message: "View updated successfully.",
+          title: t("toast.success", "Success!"),
+          message: t("view.update.success", "View updated successfully."),
         });
         handleClose();
       }
     } catch (_error) {
       setToast({
         type: TOAST_TYPE.ERROR,
-        title: "Error!",
-        message: "View could not be updated. Please try again.",
+        title: t("toast.error", "Error!"),
+        message: t("view.update.error", "View could not be updated. Please try again."),
       });
     }
   };

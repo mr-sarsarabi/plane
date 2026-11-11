@@ -682,10 +682,15 @@ export function getApproximateCardHeight(displayProperties: IIssueDisplayPropert
  */
 export const getBlockViewDetails = (
   block: { start_date: string | undefined | null; target_date: string | undefined | null } | undefined | null,
-  backgroundColor: string
+  backgroundColor: string,
+  t?: (key: string, values?: any) => string
 ) => {
   const isBlockVisibleOnChart = block?.start_date || block?.target_date;
   const isBlockComplete = block?.start_date && block?.target_date;
+
+  const fromPrefix = t ? t("common.from_prefix", { defaultValue: "From" }) : "From";
+  const tillPrefix = t ? t("common.till_prefix", { defaultValue: "Till" }) : "Till";
+  const toWord = t ? t("common.to", { defaultValue: "to" }) : "to";
 
   let message;
   const blockStyle: CSSProperties = {
@@ -694,14 +699,14 @@ export const getBlockViewDetails = (
 
   if (isBlockVisibleOnChart && !isBlockComplete) {
     if (block?.start_date) {
-      message = `From ${renderFormattedDate(block.start_date)}`;
+      message = `${fromPrefix} ${renderFormattedDate(block.start_date)}`;
       blockStyle.maskImage = `linear-gradient(to right, ${backgroundColor} 50%, transparent 95%)`;
     } else if (block?.target_date) {
-      message = `Till ${renderFormattedDate(block.target_date)}`;
+      message = `${tillPrefix} ${renderFormattedDate(block.target_date)}`;
       blockStyle.maskImage = `linear-gradient(to left, ${backgroundColor} 50%, transparent 95%)`;
     }
   } else if (isBlockComplete) {
-    message = `${renderFormattedDate(block?.start_date)} to ${renderFormattedDate(block?.target_date)}`;
+    message = `${renderFormattedDate(block?.start_date)} ${toWord} ${renderFormattedDate(block?.target_date)}`;
   }
 
   return {

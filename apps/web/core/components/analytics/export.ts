@@ -13,6 +13,7 @@ export const csvConfig = (workspaceSlug: string) =>
     filename: `${workspaceSlug}-analytics`,
     decimalSeparator: ".",
     useKeysAsHeaders: true,
+    useBom: true,
   });
 
 export const exportCSV = <T>(rows: Row<T>[], columns: ColumnDef<T>[], workspaceSlug: string) => {

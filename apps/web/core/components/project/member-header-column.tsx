@@ -49,7 +49,7 @@ export const MemberHeaderColumn = observer(function MemberHeaderColumn(props: Pr
       customButton={
         <div className="flex w-full cursor-pointer items-center justify-between gap-1.5 py-2 text-13 text-secondary hover:text-primary">
           <span>{t(propertyDetails.i18n_title)}</span>
-          <div className="ml-3 flex">
+          <div className="ms-3 flex">
             {(activeSortingProperty === propertyDetails.ascendingOrderKey ||
               activeSortingProperty === propertyDetails.descendingOrderKey) && (
               <div className="flex h-3.5 w-3.5 items-center justify-center rounded-full">
@@ -80,7 +80,7 @@ export const MemberHeaderColumn = observer(function MemberHeaderColumn(props: Pr
               <div className="flex items-center gap-2">
                 <ArrowDownWideNarrow className="h-3 w-3 stroke-[1.5]" />
                 <span>{propertyDetails.ascendingOrderTitle}</span>
-                <MoveRight className="h-3 w-3" />
+                <MoveRight className="h-3 w-3 rtl:rotate-180" />
                 <span>{propertyDetails.descendingOrderTitle}</span>
               </div>
               {activeSortingProperty === propertyDetails.ascendingOrderKey && <CheckIcon className="h-3 w-3" />}
@@ -98,7 +98,7 @@ export const MemberHeaderColumn = observer(function MemberHeaderColumn(props: Pr
               <div className="flex items-center gap-2">
                 <ArrowUpNarrowWide className="h-3 w-3 stroke-[1.5]" />
                 <span>{propertyDetails.descendingOrderTitle}</span>
-                <MoveRight className="h-3 w-3" />
+                <MoveRight className="h-3 w-3 rtl:rotate-180" />
                 <span>{propertyDetails.ascendingOrderTitle}</span>
               </div>
               {activeSortingProperty === propertyDetails.descendingOrderKey && <CheckIcon className="h-3 w-3" />}

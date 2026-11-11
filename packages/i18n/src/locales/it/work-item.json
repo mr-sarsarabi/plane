@@ -266,6 +266,11 @@
       "click_to_downvote": "Clicca per votare contro",
       "click_to_view_upvotes": "Clicca per vedere i voti a favore",
       "click_to_view_downvotes": "Clicca per vedere i voti contro"
+    },
+    "drag_drop": {
+      "cannot_move": "Cannot move work item",
+      "not_allowed": "You are not allowed to move this work item",
+      "grouping_disabled": "Drag and drop is disabled for the current grouping"
     }
   },
   "sub_work_item": {

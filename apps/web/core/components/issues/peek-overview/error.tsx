@@ -27,7 +27,7 @@ export function IssuePeekOverviewError(props: TIssuePeekOverviewError) {
       <div className="flex flex-shrink-0 justify-start">
         <Tooltip tooltipContent="Close the peek view" isMobile={isMobile}>
           <button onClick={removeRoutePeekId} className="m-5 h-5 w-5">
-            <MoveRight className="h-4 w-4 text-tertiary hover:text-secondary" />
+            <MoveRight className="h-4 w-4 text-tertiary hover:text-secondary rtl:rotate-180" />
           </button>
         </Tooltip>
       </div>

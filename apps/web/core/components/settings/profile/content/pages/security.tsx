@@ -138,7 +138,7 @@ export const SecurityProfileSettings = observer(function SecurityProfileSettings
           {oldPasswordRequired && (
             <div className="flex flex-col gap-y-2">
               <h4 className="text-13">{t("auth.common.password.current_password.label")}</h4>
-              <div className="relative flex items-center rounded-md">
+              <div dir="ltr" className="relative flex items-center rounded-md">
                 <Controller
                   control={control}
                   name="old_password"
@@ -152,7 +152,7 @@ export const SecurityProfileSettings = observer(function SecurityProfileSettings
                       value={value}
                       onChange={onChange}
                       placeholder={t("old_password")}
-                      className="w-full"
+                      className="w-full pe-12 text-start font-mono"
                       hasError={Boolean(errors.old_password)}
                       autoComplete="current-password"
                     />
@@ -160,12 +160,12 @@ export const SecurityProfileSettings = observer(function SecurityProfileSettings
                 />
                 {showPassword?.oldPassword ? (
                   <EyeOff
-                    className="absolute right-3 h-5 w-5 stroke-placeholder hover:cursor-pointer"
+                    className="absolute end-3 h-5 w-5 stroke-placeholder hover:cursor-pointer"
                     onClick={() => handleShowPassword("oldPassword")}
                   />
                 ) : (
                   <Eye
-                    className="absolute right-3 h-5 w-5 stroke-placeholder hover:cursor-pointer"
+                    className="absolute end-3 h-5 w-5 stroke-placeholder hover:cursor-pointer"
                     onClick={() => handleShowPassword("oldPassword")}
                   />
                 )}
@@ -178,7 +178,7 @@ export const SecurityProfileSettings = observer(function SecurityProfileSettings
           <div className="grid gap-x-4 gap-y-7 sm:grid-cols-2">
             <div className="flex flex-col gap-y-2">
               <h4 className="text-13">{t("auth.common.password.new_password.label")}</h4>
-              <div className="relative flex items-center rounded-md">
+              <div dir="ltr" className="relative flex items-center rounded-md">
                 <Controller
                   control={control}
                   name="new_password"
@@ -192,7 +192,7 @@ export const SecurityProfileSettings = observer(function SecurityProfileSettings
                       value={value}
                       placeholder={t("auth.common.password.new_password.placeholder")}
                       onChange={onChange}
-                      className="w-full"
+                      className="w-full pe-12 text-start font-mono"
                       hasError={Boolean(errors.new_password)}
                       onFocus={() => setIsPasswordInputFocused(true)}
                       onBlur={() => setIsPasswordInputFocused(false)}
@@ -202,12 +202,12 @@ export const SecurityProfileSettings = observer(function SecurityProfileSettings
                 />
                 {showPassword?.password ? (
                   <EyeOff
-                    className="absolute right-3 h-5 w-5 stroke-placeholder hover:cursor-pointer"
+                    className="absolute end-3 h-5 w-5 stroke-placeholder hover:cursor-pointer"
                     onClick={() => handleShowPassword("password")}
                   />
                 ) : (
                   <Eye
-                    className="absolute right-3 h-5 w-5 stroke-placeholder hover:cursor-pointer"
+                    className="absolute end-3 h-5 w-5 stroke-placeholder hover:cursor-pointer"
                     onClick={() => handleShowPassword("password")}
                   />
                 )}
@@ -224,7 +224,7 @@ export const SecurityProfileSettings = observer(function SecurityProfileSettings
             </div>
             <div className="flex flex-col gap-y-2">
               <h4 className="text-13">{t("auth.common.password.confirm_password.label")}</h4>
-              <div className="relative flex items-center rounded-md">
+              <div dir="ltr" className="relative flex items-center rounded-md">
                 <Controller
                   control={control}
                   name="confirm_password"
@@ -235,10 +235,10 @@ export const SecurityProfileSettings = observer(function SecurityProfileSettings
                     <Input
                       id="confirm_password"
                       type={showPassword?.confirmPassword ? "text" : "password"}
-                      placeholder={t("auth.common.password.confirm_password.placeholder")}
                       value={value}
+                      placeholder={t("auth.common.password.confirm_password.placeholder")}
                       onChange={onChange}
-                      className="w-full"
+                      className="w-full pe-12 text-start font-mono"
                       hasError={Boolean(errors.confirm_password)}
                       onFocus={() => setIsRetryPasswordInputFocused(true)}
                       onBlur={() => setIsRetryPasswordInputFocused(false)}
@@ -248,12 +248,12 @@ export const SecurityProfileSettings = observer(function SecurityProfileSettings
                 />
                 {showPassword?.confirmPassword ? (
                   <EyeOff
-                    className="absolute right-3 h-5 w-5 stroke-placeholder hover:cursor-pointer"
+                    className="absolute end-3 h-5 w-5 stroke-placeholder hover:cursor-pointer"
                     onClick={() => handleShowPassword("confirmPassword")}
                   />
                 ) : (
                   <Eye
-                    className="absolute right-3 h-5 w-5 stroke-placeholder hover:cursor-pointer"
+                    className="absolute end-3 h-5 w-5 stroke-placeholder hover:cursor-pointer"
                     onClick={() => handleShowPassword("confirmPassword")}
                   />
                 )}

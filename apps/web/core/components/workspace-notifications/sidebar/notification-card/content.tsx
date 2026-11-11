@@ -6,6 +6,7 @@
 
 import type { ReactNode } from "react";
 // plane imports
+import { useTranslation } from "@plane/i18n";
 import type { TNotification } from "@plane/types";
 import {
   convertMinutesToHoursMinutesString,
@@ -36,7 +37,11 @@ export type TNotificationContentDetails = {
   showConnector?: boolean;
 };
 
-export type TNotificationContentHandler = (data: TNotificationFieldData) => TNotificationContentDetails | null;
+export type TNotificationContentHandler = (
+  data: TNotificationFieldData,
+  renderCommentBox?: boolean,
+  t?: (key: string, fallback?: string) => string
+) => TNotificationContentDetails | null;
 
 export type TNotificationContentMap = {
   [key: string]: TNotificationContentHandler;
@@ -44,63 +49,81 @@ export type TNotificationContentMap = {
 
 // Base notification content map for core fields
 export const BASE_NOTIFICATION_CONTENT_MAP: TNotificationContentMap = {
-  duplicate: ({ verb }) => ({
+  duplicate: ({ verb }, _renderCommentBox, t) => ({
     action:
       verb === "created"
-        ? "marked that this work item is a duplicate of"
-        : "marked that this work item is not a duplicate",
+        ? (t ? t("notification_events.duplicate_created", "marked that this work item is a duplicate of") : "marked that this work item is a duplicate of")
+        : (t ? t("notification_events.duplicate_removed", "marked that this work item is not a duplicate") : "marked that this work item is not a duplicate"),
     value: null,
     showConnector: false,
   }),
-  assignees: ({ newValue, oldValue }) => ({
-    action: newValue !== "" ? "added assignee" : "removed assignee",
+  assignees: ({ newValue, oldValue }, _renderCommentBox, t) => ({
+    action:
+      newValue !== ""
+        ? (t ? t("notification_events.added_assignee", "added assignee") : "added assignee")
+        : (t ? t("notification_events.removed_assignee", "removed assignee") : "removed assignee"),
     value: newValue !== "" ? newValue : oldValue,
     showConnector: false,
   }),
-  start_date: ({ newValue }) => ({
-    action: newValue !== "" ? "set start date" : "removed the start date",
+  start_date: ({ newValue }, _renderCommentBox, t) => ({
+    action:
+      newValue !== ""
+        ? (t ? t("notification_events.set_start_date", "set start date") : "set start date")
+        : (t ? t("notification_events.removed_start_date", "removed the start date") : "removed the start date"),
     value: renderFormattedDate(newValue),
     showConnector: false,
   }),
-  target_date: ({ newValue }) => ({
-    action: newValue !== "" ? "set due date" : "removed the due date",
+  target_date: ({ newValue }, _renderCommentBox, t) => ({
+    action:
+      newValue !== ""
+        ? (t ? t("notification_events.set_due_date", "set due date") : "set due date")
+        : (t ? t("notification_events.removed_due_date", "removed the due date") : "removed the due date"),
     value: renderFormattedDate(newValue),
     showConnector: false,
   }),
-  labels: ({ newValue, oldValue }) => ({
-    action: newValue !== "" ? "added label" : "removed label",
+  labels: ({ newValue, oldValue }, _renderCommentBox, t) => ({
+    action:
+      newValue !== ""
+        ? (t ? t("notification_events.added_label", "added label") : "added label")
+        : (t ? t("notification_events.removed_label", "removed label") : "removed label"),
     value: newValue !== "" ? newValue : oldValue,
     showConnector: false,
   }),
-  parent: ({ newValue, oldValue }) => ({
-    action: newValue !== "" ? "added parent" : "removed parent",
+  parent: ({ newValue, oldValue }, _renderCommentBox, t) => ({
+    action:
+      newValue !== ""
+        ? (t ? t("notification_events.added_parent", "added parent") : "added parent")
+        : (t ? t("notification_events.removed_parent", "removed parent") : "removed parent"),
     value: newValue !== "" ? newValue : oldValue,
     showConnector: false,
   }),
-  relates_to: () => ({
-    action: "marked that this work item is related to",
+  relates_to: (_data, _renderCommentBox, t) => ({
+    action: t ? t("notification_events.relates_to", "marked that this work item is related to") : "marked that this work item is related to",
     value: null,
     showConnector: true,
   }),
-  comment: ({ newValue }, renderCommentBox?: boolean) => ({
-    action: "commented",
+  comment: ({ newValue }, renderCommentBox, t) => ({
+    action: t ? t("notification_events.commented", "commented") : "commented",
     value: renderCommentBox ? null : sanitizeCommentForNotification(newValue),
     showConnector: false,
   }),
-  archived_at: ({ newValue }) => ({
-    action: newValue === "restore" ? "restored the work item" : "archived the work item",
+  archived_at: ({ newValue }, _renderCommentBox, t) => ({
+    action:
+      newValue === "restore"
+        ? (t ? t("notification_events.restored_work_item", "restored the work item") : "restored the work item")
+        : (t ? t("notification_events.archived_work_item", "archived the work item") : "archived the work item"),
     value: null,
     showConnector: false,
   }),
-  None: () => ({
+  None: (_data, _renderCommentBox, t) => ({
     action: null,
-    value: "the work item and assigned it to you.",
+    value: t ? t("notification_events.none_value", "the work item and assigned it to you.") : "the work item and assigned it to you.",
     showConnector: false,
   }),
   // Fields below only define value - action falls through to default handler
-  attachment: () => ({
+  attachment: (_data, _renderCommentBox, t) => ({
     action: null,
-    value: "the work item",
+    value: t ? t("notification_events.attachment_value", "the work item") : "the work item",
     showConnector: true,
   }),
   description: ({ newValue }) => ({
@@ -119,7 +142,8 @@ export const BASE_NOTIFICATION_CONTENT_MAP: TNotificationContentMap = {
 // Helper to get content details from maps
 const getNotificationContentDetails = (
   fieldData: TNotificationFieldData,
-  renderCommentBox?: boolean
+  renderCommentBox?: boolean,
+  t?: (key: string, fallback?: string) => string
 ): TNotificationContentDetails | null => {
   const { field } = fieldData;
   if (!field) return null;
@@ -127,14 +151,7 @@ const getNotificationContentDetails = (
   // Check base map first
   const baseHandler = BASE_NOTIFICATION_CONTENT_MAP[field];
   if (baseHandler) {
-    // Special case for comment field that needs renderCommentBox
-    if (field === "comment") {
-      return (baseHandler as (data: TNotificationFieldData, renderCommentBox?: boolean) => TNotificationContentDetails)(
-        fieldData,
-        renderCommentBox
-      );
-    }
-    return baseHandler(fieldData);
+    return baseHandler(fieldData, renderCommentBox, t);
   }
 
   // Check additional map from plane-web (EE extensions)
@@ -159,6 +176,7 @@ export function NotificationContent({
   projectId: string;
   renderCommentBox?: boolean;
 }) {
+  const { t } = useTranslation();
   const { data, triggered_by_details: triggeredBy } = notification;
   const notificationField = data?.issue_activity.field;
   const newValue = data?.issue_activity.new_value;
@@ -179,14 +197,19 @@ export function NotificationContent({
   );
 
   // Get content details from map
-  const contentDetails = getNotificationContentDetails(fieldData, renderCommentBox);
+  const contentDetails = getNotificationContentDetails(fieldData, renderCommentBox, t);
 
   // Render action - use map value if defined, otherwise fall through to default handler
   // Note: undefined = fall through to default, null = explicitly no action text
   const renderAction = (): ReactNode => {
     if (!notificationField) return "";
     // Check if action is explicitly defined in map (including null)
-    if (contentDetails && "action" in contentDetails) return contentDetails.action;
+    if (contentDetails && "action" in contentDetails) {
+      if (typeof contentDetails.action === "string") {
+        return t(contentDetails.action, contentDetails.action);
+      }
+      return contentDetails.action;
+    }
     // Fallback to default action handler for fields not in map or without action defined
     return renderAdditionalAction(notificationField, verb);
   };
@@ -194,7 +217,12 @@ export function NotificationContent({
   // Render value - use map value if defined, otherwise fall through to default handler
   const renderValue = (): ReactNode => {
     // Check if value is explicitly defined in map
-    if (contentDetails && "value" in contentDetails) return contentDetails.value;
+    if (contentDetails && "value" in contentDetails) {
+      if (typeof contentDetails.value === "string") {
+        return t(contentDetails.value, contentDetails.value);
+      }
+      return contentDetails.value;
+    }
     // Fallback to default value handler for fields not in map or without value defined
     return renderAdditionalValue(notificationField, newValue, oldValue);
   };
@@ -209,10 +237,10 @@ export function NotificationContent({
       <span className="text-tertiary">{renderAction()} </span>
       {verb !== "deleted" && (
         <>
-          {showConnector && <span className="text-tertiary">to </span>}
+          {showConnector && <span className="text-tertiary">{t("notification_events.to", "to")} </span>}
           <span className="font-medium text-primary">{renderValue()}</span>
           {notificationField === "comment" && renderCommentBox && (
-            <div className="origin-left scale-75">
+            <div className="origin-left rtl:origin-right scale-75">
               <LiteTextEditor
                 editable={false}
                 id=""

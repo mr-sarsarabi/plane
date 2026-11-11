@@ -8,6 +8,7 @@ import { useState } from "react";
 import { observer } from "mobx-react";
 // ui
 import { useParams } from "next/navigation";
+import { useTranslation } from "@plane/i18n";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
 import { AlertModalCore } from "@plane/ui";
 import { getPageName } from "@plane/utils";
@@ -28,6 +29,8 @@ type TConfirmPageDeletionProps = {
 
 export const DeletePageModal = observer(function DeletePageModal(props: TConfirmPageDeletionProps) {
   const { isOpen, onClose, page, storeType } = props;
+  // translation
+  const { t } = useTranslation();
   // states
   const [isDeleting, setIsDeleting] = useState(false);
   // store hooks
@@ -52,8 +55,8 @@ export const DeletePageModal = observer(function DeletePageModal(props: TConfirm
         handleClose();
         setToast({
           type: TOAST_TYPE.SUCCESS,
-          title: "Success!",
-          message: "Page deleted successfully.",
+          title: t("page_actions.delete_modal.toasts.success_title"),
+          message: t("page_actions.delete_modal.toasts.success_message"),
         });
 
         if (routePageId) {
@@ -63,8 +66,8 @@ export const DeletePageModal = observer(function DeletePageModal(props: TConfirm
       .catch(() => {
         setToast({
           type: TOAST_TYPE.ERROR,
-          title: "Error!",
-          message: "Page could not be deleted. Please try again.",
+          title: t("page_actions.delete_modal.toasts.error_title"),
+          message: t("page_actions.delete_modal.toasts.error_message"),
         });
       });
 
@@ -79,14 +82,19 @@ export const DeletePageModal = observer(function DeletePageModal(props: TConfirm
       handleSubmit={handleDelete}
       isSubmitting={isDeleting}
       isOpen={isOpen}
-      title="Delete page"
+      title={t("page_actions.delete_modal.title")}
       content={
         <>
-          Are you sure you want to delete page-{" "}
-          <span className="font-medium break-words break-all text-primary">{getPageName(name)}</span> ? The Page will be
-          deleted permanently. This action cannot be undone.
+          {t("page_actions.delete_modal.content_prefix")}
+          <span className="font-medium break-words break-all text-primary">{getPageName(name)}</span>
+          {t("page_actions.delete_modal.content_suffix")}
         </>
       }
+      primaryButtonText={{
+        loading: t("page_actions.delete_modal.deleting"),
+        default: t("page_actions.delete_modal.delete"),
+      }}
+      secondaryButtonText={t("page_actions.delete_modal.cancel")}
     />
   );
 });

@@ -180,7 +180,7 @@ function ComboboxOptions({
           <div className="flex flex-col gap-1">
             {showSearch && (
               <div className="relative">
-                <SearchIcon className="absolute top-1/2 left-2 h-4 w-4 -translate-y-1/2 text-placeholder" />
+                <SearchIcon className="absolute top-1/2 start-2 h-4 w-4 -translate-y-1/2 text-placeholder" />
                 <input
                   type="text"
                   placeholder={searchPlaceholder}
@@ -188,7 +188,7 @@ function ComboboxOptions({
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onKeyDown={onSearchQueryKeyDown}
                   className={cn(
-                    "w-full rounded-sm border border-subtle bg-surface-2 py-1.5 pr-2 pl-8 text-13 outline-none placeholder:text-placeholder",
+                    "w-full rounded-sm border border-subtle bg-surface-2 py-1.5 pe-2 ps-8 text-13 outline-none placeholder:text-placeholder",
                     inputClassName
                   )}
                 />

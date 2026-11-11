@@ -161,7 +161,7 @@ export const IssuePeekOverviewHeader = observer(function IssuePeekOverviewHeader
       <div className="flex items-center gap-4">
         <Tooltip tooltipContent={t("common.close_peek_view")} isMobile={isMobile}>
           <button onClick={removeRoutePeekId}>
-            <MoveRight className="h-4 w-4 text-tertiary hover:text-secondary" />
+            <MoveRight className="h-4 w-4 text-tertiary hover:text-secondary rtl:rotate-180" />
           </button>
         </Tooltip>
 

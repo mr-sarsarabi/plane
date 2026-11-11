@@ -80,7 +80,7 @@ export const StickyActionBar = observer(function StickyActionBar() {
                   stickyId={newSticky ? activeStickyId : recentStickyId || ""}
                 />
                 <div
-                  className="absolute top-0 right-0 h-full w-full"
+                  className="absolute top-0 end-0 h-full w-full"
                   style={{
                     background: `linear-gradient(to top, ${recentStickyBackgroundColor}, transparent)`,
                   }}
@@ -127,7 +127,7 @@ export const StickyActionBar = observer(function StickyActionBar() {
 
       <div
         className={cn(
-          "absolute right-0 bottom-16 z-[20]",
+          "absolute end-0 bottom-16 z-[20]",
           "transform transition-all duration-300 ease-in-out",
           newSticky || showRecentSticky ? "min-h-[300px] translate-y-[0%]" : "h-0 translate-y-[100%]"
         )}

@@ -116,9 +116,19 @@ export const DateRangeDropdown = observer(function DateRangeDropdown(props: Prop
   // popper-js refs
   const [referenceElement, setReferenceElement] = useState<HTMLButtonElement | null>(null);
   const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(null);
+
+  const isRTL = typeof document !== "undefined" && (document.documentElement.dir === "rtl" || document.dir === "rtl");
+  const resolvedPlacement = placement
+    ? isRTL && placement === "bottom-start"
+      ? "bottom-end"
+      : placement
+    : isRTL
+      ? "bottom-end"
+      : "bottom-start";
+
   // popper-js init
   const { styles, attributes } = usePopper(referenceElement, popperElement, {
-    placement: placement ?? "bottom-start",
+    placement: resolvedPlacement,
     modifiers: [
       {
         name: "preventOverflow",

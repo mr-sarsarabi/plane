@@ -168,17 +168,17 @@ export function FavoriteFolder(props: Props) {
             >
               {/* draggable indicator */}
 
-              <div className="absolute left-0 hidden h-3 w-3 flex-shrink-0 cursor-pointer items-center justify-center rounded-xs bg-surface-2 text-secondary transition-colors group-hover:flex hover:text-primary">
+              <div className="absolute start-0 hidden h-3 w-3 flex-shrink-0 cursor-pointer items-center justify-center rounded-xs bg-surface-2 text-secondary transition-colors group-hover:flex hover:text-primary">
                 <GripVertical className="h-3 w-3" />
               </div>
 
               <>
-                <Tooltip tooltipContent={`${favorite.name}`} position="right" className="ml-8" isMobile={isMobile}>
+                <Tooltip tooltipContent={`${favorite.name}`} position="right" className="ms-8" isMobile={isMobile}>
                   <div className="flex flex-grow truncate">
                     <Disclosure.Button
                       as="button"
                       type="button"
-                      className="flex w-full flex-grow items-center gap-1.5 text-left select-none"
+                      className="flex w-full flex-grow items-center gap-1.5 text-start select-none"
                     >
                       <Tooltip
                         isMobile={isMobile}
@@ -191,7 +191,7 @@ export function FavoriteFolder(props: Props) {
                         <button
                           type="button"
                           className={cn(
-                            "absolute top-1/2 -left-3 hidden -translate-y-1/2 cursor-grab items-center justify-center rounded-sm text-placeholder group-hover/project-item:flex",
+                            "absolute top-1/2 -start-3 hidden -translate-y-1/2 cursor-grab items-center justify-center rounded-sm text-placeholder group-hover/project-item:flex",
                             {
                               "cursor-not-allowed opacity-60": favorite.sort_order === null,
                               "cursor-grabbing": isDragging,

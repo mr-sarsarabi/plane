@@ -148,11 +148,11 @@ export function ExistingIssuesListModal(props: Props) {
       >
         <div className="relative m-1">
           <SearchIcon
-            className="text-opacity-40 pointer-events-none absolute top-3.5 left-4 h-5 w-5 text-primary"
+            className="text-opacity-40 pointer-events-none absolute top-3.5 start-4 h-5 w-5 text-primary"
             aria-hidden="true"
           />
           <Combobox.Input
-            className="h-12 w-full border-0 bg-transparent pr-4 pl-11 text-13 text-primary outline-none placeholder:text-placeholder focus:ring-0"
+            className="h-12 w-full border-0 bg-transparent pe-4 ps-11 text-13 text-primary outline-none placeholder:text-placeholder focus:ring-0"
             placeholder={t("common.search.placeholder")}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}

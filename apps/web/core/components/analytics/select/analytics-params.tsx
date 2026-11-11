@@ -11,6 +11,7 @@ import { Controller } from "react-hook-form";
 import { SlidersHorizontal } from "lucide-react";
 // plane package imports
 import { ANALYTICS_X_AXIS_VALUES, ANALYTICS_Y_AXIS_VALUES } from "@plane/constants";
+import { useTranslation } from "@plane/i18n";
 import { CalendarLayoutIcon } from "@plane/propel/icons";
 import type { IAnalyticsParams } from "@plane/types";
 import { ChartYAxisMetric } from "@plane/types";
@@ -30,13 +31,31 @@ type Props = {
 
 export const AnalyticsSelectParams = observer(function AnalyticsSelectParams(props: Props) {
   const { control, params, classNames, isEpic } = props;
+  const { t } = useTranslation();
+
+  const yAxisOptions = useMemo(
+    () =>
+      ANALYTICS_Y_AXIS_VALUES.map((option) => ({
+        ...option,
+        label: option.i18nKey ? t(option.i18nKey) : option.label,
+      })),
+    [t]
+  );
   const xAxisOptions = useMemo(
-    () => ANALYTICS_X_AXIS_VALUES.filter((option) => option.value !== params.group_by),
-    [params.group_by]
+    () =>
+      ANALYTICS_X_AXIS_VALUES.filter((option) => option.value !== params.group_by).map((option) => ({
+        ...option,
+        label: option.i18nKey ? t(option.i18nKey) : option.label,
+      })),
+    [params.group_by, t]
   );
   const groupByOptions = useMemo(
-    () => ANALYTICS_X_AXIS_VALUES.filter((option) => option.value !== params.x_axis),
-    [params.x_axis]
+    () =>
+      ANALYTICS_X_AXIS_VALUES.filter((option) => option.value !== params.x_axis).map((option) => ({
+        ...option,
+        label: option.i18nKey ? t(option.i18nKey) : option.label,
+      })),
+    [params.x_axis, t]
   );
 
   return (
@@ -51,7 +70,7 @@ export const AnalyticsSelectParams = observer(function AnalyticsSelectParams(pro
               onChange={(val: ChartYAxisMetric | null) => {
                 onChange(val);
               }}
-              options={ANALYTICS_Y_AXIS_VALUES}
+              options={yAxisOptions}
               hiddenOptions={[
                 ChartYAxisMetric.ESTIMATE_POINT_COUNT,
                 isEpic ? ChartYAxisMetric.WORK_ITEM_COUNT : ChartYAxisMetric.EPIC_WORK_ITEM_COUNT,
@@ -72,7 +91,7 @@ export const AnalyticsSelectParams = observer(function AnalyticsSelectParams(pro
                 <div className="flex items-center gap-2">
                   <CalendarLayoutIcon className="h-3 w-3" />
                   <span className={cn("text-secondary", value && "text-primary")}>
-                    {xAxisOptions.find((v) => v.value === value)?.label || "Add Property"}
+                    {xAxisOptions.find((v) => v.value === value)?.label || t("workspace_analytics.add_property")}
                   </span>
                 </div>
               }
@@ -93,7 +112,7 @@ export const AnalyticsSelectParams = observer(function AnalyticsSelectParams(pro
                 <div className="flex items-center gap-2">
                   <SlidersHorizontal className="h-3 w-3" />
                   <span className={cn("text-secondary", value && "text-primary")}>
-                    {groupByOptions.find((v) => v.value === value)?.label || "Add Property"}
+                    {groupByOptions.find((v) => v.value === value)?.label || t("workspace_analytics.add_property")}
                   </span>
                 </div>
               }

@@ -110,6 +110,63 @@
       "label": "حذف از مجموعه",
       "success_message": "صفحه از مجموعه حذف شد.",
       "error_message": "صفحه از مجموعه حذف نشد. لطفاً دوباره تلاش کنید."
+    },
+    "lock": "قفل کردن",
+    "unlock": "باز کردن قفل",
+    "locked": "قفل شده",
+    "unlocked": "قفل باز شده",
+    "make_private": "خصوصی کردن",
+    "make_public": "عمومی کردن",
+    "open_in_new_tab": "باز کردن در تب جدید",
+    "copy_link": "کپی پیوند",
+    "make_a_copy": "ایجاد یک کپی",
+    "duplicate": "تکثیر",
+    "archive": "بایگانی",
+    "restore": "بازیابی",
+    "delete": "حذف",
+    "move": "انتقال",
+    "full_screen": "تمام‌عرض",
+    "sticky_toolbar": "نوار ابزار چسبان",
+    "copy_markdown": "کپی مارک‌داون",
+    "version_history": "تاریخچه نسخه‌ها",
+    "export": "خروجی",
+    "toasts": {
+      "success_title": "موفق!",
+      "error_title": "خطا!",
+      "copy_markdown_success": "مارک‌داون در کلیپ‌بورد کپی شد."
+    },
+    "export_modal": {
+      "title": "خروجی صفحه",
+      "export_format": "فرمت خروجی",
+      "include_content": "محتوای ارسالی",
+      "page_format": "اندازه صفحه",
+      "cancel": "انصراف",
+      "export": "خروجی گرفتن",
+      "exporting": "در حال خروجی گرفتن",
+      "content_variety": {
+        "everything": "تمام محتوا",
+        "no_assets": "بدون تصاویر"
+      },
+      "toasts": {
+        "success_title": "موفق!",
+        "success_message": "خروجی صفحه با موفقیت ایجاد شد.",
+        "error_title": "خطا!",
+        "error_message": "خروجی صفحه انجام نشد. لطفاً بعداً دوباره تلاش کنید."
+      }
+    },
+    "delete_modal": {
+      "title": "حذف صفحه",
+      "content_prefix": "آیا مطمئن هستید که می‌خواهید صفحه «",
+      "content_suffix": "» را حذف کنید؟ این صفحه برای همیشه حذف خواهد شد. این عملیات قابل بازگشت نیست.",
+      "cancel": "انصراف",
+      "delete": "حذف",
+      "deleting": "در حال حذف",
+      "toasts": {
+        "success_title": "موفق!",
+        "success_message": "صفحه با موفقیت حذف شد.",
+        "error_title": "خطا!",
+        "error_message": "صفحه حذف نشد. لطفاً دوباره تلاش کنید."
+      }
     }
   }
 }

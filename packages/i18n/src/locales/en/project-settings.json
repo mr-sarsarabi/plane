@@ -11,7 +11,20 @@
       "delete_project": {
         "title": "Delete project",
         "description": "When deleting a project, all of the data and resources within that project will be permanently removed and cannot be recovered.",
-        "button": "Delete my project"
+        "button": "Delete my project",
+        "modal": {
+          "title": "Delete project",
+          "confirmation_prefix": "Are you sure you want to delete project",
+          "confirmation_suffix": "? All of the data related to the project will be permanently removed. This action cannot be undone",
+          "enter_project_name_prefix": "Enter the project name",
+          "enter_project_name_suffix": "to continue:",
+          "project_name_placeholder": "Project name",
+          "type_to_confirm_prefix": "To confirm, type",
+          "type_to_confirm_suffix": "below:",
+          "confirm_placeholder": "Enter 'delete my project'",
+          "deleting": "Deleting",
+          "success": "Project deleted successfully."
+        }
       },
       "toast": {
         "success": "Project updated successfully",
@@ -43,6 +56,15 @@
       "empty_state": {
         "title": "No states available for the {groupKey} group",
         "description": "Please create a new state"
+      },
+      "delete_state": {
+        "title": "Delete State",
+        "confirmation_prefix": "Are you sure you want to delete state-",
+        "confirmation_suffix": "? All of the data related to the state will be permanently removed. This action cannot be undone.",
+        "cannot_delete_default": "Cannot delete the default state.",
+        "cannot_empty_group": "Cannot have an empty group.",
+        "has_work_items": "This state contains some work items within it, please move them to some other state to delete this state.",
+        "failed": "State could not be deleted. Please try again."
       }
     },
     "labels": {

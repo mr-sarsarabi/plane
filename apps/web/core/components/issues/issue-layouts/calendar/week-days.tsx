@@ -6,6 +6,7 @@
 
 import { observer } from "mobx-react";
 // plane imports
+import { useTranslation } from "@plane/i18n";
 import type { TGroupedIssues, TIssue, TIssueMap, TPaginationData, ICalendarDate, ICalendarWeek } from "@plane/types";
 import { cn, getOrderedDays, renderFormattedPayloadDate } from "@plane/utils";
 // hooks
@@ -17,6 +18,7 @@ import type { IProjectIssuesFilter } from "@/store/issue/project";
 import type { IProjectViewIssuesFilter } from "@/store/issue/project-views";
 import type { TRenderQuickActions } from "../list/list-view-types";
 import { CalendarDayTile } from "./day-tile";
+import { getEffectiveStartOfWeek, isCalendarWeekend } from "./utils";
 
 type Props = {
   issuesFilterStore: IProjectIssuesFilter | IModuleIssuesFilter | ICycleIssuesFilter | IProjectViewIssuesFilter;
@@ -66,8 +68,10 @@ export const CalendarWeekDays = observer(function CalendarWeekDays(props: Props)
     isEpic = false,
   } = props;
   // hooks
+  const { currentLocale } = useTranslation();
+  const isPersian = currentLocale === "fa";
   const { data } = useUserProfile();
-  const startOfWeek = data?.start_of_the_week;
+  const startOfWeek = getEffectiveStartOfWeek(data?.start_of_the_week, isPersian);
 
   const calendarLayout = issuesFilterStore?.issueFilters?.displayFilters?.calendar?.layout ?? "month";
   const showWeekends = issuesFilterStore?.issueFilters?.displayFilters?.calendar?.show_weekends ?? false;
@@ -77,16 +81,17 @@ export const CalendarWeekDays = observer(function CalendarWeekDays(props: Props)
   const shouldShowDay = (dayDate: Date) => {
     if (showWeekends) return true;
     const day = dayDate.getDay();
-    return !(day === 0 || day === 6);
+    return !isCalendarWeekend(day, isPersian);
   };
 
   const sortedWeekDays = getOrderedDays(Object.values(week), (item) => item.date.getDay(), startOfWeek);
 
   return (
     <div
-      className={cn("grid divide-subtle-1 md:divide-x-[0.5px]", {
+      className={cn("grid divide-subtle-1 md:divide-x-[0.5px] rtl:divide-x-reverse", {
         "grid-cols-7": showWeekends,
-        "grid-cols-5": !showWeekends,
+        "grid-cols-6": !showWeekends && isPersian,
+        "grid-cols-5": !showWeekends && !isPersian,
         "h-full": calendarLayout !== "month",
       })}
     >

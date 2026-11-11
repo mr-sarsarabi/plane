@@ -36,6 +36,15 @@ export function ViewAppliedFiltersList(props: Props) {
 
   const isEditingAllowed = alwaysAllowEditing;
 
+  const getFilterLabel = (key: string | number | symbol) => {
+    const k = String(key);
+    if (k === "view_type") return t("common.access.label", "Access");
+    if (k === "created_at") return t("common.created_at", "Created at");
+    if (k === "owned_by") return t("common.created_by", "Created by");
+    if (k === "favorites") return t("favorites", "Favorites");
+    return replaceUnderscoreIfSnakeCase(k);
+  };
+
   return (
     <div className="flex flex-wrap items-stretch gap-2 bg-surface-1">
       {Object.entries(appliedFilters).map(([key, value]) => {
@@ -46,7 +55,7 @@ export function ViewAppliedFiltersList(props: Props) {
 
         return (
           <Tag key={filterKey}>
-            <span className="text-11 text-tertiary">{replaceUnderscoreIfSnakeCase(filterKey)}</span>
+            <span className="text-11 text-tertiary">{getFilterLabel(filterKey)}</span>
             {VIEW_ACCESS_FILTERS.includes(filterKey) && (
               <AppliedAccessFilters
                 editable={isEditingAllowed}

@@ -9,6 +9,7 @@ import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 // lucide icons
 import { Minimize2, Maximize2, Circle } from "lucide-react";
+import { useTranslation } from "@plane/i18n";
 import { PlusIcon } from "@plane/propel/icons";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
 import type { TIssue, ISearchIssueResponse, TIssueKanbanFilters, TIssueGroupByOptions } from "@plane/types";
@@ -60,6 +61,7 @@ export const HeaderGroupByCard = observer(function HeaderGroupByCard(props: IHea
   const [openExistingIssueListModal, setOpenExistingIssueListModal] = React.useState(false);
   // hooks
   const storeType = useIssueStoreType();
+  const { t } = useTranslation();
   // router
   const { workspaceSlug, projectId, moduleId, cycleId } = useParams();
 
@@ -127,13 +129,13 @@ export const HeaderGroupByCard = observer(function HeaderGroupByCard(props: IHea
         >
           <div
             className={`line-clamp-1 inline-block truncate overflow-hidden font-medium text-primary ${
-              verticalAlignPosition ? `max-h-[400px] vertical-lr` : ``
+              verticalAlignPosition ? `max-h-[400px] vertical-lr [text-orientation:sideways]` : ``
             }`}
           >
             {title}
           </div>
           <div
-            className={`flex-shrink-0 text-13 font-medium text-tertiary ${verticalAlignPosition ? `pr-0.5` : `pl-2`}`}
+            className={`flex-shrink-0 text-13 font-medium text-tertiary ${verticalAlignPosition ? `pr-0.5` : `ps-2`}`}
           >
             {count || 0}
           </div>
@@ -169,14 +171,14 @@ export const HeaderGroupByCard = observer(function HeaderGroupByCard(props: IHea
                   setIsOpen(true);
                 }}
               >
-                <span className="flex items-center justify-start gap-2">Create work item</span>
+                <span className="flex items-center justify-start gap-2">{t("create_work_item")}</span>
               </CustomMenu.MenuItem>
               <CustomMenu.MenuItem
                 onClick={() => {
                   setOpenExistingIssueListModal(true);
                 }}
               >
-                <span className="flex items-center justify-start gap-2">Add an existing work item</span>
+                <span className="flex items-center justify-start gap-2">{t("issue.add.existing")}</span>
               </CustomMenu.MenuItem>
             </CustomMenu>
           ) : (

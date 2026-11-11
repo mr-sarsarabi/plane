@@ -47,11 +47,11 @@ function Switch({ value, onChange, label, size = "sm", disabled, className }: IT
           // position + color by state
           value
             ? size === "sm"
-              ? "translate-x-3 bg-white"
+              ? "translate-x-3 rtl:-translate-x-3 bg-white"
               : size === "md"
-                ? "translate-x-4 bg-white"
-                : "translate-x-5 bg-white"
-            : "translate-x-0.5 bg-surface-2",
+                ? "translate-x-4 rtl:-translate-x-4 bg-white"
+                : "translate-x-5 rtl:-translate-x-5 bg-white"
+            : "translate-x-0.5 rtl:-translate-x-0.5 bg-surface-2",
           // disabled
           disabled && "cursor-not-allowed bg-surface-2"
         )}

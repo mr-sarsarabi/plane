@@ -83,6 +83,11 @@
         "gantt": "Timeline Layout"
       }
     },
+    "drag_drop": {
+      "cannot_move": "Cannot move work item",
+      "not_allowed": "You are not allowed to move this work item",
+      "grouping_disabled": "Drag and drop is disabled for the current grouping"
+    },
     "states": {
       "active": "Active",
       "backlog": "Backlog"

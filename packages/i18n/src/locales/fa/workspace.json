@@ -95,6 +95,33 @@
       "scope_and_demand": "محدوده و تقاضا",
       "custom": "تجزیه‌وتحلیل سفارشی"
     },
+    "duration": {
+      "yesterday": "دیروز",
+      "last_7_days": "۷ روز گذشته",
+      "last_30_days": "۳۰ روز گذشته",
+      "last_3_months": "۳ ماه گذشته"
+    },
+    "x_axis": {
+      "state_name": "نام وضعیت",
+      "state_group": "گروه وضعیت",
+      "priority": "اولویت",
+      "label": "برچسب",
+      "assignee": "مسئول",
+      "estimate_point": "امتیاز تخمین",
+      "cycle": "اسپرینت",
+      "module": "ماژول",
+      "completed_date": "تاریخ تکمیل",
+      "due_date": "موعد تحویل",
+      "start_date": "تاریخ شروع",
+      "created_date": "تاریخ ایجاد"
+    },
+    "y_axis": {
+      "work_item": "تسک",
+      "estimate": "تخمین",
+      "epic": "حماسه"
+    },
+    "add_property": "افزودن ویژگی",
+    "add_metric": "افزودن معیار",
     "total": "مجموع {entity}",
     "started_work_items": "{entity} شروع‌شده",
     "backlog_work_items": "{entity} در بک‌لاگ",

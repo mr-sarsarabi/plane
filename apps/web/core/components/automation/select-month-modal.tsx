@@ -76,7 +76,7 @@ export function SelectMonthModal({ type, initialValues, isOpen, handleClose, han
                           min={1}
                           max={12}
                         />
-                        <span className="absolute top-2.5 right-8 text-13 text-secondary">Months</span>
+                        <span className="absolute top-2.5 end-8 text-13 text-secondary">Months</span>
                       </div>
                     )}
                   />
@@ -110,7 +110,7 @@ export function SelectMonthModal({ type, initialValues, isOpen, handleClose, han
                           min={1}
                           max={12}
                         />
-                        <span className="absolute top-2.5 right-8 text-13 text-secondary">Months</span>
+                        <span className="absolute top-2.5 end-8 text-13 text-secondary">Months</span>
                       </div>
                     )}
                   />

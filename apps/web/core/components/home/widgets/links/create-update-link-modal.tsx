@@ -95,7 +95,8 @@ export const LinkCreateUpdateModal = observer(function LinkCreateUpdateModal(pro
                     ref={ref}
                     hasError={Boolean(errors.url)}
                     placeholder={t("link.modal.url.placeholder")}
-                    className="w-full"
+                    className="w-full text-left font-mono"
+                    dir="ltr"
                   />
                 )}
               />

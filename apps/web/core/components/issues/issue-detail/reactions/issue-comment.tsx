@@ -11,6 +11,7 @@ import { EmojiReactionGroup, EmojiReactionPicker } from "@plane/propel/emoji-rea
 import type { EmojiReactionType } from "@plane/propel/emoji-reaction";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
 import type { IUser } from "@plane/types";
+import { useTranslation } from "@plane/i18n";
 // hooks
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 import { useMember } from "@/hooks/store/use-member";
@@ -25,6 +26,7 @@ export type TIssueCommentReaction = {
 
 export const IssueCommentReaction = observer(function IssueCommentReaction(props: TIssueCommentReaction) {
   const { workspaceSlug, projectId, commentId, currentUser, disabled = false } = props;
+  const { t } = useTranslation();
   // state
   const [isPickerOpen, setIsPickerOpen] = useState(false);
   // hooks
@@ -45,15 +47,15 @@ export const IssueCommentReaction = observer(function IssueCommentReaction(props
           if (!workspaceSlug || !projectId || !commentId) throw new Error("Missing fields");
           await createCommentReaction(workspaceSlug, projectId, commentId, reaction);
           setToast({
-            title: "Success!",
+            title: t("success", "Success!"),
             type: TOAST_TYPE.SUCCESS,
-            message: "Reaction created successfully",
+            message: t("reaction_created_successfully", "Reaction created successfully"),
           });
         } catch (_error) {
           setToast({
-            title: "Error!",
+            title: t("error", "Error!"),
             type: TOAST_TYPE.ERROR,
-            message: "Reaction creation failed",
+            message: t("reaction_creation_failed", "Reaction creation failed"),
           });
         }
       },
@@ -62,15 +64,15 @@ export const IssueCommentReaction = observer(function IssueCommentReaction(props
           if (!workspaceSlug || !projectId || !commentId || !currentUser?.id) throw new Error("Missing fields");
           removeCommentReaction(workspaceSlug, projectId, commentId, reaction, currentUser.id);
           setToast({
-            title: "Success!",
+            title: t("success", "Success!"),
             type: TOAST_TYPE.SUCCESS,
-            message: "Reaction removed successfully",
+            message: t("reaction_removed_successfully", "Reaction removed successfully"),
           });
         } catch (_error) {
           setToast({
-            title: "Error!",
+            title: t("error", "Error!"),
             type: TOAST_TYPE.ERROR,
-            message: "Reaction remove failed",
+            message: t("reaction_remove_failed", "Reaction remove failed"),
           });
         }
       },
@@ -128,12 +130,15 @@ export const IssueCommentReaction = observer(function IssueCommentReaction(props
         handleToggle={setIsPickerOpen}
         onChange={handleEmojiSelect}
         disabled={disabled}
+        searchPlaceholder={t("search", "Search")}
         label={
           <EmojiReactionGroup
             reactions={reactions}
             onReactionClick={handleReactionClick}
             showAddButton={!disabled}
             onAddReaction={() => setIsPickerOpen(true)}
+            addButtonTooltip={t("add_reaction", "Add reaction")}
+            moreUsersText={(count) => t("and_more", { count, defaultValue: `and ${count} more` })}
           />
         }
         placement="bottom-start"

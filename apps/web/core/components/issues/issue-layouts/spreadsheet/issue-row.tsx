@@ -264,7 +264,7 @@ const IssueRowDetails = observer(function IssueRowDetails(props: IssueRowDetails
         id={`issue-${issueId}`}
         ref={cellRef}
         tabIndex={0}
-        className="group/list-block relative left-0 z-10 max-w-lg bg-surface-1 md:sticky"
+        className="group/list-block relative start-0 rtl:right-0 rtl:left-auto z-10 max-w-lg bg-surface-1 md:sticky"
       >
         <ControlLink
           href={workItemLink}
@@ -274,12 +274,13 @@ const IssueRowDetails = observer(function IssueRowDetails(props: IssueRowDetails
         >
           <Row
             className={cn(
-              "group clickable z-10 flex h-11 w-full cursor-pointer items-center border-r-[0.5px] border-subtle-1 bg-transparent text-13 group-[.selected-issue-row]:bg-accent-primary/5 after:absolute group-[.selected-issue-row]:hover:bg-accent-primary/10",
+              "group clickable z-10 flex h-11 w-full cursor-pointer items-center border-e-[0.5px] border-subtle-1 bg-transparent text-13 group-[.selected-issue-row]:bg-accent-primary/5 after:absolute group-[.selected-issue-row]:hover:bg-accent-primary/10",
               {
                 "border-b-[0.5px]": !getIsIssuePeeked(issueDetail.id),
                 "border border-accent-strong hover:border-accent-strong":
                   getIsIssuePeeked(issueDetail.id) && nestingLevel === peekIssue?.nestingLevel,
-                "shadow-[8px_22px_22px_10px_rgba(0,0,0,0.05)]": isScrolled.current,
+                "shadow-[8px_22px_22px_10px_rgba(0,0,0,0.05)] rtl:shadow-[-8px_22px_22px_10px_rgba(0,0,0,0.05)]":
+                  isScrolled.current,
               }
             )}
           >
@@ -319,7 +320,7 @@ const IssueRowDetails = observer(function IssueRowDetails(props: IssueRowDetails
                   }
                   disabled={issueDetail.project_id === projectId}
                 >
-                  <div className="absolute left-1 mr-1 grid w-3.5 flex-shrink-0 place-items-center">
+                  <div className="absolute start-1 me-1 grid w-3.5 flex-shrink-0 place-items-center">
                     <MultipleSelectEntityAction
                       className={cn(
                         "pointer-events-none opacity-0 transition-opacity group-hover/list-block:pointer-events-auto group-hover/list-block:opacity-100",
@@ -362,7 +363,7 @@ const IssueRowDetails = observer(function IssueRowDetails(props: IssueRowDetails
                   <div className="w-full overflow-hidden">
                     <Tooltip tooltipContent={issueDetail.name} isMobile={isMobile}>
                       <div
-                        className="h-full w-full cursor-pointer truncate pr-4 text-left text-13 text-primary focus:outline-none"
+                        className="h-full w-full cursor-pointer truncate pe-4 text-start text-13 text-primary focus:outline-none"
                         tabIndex={-1}
                       >
                         {issueDetail.name}

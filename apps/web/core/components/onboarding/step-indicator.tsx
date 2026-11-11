@@ -29,8 +29,8 @@ export function OnboardingStepIndicator({ currentStep, totalSteps }: OnboardingS
           className={cn("-ml-0.5 h-1.5 w-full", {
             "bg-success-primary": isCompleted,
             "bg-surface-1": !isCompleted,
-            "rounded-l-full": isFirstStep,
-            "rounded-r-full": isLastStep || isActive,
+            "rounded-s-full": isFirstStep,
+            "rounded-e-full": isLastStep || isActive,
             "z-10": isActive,
           })}
         />

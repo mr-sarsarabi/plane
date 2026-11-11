@@ -8,6 +8,7 @@ import React from "react";
 import { observer } from "mobx-react";
 import Link from "next/link";
 
+import { useTranslation } from "@plane/i18n";
 import { EditIcon, CloseIcon } from "@plane/propel/icons";
 // Plane
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
@@ -37,6 +38,7 @@ type TIssueRelationSelect = {
 
 export const IssueRelationSelect = observer(function IssueRelationSelect(props: TIssueRelationSelect) {
   const { className = "", workspaceSlug, projectId, issueId, relationKey, disabled = false } = props;
+  const { t } = useTranslation();
   // hooks
   const { getProjectById } = useProject();
   const {
@@ -119,7 +121,7 @@ export const IssueRelationSelect = observer(function IssueRelationSelect(props: 
                     key={relationIssueId}
                     className={`group flex items-center gap-1 rounded-sm px-1.5 pt-1 pb-1 leading-3 hover:bg-surface-2 ${currRelationOption?.className}`}
                   >
-                    <Tooltip tooltipHeading="Title" tooltipContent={currentIssue.name} isMobile={isMobile}>
+                    <Tooltip tooltipHeading={t("title")} tooltipContent={currentIssue.name} isMobile={isMobile}>
                       <Link
                         href={generateWorkItemLink({
                           workspaceSlug,
@@ -131,13 +133,14 @@ export const IssueRelationSelect = observer(function IssueRelationSelect(props: 
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-caption-sm-medium"
+                        dir="ltr"
                         onClick={(e) => e.stopPropagation()}
                       >
                         {`${projectDetails?.identifier}-${currentIssue?.sequence_id}`}
                       </Link>
                     </Tooltip>
                     {!disabled && (
-                      <Tooltip tooltipContent="Remove" position="bottom" isMobile={isMobile}>
+                      <Tooltip tooltipContent={t("remove")} position="bottom" isMobile={isMobile}>
                         <span
                           onClick={(e) => {
                             e.preventDefault();

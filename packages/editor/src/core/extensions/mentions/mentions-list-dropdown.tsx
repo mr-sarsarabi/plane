@@ -172,7 +172,7 @@ export const MentionsListDropdown = forwardRef(function MentionsListDropdown(pro
                     id={`mention-item-${sectionIndex}-${itemIndex}`}
                     type="button"
                     className={cn(
-                      "flex w-full items-center gap-2 truncate rounded-sm px-1 py-1.5 text-left text-11 text-secondary hover:bg-layer-1-hover",
+                      "flex w-full items-center gap-2 truncate rounded-sm px-1 py-1.5 text-start text-11 text-secondary hover:bg-layer-1-hover",
                       {
                         "bg-layer-1-hover": isSelected,
                       }
@@ -191,9 +191,13 @@ export const MentionsListDropdown = forwardRef(function MentionsListDropdown(pro
                   >
                     <span className="grid size-5 flex-shrink-0 place-items-center">{item.icon}</span>
                     {item.subTitle && (
-                      <h5 className="flex-shrink-0 text-11 whitespace-nowrap text-tertiary">{item.subTitle}</h5>
+                      <h5 className="flex-shrink-0 text-11 whitespace-nowrap text-tertiary">
+                        <bdi dir="ltr">{item.subTitle}</bdi>
+                      </h5>
                     )}
-                    <p className="flex-grow truncate">{item.title}</p>
+                    <p className="flex-grow truncate text-start">
+                      <bdi>{item.title}</bdi>
+                    </p>
                   </button>
                 );
               })}

@@ -21,7 +21,8 @@ export function WebhookInput(props: Props) {
       <h6 className="text-13 font-medium">{t("workspace_settings.settings.webhooks.modal.payload")}</h6>
       <Input
         type="url"
-        className="h-11 w-full"
+        dir="ltr"
+        className="h-11 w-full text-left font-mono"
         onChange={(e) => onChange(e.target.value)}
         value={value}
         autoComplete="off"

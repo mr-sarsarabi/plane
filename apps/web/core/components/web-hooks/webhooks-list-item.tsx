@@ -34,7 +34,7 @@ export function WebhooksListItem(props: IWebhookListItem) {
         href={`/${workspaceSlug}/settings/webhooks/${webhook?.id}`}
         className="flex items-center justify-between gap-4"
       >
-        <h5 className="truncate text-body-sm-medium">{webhook.url}</h5>
+        <h5 className="truncate text-body-sm-medium text-left font-mono" dir="ltr">{webhook.url}</h5>
         <div className="shrink-0">
           <ToggleSwitch value={webhook.is_active} onChange={handleToggle} />
         </div>

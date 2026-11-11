@@ -9,6 +9,7 @@ import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 import useSWR from "swr";
 // plane package imports
+import { ANALYTICS_DURATION_FILTER_OPTIONS } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 import { AreaChart } from "@plane/propel/charts/area-chart";
 import { EmptyStateCompact } from "@plane/propel/empty-state";
@@ -89,10 +90,15 @@ const CreatedVsResolved = observer(function CreatedVsResolved() {
     []
   );
 
+  const isRTL =
+    typeof document !== "undefined" && (document.documentElement.dir === "rtl" || document.dir === "rtl");
+  const selectedDurationOption = ANALYTICS_DURATION_FILTER_OPTIONS.find((item) => item.value === selectedDuration);
+  const durationSubtitle = selectedDurationOption?.i18nKey ? t(selectedDurationOption.i18nKey) : selectedDurationLabel;
+
   return (
     <AnalyticsSectionWrapper
       title={t("workspace_analytics.created_vs_resolved")}
-      subtitle={selectedDurationLabel}
+      subtitle={durationSubtitle}
       className="col-span-1"
     >
       {isCreatedVsResolvedLoading ? (
@@ -113,13 +119,14 @@ const CreatedVsResolved = observer(function CreatedVsResolved() {
             dx: -24,
           }}
           legend={{
-            align: "left",
+            align: isRTL ? "right" : "left",
             verticalAlign: "bottom",
             layout: "horizontal",
             wrapperStyles: {
-              justifyContent: "start",
-              alignContent: "start",
-              paddingLeft: "40px",
+              justifyContent: isRTL ? "end" : "start",
+              alignContent: isRTL ? "end" : "start",
+              paddingRight: isRTL ? "40px" : undefined,
+              paddingLeft: !isRTL ? "40px" : undefined,
               paddingTop: "10px",
             },
           }}

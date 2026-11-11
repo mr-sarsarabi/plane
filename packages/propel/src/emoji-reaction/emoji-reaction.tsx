@@ -27,6 +27,7 @@ export interface EmojiReactionProps extends React.ButtonHTMLAttributes<HTMLButto
   onReactionClick?: (emoji: string) => void;
   className?: string;
   showCount?: boolean;
+  moreUsersText?: (count: number) => React.ReactNode;
 }
 
 export interface EmojiReactionGroupProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -36,11 +37,14 @@ export interface EmojiReactionGroupProps extends React.HTMLAttributes<HTMLDivEle
   className?: string;
   showAddButton?: boolean;
   maxDisplayUsers?: number;
+  addButtonTooltip?: React.ReactNode;
+  moreUsersText?: (count: number) => React.ReactNode;
 }
 
 export interface EmojiReactionButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   onAddReaction?: () => void;
   className?: string;
+  tooltipContent?: React.ReactNode;
 }
 
 const EmojiReaction = React.forwardRef(function EmojiReaction(
@@ -52,6 +56,7 @@ const EmojiReaction = React.forwardRef(function EmojiReaction(
     onReactionClick,
     className,
     showCount = true,
+    moreUsersText,
     ...props
   }: EmojiReactionProps,
   ref: React.ForwardedRef<HTMLButtonElement>
@@ -71,11 +76,12 @@ const EmojiReaction = React.forwardRef(function EmojiReaction(
         <div className="mb-1 font-medium">{stringToEmoji(emoji)}</div>
         <div>
           {displayUsers.join(", ")}
-          {remainingCount > 0 && ` and ${remainingCount} more`}
+          {remainingCount > 0 &&
+            (moreUsersText ? <> {moreUsersText(remainingCount)}</> : ` and ${remainingCount} more`)}
         </div>
       </div>
     );
-  }, [emoji, users]);
+  }, [emoji, users, moreUsersText]);
 
   const button = (
     <button
@@ -103,11 +109,11 @@ const EmojiReaction = React.forwardRef(function EmojiReaction(
 });
 
 const EmojiReactionButton = React.forwardRef(function EmojiReactionButton(
-  { onAddReaction, className, ...props }: EmojiReactionButtonProps,
+  { onAddReaction, className, tooltipContent = "Add reaction", ...props }: EmojiReactionButtonProps,
   ref: React.ForwardedRef<HTMLButtonElement>
 ) {
   return (
-    <Tooltip tooltipContent="Add reaction">
+    <Tooltip tooltipContent={tooltipContent}>
       <IconButton
         ref={ref}
         icon={AddReactionIcon}
@@ -129,6 +135,8 @@ const EmojiReactionGroup = React.forwardRef(function EmojiReactionGroup(
     className,
     showAddButton = true,
     maxDisplayUsers = 5,
+    addButtonTooltip = "Add reaction",
+    moreUsersText,
     ...props
   }: EmojiReactionGroupProps,
   ref: React.ForwardedRef<HTMLDivElement>
@@ -143,9 +151,10 @@ const EmojiReactionGroup = React.forwardRef(function EmojiReactionGroup(
           reacted={reaction.reacted}
           users={reaction.users?.slice(0, maxDisplayUsers)}
           onReactionClick={onReactionClick}
+          moreUsersText={moreUsersText}
         />
       ))}
-      {showAddButton && <EmojiReactionButton onAddReaction={onAddReaction} />}
+      {showAddButton && <EmojiReactionButton onAddReaction={onAddReaction} tooltipContent={addButtonTooltip} />}
     </div>
   );
 });

@@ -41,7 +41,7 @@ export function AuthInput({
           {label}
         </label>
       )}
-      <div className={cn("relative flex items-center rounded-md border border-strong px-3 py-2 transition-all")}>
+      <div dir="ltr" className={cn("relative flex items-center rounded-md border border-strong px-3 py-2 transition-all")}>
         <Input
           {...props}
           type={inputType}
@@ -58,7 +58,7 @@ export function AuthInput({
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-3 h-5 w-5 stroke-placeholder hover:cursor-pointer"
+            className="absolute end-3 h-5 w-5 stroke-placeholder hover:cursor-pointer"
           >
             {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
           </button>

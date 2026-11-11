@@ -12,6 +12,7 @@ import type { IFilterInstance } from "@plane/shared-state";
 import type { TExternalFilter, TFilterProperty, TSupportedOperators } from "@plane/types";
 import { CustomSearchSelect } from "@plane/ui";
 import { getOperatorForPayload } from "@plane/utils";
+import { useTranslation } from "@plane/i18n";
 
 export type TAddFilterDropdownProps<P extends TFilterProperty, E extends TExternalFilter> = {
   customButton: React.ReactNode;
@@ -30,6 +31,8 @@ export const AddFilterDropdown = observer(function AddFilterDropdown<
 >(props: TAddFilterDropdownProps<P, E>) {
   const { filter, customButton, buttonConfig } = props;
   const { className, defaultOpen = false, isDisabled = false } = buttonConfig || {};
+  const { t } = useTranslation();
+  const isRTL = typeof document !== "undefined" && (document.dir === "rtl" || document.documentElement.dir === "rtl");
 
   // Transform available filter configs to CustomSearchSelect options format
   const filterOptions = filter.configManager.allAvailableConfigs.map((config) => ({
@@ -54,7 +57,7 @@ export const AddFilterDropdown = observer(function AddFilterDropdown<
     ? [
         {
           value: "all_filters_applied",
-          content: <div className="text-placeholder italic">All filters applied</div>,
+          content: <div className="text-placeholder italic">{t("common.all_filters_applied", "All filters applied")}</div>,
           query: "all filters applied",
           disabled: true,
         },
@@ -68,8 +71,8 @@ export const AddFilterDropdown = observer(function AddFilterDropdown<
       props.handleFilterSelect(property, operator, isNegation);
     } else {
       setToast({
-        title: "Filter configuration error",
-        message: "This filter is not properly configured and cannot be applied",
+        title: t("common.filter_configuration_error", "Filter configuration error"),
+        message: t("common.filter_configuration_error_message", "This filter is not properly configured and cannot be applied"),
         type: TOAST_TYPE.ERROR,
       });
     }
@@ -84,7 +87,7 @@ export const AddFilterDropdown = observer(function AddFilterDropdown<
         options={displayOptions}
         optionsClassName="w-56"
         maxHeight="2xl"
-        placement="bottom-start"
+        placement={isRTL ? "bottom-end" : "bottom-start"}
         disabled={isDisabled}
         customButtonClassName={className}
         customButton={customButton}

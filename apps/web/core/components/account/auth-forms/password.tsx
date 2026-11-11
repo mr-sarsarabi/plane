@@ -137,7 +137,7 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
           </div>
           <button
             type="button"
-            className="relative ml-auto flex h-6 w-6 cursor-pointer items-center justify-center rounded-xs text-accent-primary/80 transition-all hover:bg-danger-subtle-hover"
+            className="relative ms-auto flex h-6 w-6 cursor-pointer items-center justify-center rounded-xs text-accent-primary/80 transition-all hover:bg-danger-subtle-hover"
             onClick={() => setBannerMessage(false)}
           >
             <CloseIcon className="h-4 w-4 shrink-0 text-danger-primary" />
@@ -174,21 +174,22 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
           <label htmlFor="email" className="text-13 font-medium text-tertiary">
             {t("auth.common.email.label")}
           </label>
-          <div className={`relative flex items-center rounded-md border border-strong bg-surface-1`}>
+          <div dir="ltr" className={`relative flex items-center rounded-md border border-strong bg-surface-1`}>
             <Input
               id="email"
               name="email"
               type="email"
+              dir="ltr"
               value={passwordFormData.email}
               onChange={(e) => handleFormChange("email", e.target.value)}
               placeholder={t("auth.common.email.placeholder")}
-              className={`h-10 w-full border-0 disable-autofill-style placeholder:text-placeholder`}
+              className={`h-10 w-full border-0 pe-10 text-start font-mono disable-autofill-style placeholder:font-sans placeholder:text-placeholder`}
               disabled
             />
             {passwordFormData.email.length > 0 && (
               <button
                 type="button"
-                className="absolute right-3 size-5"
+                className="absolute end-3 size-5"
                 onClick={handleEmailClear}
                 aria-label={t("aria_labels.auth_forms.clear_email")}
               >
@@ -202,15 +203,16 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
           <label htmlFor="password" className="text-13 font-medium text-tertiary">
             {mode === EAuthModes.SIGN_IN ? t("auth.common.password.label") : t("auth.common.password.set_password")}
           </label>
-          <div className="relative flex items-center rounded-md bg-surface-1">
+          <div dir="ltr" className="relative flex items-center rounded-md bg-surface-1">
             <Input
               type={showPassword?.password ? "text" : "password"}
               id="password"
               name="password"
+              dir="ltr"
               value={passwordFormData.password}
               onChange={(e) => handleFormChange("password", e.target.value)}
               placeholder={t("auth.common.password.placeholder")}
-              className="h-10 w-full border border-strong !bg-surface-1 pr-12 disable-autofill-style placeholder:text-placeholder"
+              className="h-10 w-full border border-strong !bg-surface-1 pe-12 text-start font-mono disable-autofill-style placeholder:font-sans placeholder:text-placeholder"
               onFocus={() => setIsPasswordInputFocused(true)}
               onBlur={() => setIsPasswordInputFocused(false)}
               autoComplete="off"
@@ -219,7 +221,7 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
             <button
               type="button"
               onClick={() => handleShowPassword("password")}
-              className="absolute right-3 grid size-5 place-items-center"
+              className="absolute end-3 grid size-5 place-items-center"
               aria-label={t(
                 showPassword?.password ? "aria_labels.auth_forms.hide_password" : "aria_labels.auth_forms.show_password"
               )}
@@ -239,22 +241,23 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
             <label htmlFor="confirm-password" className="text-13 font-medium text-tertiary">
               {t("auth.common.password.confirm_password.label")}
             </label>
-            <div className="relative flex items-center rounded-md bg-surface-1">
+            <div dir="ltr" className="relative flex items-center rounded-md bg-surface-1">
               <Input
                 type={showPassword?.retypePassword ? "text" : "password"}
                 id="confirm-password"
                 name="confirm_password"
+                dir="ltr"
                 value={passwordFormData.confirm_password}
                 onChange={(e) => handleFormChange("confirm_password", e.target.value)}
                 placeholder={t("auth.common.password.confirm_password.placeholder")}
-                className="h-10 w-full border border-strong !bg-surface-1 pr-12 disable-autofill-style placeholder:text-placeholder"
+                className="h-10 w-full border border-strong !bg-surface-1 pe-12 text-start font-mono disable-autofill-style placeholder:font-sans placeholder:text-placeholder"
                 onFocus={() => setIsRetryPasswordInputFocused(true)}
                 onBlur={() => setIsRetryPasswordInputFocused(false)}
                 autoComplete="off"
               />
               <button
                 type="button"
-                className="absolute right-3 grid size-5 place-items-center"
+                className="absolute end-3 grid size-5 place-items-center"
                 aria-label={t(
                   showPassword?.retypePassword
                     ? "aria_labels.auth_forms.hide_password"

@@ -5,6 +5,7 @@
  */
 
 import { observer } from "mobx-react";
+import { useTranslation } from "@plane/i18n";
 // plane utils
 import { cn } from "@plane/utils";
 // hooks
@@ -14,6 +15,7 @@ import { HEADER_HEIGHT, SIDEBAR_WIDTH } from "../../constants";
 import type { IWeekBlock } from "../../views";
 
 export const WeekChartView = observer(function WeekChartView(_props: any) {
+  const { t } = useTranslation();
   const { currentViewData, renderView } = useTimeLineChartStore();
   const weekBlocks: IWeekBlock[] = renderView;
 
@@ -43,7 +45,7 @@ export const WeekChartView = observer(function WeekChartView(_props: any) {
                   {block?.title}
                 </div>
                 <div className="sticky px-3 py-2 text-11 whitespace-nowrap text-placeholder capitalize">
-                  {block?.weekData?.title}
+                  {block?.weekNumber ? `${t("common.week")} ${block.weekNumber}` : block?.weekData?.title}
                 </div>
               </div>
               {/** Days Sub title */}

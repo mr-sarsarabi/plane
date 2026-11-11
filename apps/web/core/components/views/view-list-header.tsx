@@ -9,6 +9,7 @@ import { observer } from "mobx-react";
 // icons
 import { ListFilter } from "lucide-react";
 import { useOutsideClickDetector } from "@plane/hooks";
+import { useTranslation } from "@plane/i18n";
 import { SearchIcon, CloseIcon } from "@plane/propel/icons";
 // plane helpers
 // helpers
@@ -22,6 +23,7 @@ import { ViewOrderByDropdown } from "./filters/order-by";
 import { IconButton } from "@plane/propel/icon-button";
 
 export const ViewListHeader = observer(function ViewListHeader() {
+  const { t } = useTranslation();
   // states
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   // refs
@@ -60,7 +62,7 @@ export const ViewListHeader = observer(function ViewListHeader() {
           <IconButton
             variant="ghost"
             size="lg"
-            className="-mr-1"
+            className="-me-1"
             onClick={() => {
               setIsSearchOpen(true);
               inputRef.current?.focus();
@@ -70,7 +72,7 @@ export const ViewListHeader = observer(function ViewListHeader() {
         )}
         <div
           className={cn(
-            "ml-auto flex w-0 items-center justify-start gap-1 overflow-hidden rounded-md border border-transparent bg-surface-1 text-placeholder opacity-0 transition-[width] ease-linear",
+            "ms-auto flex w-0 items-center justify-start gap-1 overflow-hidden rounded-md border border-transparent bg-surface-1 text-placeholder opacity-0 transition-[width] ease-linear",
             {
               "w-64 border-subtle px-2.5 py-1.5 opacity-100": isSearchOpen,
             }
@@ -80,7 +82,7 @@ export const ViewListHeader = observer(function ViewListHeader() {
           <input
             ref={inputRef}
             className="w-full max-w-[234px] border-none bg-transparent text-13 text-primary placeholder:text-placeholder focus:outline-none"
-            placeholder="Search"
+            placeholder={t("search", "Search")}
             value={filters?.searchQuery}
             onChange={(e) => updateFilters("searchQuery", e.target.value)}
             onKeyDown={handleInputKeyDown}
@@ -110,7 +112,7 @@ export const ViewListHeader = observer(function ViewListHeader() {
         />
         <FiltersDropdown
           icon={<ListFilter className="h-3 w-3" />}
-          title="Filters"
+          title={t("common.filters", "Filters")}
           placement="bottom-end"
           isFiltersApplied={false}
         >

@@ -10,6 +10,7 @@ import { autoScrollForElements } from "@atlaskit/pragmatic-drag-and-drop-auto-sc
 import { observer } from "mobx-react";
 // plane constants
 import type { TSupportedFilterTypeForUpdate } from "@plane/constants";
+import { useTranslation } from "@plane/i18n";
 // types
 import type {
   TGroupedIssues,
@@ -26,6 +27,7 @@ import { renderFormattedPayloadDate, cn } from "@plane/utils";
 // constants
 import { MONTHS_LIST } from "@/constants/calendar";
 // helpers
+import { getLocalizedMonth } from "./utils";
 // hooks
 import { useIssues } from "@/hooks/store/use-issues";
 import useSize from "@/hooks/use-window-size";
@@ -94,6 +96,8 @@ export const CalendarChart = observer(function CalendarChart(props: Props) {
   } = props;
   // states
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  // hooks
+  const { t, currentLocale } = useTranslation();
   //refs
   const scrollableContainerRef = useRef<HTMLDivElement | null>(null);
   // store hooks
@@ -206,9 +210,12 @@ export const CalendarChart = observer(function CalendarChart(props: Props) {
             {/* mobile view */}
             <div className="md:hidden">
               <p className="p-4 text-18 font-semibold">
-                {`${selectedDate.getDate()} ${
-                  MONTHS_LIST[selectedDate.getMonth() + 1].title
-                }, ${selectedDate.getFullYear()}`}
+                {`${selectedDate.getDate()} ${getLocalizedMonth(
+                  selectedDate.getMonth() + 1,
+                  currentLocale,
+                  false,
+                  t
+                )}, ${selectedDate.getFullYear()}`}
               </p>
               <CalendarIssueBlocks
                 date={selectedDate}
@@ -234,9 +241,12 @@ export const CalendarChart = observer(function CalendarChart(props: Props) {
         {/* mobile view */}
         <div className="md:hidden">
           <p className="p-4 text-18 font-semibold">
-            {`${selectedDate.getDate()} ${
-              MONTHS_LIST[selectedDate.getMonth() + 1].title
-            }, ${selectedDate.getFullYear()}`}
+            {`${selectedDate.getDate()} ${getLocalizedMonth(
+              selectedDate.getMonth() + 1,
+              currentLocale,
+              false,
+              t
+            )}, ${selectedDate.getFullYear()}`}
           </p>
           <CalendarIssueBlocks
             date={selectedDate}

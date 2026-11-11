@@ -24,8 +24,25 @@ export type UpdateFloatingUIFloaterPosition = (
 export const updateFloatingUIFloaterPosition: UpdateFloatingUIFloaterPosition = (editor, element, options) => {
   document.body.appendChild(element);
 
+  const contextElement = editor.view.dom;
+  const isRTL =
+    contextElement?.getAttribute("dir") === "rtl" ||
+    contextElement?.closest?.('[dir="rtl"]') !== null ||
+    (typeof window !== "undefined" && window.getComputedStyle(contextElement).direction === "rtl") ||
+    document.documentElement.getAttribute("dir") === "rtl" ||
+    document.body.getAttribute("dir") === "rtl";
+
+  if (isRTL) {
+    element.setAttribute("dir", "rtl");
+    element.style.direction = "rtl";
+  } else {
+    element.setAttribute("dir", "ltr");
+    element.style.direction = "ltr";
+  }
+
   const virtualElement: ReferenceElement = {
     getBoundingClientRect: () => posToDOMRect(editor.view, editor.state.selection.from, editor.state.selection.to),
+    contextElement,
   };
 
   const cleanup = autoUpdate(virtualElement, element, () => {

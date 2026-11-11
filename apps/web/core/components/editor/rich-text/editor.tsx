@@ -8,8 +8,9 @@ import { forwardRef } from "react";
 // plane imports
 import { RichTextEditorWithRef } from "@plane/editor";
 import type { EditorRefApi, IRichTextEditorProps, TFileHandler } from "@plane/editor";
+import { useTranslation } from "@plane/i18n";
 import type { MakeOptional, TSearchEntityRequestPayload, TSearchResponse } from "@plane/types";
-import { cn } from "@plane/utils";
+import { cn, getDescriptionPlaceholderI18n } from "@plane/utils";
 // components
 import { EditorMentionsRoot } from "@/components/editor/embeds/mentions";
 // hooks
@@ -50,6 +51,8 @@ export const RichTextEditor = forwardRef(function RichTextEditor(
     workspaceId,
     projectId,
     disabledExtensions: additionalDisabledExtensions = [],
+    editorProps,
+    placeholder,
     ...rest
   } = props;
   // store hooks
@@ -70,6 +73,40 @@ export const RichTextEditor = forwardRef(function RichTextEditor(
     projectId,
     workspaceSlug,
   });
+  // translation
+  const { t, currentLocale } = useTranslation();
+
+  const isRTL =
+    typeof document !== "undefined"
+      ? document.documentElement.dir === "rtl" || document.dir === "rtl"
+      : currentLocale === "fa";
+
+  const resolvedEditorProps = {
+    ...editorProps,
+    attributes: {
+      dir: isRTL ? "rtl" : "auto",
+      ...editorProps?.attributes,
+    },
+  };
+
+  const resolvePlaceholderText = (text: string): string => {
+    if (!text) return "";
+    if (
+      text === "common.press_for_commands" ||
+      text === "common.click_to_add_description" ||
+      text.startsWith("common.")
+    ) {
+      return t(text);
+    }
+    return text;
+  };
+
+  const resolvedPlaceholder =
+    placeholder !== undefined
+      ? typeof placeholder === "function"
+        ? (isFocused: boolean, value: string) => resolvePlaceholderText(placeholder(isFocused, value))
+        : resolvePlaceholderText(placeholder)
+      : (isFocused: boolean, value: string) => t(getDescriptionPlaceholderI18n(isFocused, value));
 
   return (
     <RichTextEditorWithRef
@@ -97,8 +134,10 @@ export const RichTextEditor = forwardRef(function RichTextEditor(
         }),
       }}
       extendedEditorProps={{}}
+      editorProps={resolvedEditorProps}
+      placeholder={resolvedPlaceholder}
       {...rest}
-      containerClassName={cn("relative pb-3 pl-3", containerClassName)}
+      containerClassName={cn("relative pb-3 pl-3 rtl:pl-0 rtl:pr-3", containerClassName)}
     />
   );
 });

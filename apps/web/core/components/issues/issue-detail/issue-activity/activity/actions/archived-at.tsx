@@ -6,6 +6,7 @@
 
 import { observer } from "mobx-react";
 import { RotateCcw } from "lucide-react";
+import { useTranslation } from "@plane/i18n";
 // hooks
 import { ArchiveIcon } from "@plane/propel/icons";
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
@@ -17,6 +18,7 @@ type TIssueArchivedAtActivity = { activityId: string; ends: "top" | "bottom" | u
 
 export const IssueArchivedAtActivity = observer(function IssueArchivedAtActivity(props: TIssueArchivedAtActivity) {
   const { activityId, ends } = props;
+  const { t } = useTranslation();
   // hooks
   const {
     activity: { getActivityById },
@@ -39,7 +41,9 @@ export const IssueArchivedAtActivity = observer(function IssueArchivedAtActivity
       ends={ends}
       customUserName={activity.new_value === "archive" ? "Plane" : undefined}
     >
-      {activity.new_value === "restore" ? "restored the work item" : "archived the work item"}.
+      {activity.new_value === "restore"
+        ? t("restored_the_work_item", "restored the work item")
+        : t("archived_the_work_item", "archived the work item")}.
     </IssueActivityBlockComponent>
   );
 });

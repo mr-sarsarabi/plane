@@ -102,11 +102,11 @@ export function ParentIssuesListModal({
       >
         <div className="relative m-1">
           <SearchIcon
-            className="text-opacity-40 pointer-events-none absolute top-3.5 left-4 h-5 w-5 text-primary"
+            className="text-opacity-40 pointer-events-none absolute top-3.5 start-4 h-5 w-5 text-primary"
             aria-hidden="true"
           />
           <Combobox.Input
-            className="h-12 w-full border-0 bg-transparent pr-4 pl-11 text-primary outline-none placeholder:text-placeholder focus:ring-0 sm:text-13"
+            className="h-12 w-full border-0 bg-transparent pe-4 ps-11 text-primary outline-none placeholder:text-placeholder focus:ring-0 sm:text-13"
             placeholder={t("common.search.placeholder")}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -117,13 +117,19 @@ export function ParentIssuesListModal({
         <Combobox.Options static className="vertical-scrollbar scrollbar-md max-h-80 scroll-py-2 overflow-y-auto">
           {searchTerm !== "" && (
             <h5 className="mx-2 text-13 text-secondary">
-              Search results for{" "}
-              <span className="text-primary">
-                {'"'}
-                {searchTerm}
-                {'"'}
-              </span>{" "}
-              in project:
+              {t("search_results_in_project", { searchTerm }) !== "search_results_in_project" ? (
+                t("search_results_in_project", { searchTerm })
+              ) : (
+                <>
+                  Search results for{" "}
+                  <span className="text-primary">
+                    {'"'}
+                    {searchTerm}
+                    {'"'}
+                  </span>{" "}
+                  in project:
+                </>
+              )}
             </h5>
           )}
 

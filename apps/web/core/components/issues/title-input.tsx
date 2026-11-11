@@ -160,13 +160,13 @@ export const IssueTitleInput = observer(function IssueTitleInput(props: IssueTit
           value={title}
           onChange={handleTitleChange}
           maxLength={255}
-          placeholder={t("issue.title.label")}
+          placeholder={t("issue.title.label") !== "issue.title.label" ? t("issue.title.label") : t("title")}
           onFocus={() => setIsLengthVisible(true)}
           onBlur={() => setIsLengthVisible(false)}
         />
         <div
           className={cn(
-            "pointer-events-none absolute right-1 bottom-1 z-[2] rounded-sm bg-surface-1 p-0.5 text-11 text-secondary opacity-0 transition-opacity",
+            "pointer-events-none absolute end-1 right-1 rtl:left-1 rtl:right-auto bottom-1 z-[2] rounded-sm bg-surface-1 p-0.5 text-11 text-secondary opacity-0 transition-opacity",
             {
               "opacity-100": isLengthVisible,
             }

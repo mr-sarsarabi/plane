@@ -7,8 +7,9 @@
 import React from "react";
 import { observer } from "mobx-react";
 import Link from "next/link";
+import { Globe } from "lucide-react";
 import { AUTH_TRACKER_ELEMENTS } from "@plane/constants";
-import { useTranslation } from "@plane/i18n";
+import { useTranslation, setLanguage } from "@plane/i18n";
 import { PlaneLockup } from "@plane/propel/icons";
 import { PageHead } from "@/components/core/page-title";
 import { EAuthModes } from "@/helpers/authentication.helper";
@@ -16,15 +17,15 @@ import { useInstance } from "@/hooks/store/use-instance";
 
 const authContentMap = {
   [EAuthModes.SIGN_IN]: {
-    pageTitle: "Sign up",
+    pageTitle: "auth.common.login",
     text: "auth.common.new_to_plane",
-    linkText: "Sign up",
+    linkText: "auth.common.create_account",
     linkHref: "/sign-up",
   },
   [EAuthModes.SIGN_UP]: {
-    pageTitle: "Sign in",
+    pageTitle: "auth.common.create_account",
     text: "auth.common.already_have_an_account",
-    linkText: "Sign in",
+    linkText: "auth.common.login",
     linkHref: "/sign-in",
   },
 };
@@ -68,6 +69,15 @@ type TAuthHeaderBase = {
 
 export function AuthHeaderBase(props: TAuthHeaderBase) {
   const { pageTitle, additionalAction } = props;
+  const { currentLocale } = useTranslation();
+  const currentLang = currentLocale || "en";
+  const isPersian = currentLang.startsWith("fa");
+
+  const handleToggleLanguage = async () => {
+    const nextLang = isPersian ? "en" : "fa";
+    await setLanguage(nextLang);
+  };
+
   return (
     <>
       <PageHead title={pageTitle + " - Plane"} />
@@ -75,7 +85,18 @@ export function AuthHeaderBase(props: TAuthHeaderBase) {
         <Link href="/">
           <PlaneLockup height={20} width={95} className="text-primary" />
         </Link>
-        {additionalAction}
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={handleToggleLanguage}
+            className="flex items-center gap-1.5 rounded-md border border-subtle bg-surface-1 px-2.5 py-1 text-12 font-medium text-secondary shadow-sm transition-colors hover:bg-layer-1 hover:text-primary"
+            title={isPersian ? "Switch to English" : "تغییر زبان به فارسی"}
+          >
+            <Globe className="size-3.5 text-tertiary" />
+            <span>{isPersian ? "English" : "فارسی"}</span>
+          </button>
+          {additionalAction}
+        </div>
       </div>
     </>
   );

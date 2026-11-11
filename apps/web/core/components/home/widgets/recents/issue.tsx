@@ -5,6 +5,7 @@
  */
 
 import { observer } from "mobx-react";
+import { useTranslation } from "@plane/i18n";
 // plane types
 import { PriorityIcon, StateGroupIcon, WorkItemsIcon } from "@plane/propel/icons";
 import { Tooltip } from "@plane/propel/tooltip";
@@ -31,6 +32,7 @@ type BlockProps = {
 export const RecentIssue = observer(function RecentIssue(props: BlockProps) {
   const { activity, ref, workspaceSlug } = props;
   // hooks
+  const { t } = useTranslation();
   const { getStateById } = useProjectState();
   const { setPeekIssue } = useIssueDetail();
   const { setPeekIssue: setPeekEpic } = useIssueDetail(EIssueServiceType.EPICS);
@@ -73,21 +75,25 @@ export const RecentIssue = observer(function RecentIssue(props: BlockProps) {
       prependTitleElement={
         <div className="flex flex-shrink-0 items-center gap-2">
           {issueDetails.type ? (
-            <IssueIdentifier
-              size="lg"
-              issueTypeId={issueDetails?.type}
-              projectId={issueDetails?.project_id || ""}
-              projectIdentifier={issueDetails?.project_identifier || ""}
-              issueSequenceId={issueDetails?.sequence_id || ""}
-              variant="tertiary"
-            />
+            <span dir="ltr">
+              <IssueIdentifier
+                size="lg"
+                issueTypeId={issueDetails?.type}
+                projectId={issueDetails?.project_id || ""}
+                projectIdentifier={issueDetails?.project_identifier || ""}
+                issueSequenceId={issueDetails?.sequence_id || ""}
+                variant="tertiary"
+              />
+            </span>
           ) : (
             <div className="flex items-center justify-center gap-2">
               <div className="grid size-8 flex-shrink-0 place-items-center rounded-sm bg-layer-2">
                 <WorkItemsIcon className="size-4 text-tertiary" />
               </div>
               <div className="text-13 font-medium whitespace-nowrap text-placeholder">
-                {issueDetails?.project_identifier}-{issueDetails?.sequence_id}
+                <span dir="ltr">
+                  {issueDetails?.project_identifier}-{issueDetails?.sequence_id}
+                </span>
               </div>
             </div>
           )}
@@ -100,7 +106,7 @@ export const RecentIssue = observer(function RecentIssue(props: BlockProps) {
       }
       quickActionElement={
         <div className="flex gap-4">
-          <Tooltip tooltipHeading="State" tooltipContent={state?.name ?? "State"}>
+          <Tooltip tooltipHeading={t("state")} tooltipContent={state?.name ?? t("state")}>
             <div>
               <StateGroupIcon
                 stateGroup={state?.group ?? "backlog"}
@@ -110,7 +116,7 @@ export const RecentIssue = observer(function RecentIssue(props: BlockProps) {
               />
             </div>
           </Tooltip>
-          <Tooltip tooltipHeading="Priority" tooltipContent={issueDetails?.priority ?? "Priority"}>
+          <Tooltip tooltipHeading={t("priority")} tooltipContent={issueDetails?.priority ?? t("priority")}>
             <div>
               <PriorityIcon priority={issueDetails?.priority} withContainer size={12} />
             </div>
@@ -126,7 +132,7 @@ export const RecentIssue = observer(function RecentIssue(props: BlockProps) {
                 buttonVariant={issueDetails?.assignees?.length > 0 ? "transparent-without-text" : "border-without-text"}
                 buttonClassName={issueDetails?.assignees?.length > 0 ? "hover:bg-transparent px-0" : ""}
                 showTooltip={issueDetails?.assignees?.length === 0}
-                placeholder="Assignees"
+                placeholder={t("assignees")}
                 optionsClassName="z-10"
                 tooltipContent=""
               />

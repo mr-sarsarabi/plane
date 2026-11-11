@@ -18,6 +18,7 @@ import type {
 } from "@plane/types";
 import { CustomSearchSelect } from "@plane/ui";
 import { cn, getOperatorForPayload } from "@plane/utils";
+import { useTranslation } from "@plane/i18n";
 // local imports
 import { FilterValueInput } from "../filter-value-input/root";
 import { COMMON_FILTER_ITEM_BORDER_CLASSNAME } from "../shared";
@@ -38,20 +39,39 @@ export const FilterItem = observer(function FilterItem<P extends TFilterProperty
   props: IFilterItemProps<P, E>
 ) {
   const { condition, filter, isDisabled = false, showTransition = true } = props;
+  const { t } = useTranslation();
+
+  const getTranslatedOperator = (operatorLabel: string | undefined): string => {
+    if (!operatorLabel) return "";
+    const keyMap: Record<string, string> = {
+      is: "common.filter_operators.is",
+      "is any of": "common.filter_operators.is_any_of",
+      between: "common.filter_operators.between",
+    };
+    const key = keyMap[operatorLabel.toLowerCase()];
+    return key ? t(key, operatorLabel) : operatorLabel;
+  };
+
   // derived values
   const filterConfig = condition?.property ? filter.configManager.getConfigByProperty(condition.property) : undefined;
   const operatorOptions = filterConfig
     ?.getAllDisplayOperatorOptionsByValue(condition.value as TFilterValue)
-    .map((option) => ({
-      value: option.value,
-      content: option.label,
-      query: option.label.toLowerCase(),
-    }));
+    .map((option) => {
+      const translatedLabel = getTranslatedOperator(option.label);
+      return {
+        value: option.value,
+        content: translatedLabel,
+        query: `${option.label} ${translatedLabel}`.toLowerCase(),
+      };
+    });
   const selectedOperatorFieldConfig = filterConfig?.getOperatorConfig(condition.operator);
   const selectedOperatorOption = filterConfig?.getDisplayOperatorByValue(
     condition.operator,
     condition.value as TFilterValue
   );
+  const selectedOperatorRawLabel = filterConfig?.getLabelForOperator(selectedOperatorOption);
+  const selectedOperatorLabel = selectedOperatorRawLabel ? getTranslatedOperator(selectedOperatorRawLabel) : selectedOperatorRawLabel;
+
   // Disable operator selection when filter is disabled or only one operator option is available and selected
   const isOperatorSelectionDisabled =
     isDisabled ||
@@ -110,7 +130,7 @@ export const FilterItem = observer(function FilterItem<P extends TFilterProperty
         disabled={isOperatorSelectionDisabled}
         customButton={
           <div className="flex h-full items-center" aria-disabled={isOperatorSelectionDisabled}>
-            {filterConfig.getLabelForOperator(selectedOperatorOption)}
+            {selectedOperatorLabel}
           </div>
         }
       />

@@ -39,6 +39,14 @@
   height: 0;
 }
 
+/* RTL Placeholders */
+[dir="rtl"] .ProseMirror p.is-editor-empty:first-child::before,
+[dir="rtl"] .ProseMirror p.is-empty::before,
+.ProseMirror[dir="rtl"] p.is-editor-empty:first-child::before,
+.ProseMirror[dir="rtl"] p.is-empty::before {
+  float: right;
+}
+
 .ProseMirror li blockquote {
   margin-top: 10px;
   padding-inline-start: 1em;
@@ -49,6 +57,12 @@
   font-style: normal;
   font-weight: 400;
   @apply border-l-[3px] border-strong;
+}
+
+[dir="rtl"] .ProseMirror blockquote,
+.ProseMirror[dir="rtl"] blockquote {
+  border-left-width: 0;
+  @apply border-r-[3px] border-strong;
 }
 
 .ProseMirror blockquote p::before,
@@ -104,6 +118,20 @@ ul[data-type="taskList"] li > div {
   margin-left: 1.15rem;
 }
 
+/* RTL to-do list */
+[dir="rtl"] ul[data-type="taskList"] li > label,
+.ProseMirror[dir="rtl"] ul[data-type="taskList"] li > label {
+  left: auto;
+  right: -5px;
+  margin: 0.1rem 0 0 0.15rem;
+}
+
+[dir="rtl"] ul[data-type="taskList"] li > div,
+.ProseMirror[dir="rtl"] ul[data-type="taskList"] li > div {
+  margin-left: 0;
+  margin-right: 1.15rem;
+}
+
 ul[data-type="taskList"] li > label input[type="checkbox"] {
   @apply border! border-strong!;
   outline: none;
@@ -133,6 +161,12 @@ ul[data-type="taskList"] li > label input[type="checkbox"]:checked:hover {
 @media screen and (max-width: 768px) {
   ul[data-type="taskList"] li > label {
     margin-right: 0.5rem;
+  }
+
+  [dir="rtl"] ul[data-type="taskList"] li > label,
+  .ProseMirror[dir="rtl"] ul[data-type="taskList"] li > label {
+    margin-right: 0;
+    margin-left: 0.5rem;
   }
 }
 
@@ -177,6 +211,12 @@ ul[data-type="taskList"] li > label input[type="checkbox"] {
   &:checked::before {
     transform: scale(1) translate(-50%, -50%);
   }
+}
+
+[dir="rtl"] ul[data-type="taskList"] li > label input[type="checkbox"],
+.ProseMirror[dir="rtl"] ul[data-type="taskList"] li > label input[type="checkbox"] {
+  margin-right: 0;
+  margin-left: 0.2rem;
 }
 
 ul[data-type="taskList"] li > div {
@@ -321,6 +361,39 @@ ul[data-type="taskList"] ul[data-type="taskList"] {
   margin-top: 0.6rem;
 }
 /* end numbered, bulleted and to-do lists spacing */
+
+/* RTL list indentation so bullets and numbers don't clip outside the right border */
+[dir="rtl"] .prose ol,
+[dir="rtl"] .prose ul:not([data-type="taskList"]),
+.prose[dir="rtl"] ol,
+.prose[dir="rtl"] ul:not([data-type="taskList"]),
+[dir="rtl"] .ProseMirror ol,
+[dir="rtl"] .ProseMirror ul:not([data-type="taskList"]),
+.ProseMirror[dir="rtl"] ol,
+.ProseMirror[dir="rtl"] ul:not([data-type="taskList"]) {
+  padding-right: 1.625em;
+  padding-left: 0;
+}
+
+[dir="rtl"] .prose ol ol,
+[dir="rtl"] .prose ol ul:not([data-type="taskList"]),
+[dir="rtl"] .prose ul:not([data-type="taskList"]) ul:not([data-type="taskList"]),
+[dir="rtl"] .prose ul:not([data-type="taskList"]) ol,
+.prose[dir="rtl"] ol ol,
+.prose[dir="rtl"] ol ul:not([data-type="taskList"]),
+.prose[dir="rtl"] ul:not([data-type="taskList"]) ul:not([data-type="taskList"]),
+.prose[dir="rtl"] ul:not([data-type="taskList"]) ol,
+[dir="rtl"] .ProseMirror ol ol,
+[dir="rtl"] .ProseMirror ol ul:not([data-type="taskList"]),
+[dir="rtl"] .ProseMirror ul:not([data-type="taskList"]) ul:not([data-type="taskList"]),
+[dir="rtl"] .ProseMirror ul:not([data-type="taskList"]) ol,
+.ProseMirror[dir="rtl"] ol ol,
+.ProseMirror[dir="rtl"] ol ul:not([data-type="taskList"]),
+.ProseMirror[dir="rtl"] ul:not([data-type="taskList"]) ul:not([data-type="taskList"]),
+.ProseMirror[dir="rtl"] ul:not([data-type="taskList"]) ol {
+  padding-right: 1.625em;
+  padding-left: 0;
+}
 
 h1.editor-heading-block,
 h2.editor-heading-block,

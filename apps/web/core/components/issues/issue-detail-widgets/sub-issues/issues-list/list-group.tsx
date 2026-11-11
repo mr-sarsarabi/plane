@@ -66,8 +66,8 @@ export const SubIssuesListGroup = observer(function SubIssuesListGroup(props: TS
           !isAllIssues && (
             <div className="flex items-center gap-2 p-3">
               <ChevronRightIcon
-                className={cn("size-3.5 text-placeholder transition-all", {
-                  "rotate-90": isCollapsibleOpen,
+                className={cn("size-3.5 text-placeholder transition-all rtl:rotate-180", {
+                  "rotate-90 rtl:rotate-90": isCollapsibleOpen,
                 })}
                 strokeWidth={2.5}
               />

@@ -8,7 +8,7 @@ import { useState } from "react";
 import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 // plane imports
-import { ROLE, EUserPermissions, EUserPermissionsLevel } from "@plane/constants";
+import { ROLE, ROLE_DETAILS, EUserPermissions, EUserPermissionsLevel } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 import { LinkIcon, TrashIcon, ChevronDownIcon } from "@plane/propel/icons";
 import { TOAST_TYPE, setToast } from "@plane/propel/toast";
@@ -52,6 +52,14 @@ export const WorkspaceInvitationsListItem = observer(function WorkspaceInvitatio
     [EUserPermissions.ADMIN, EUserPermissions.MEMBER],
     EUserPermissionsLevel.WORKSPACE
   );
+
+  const getRoleLabel = (role: EUserPermissions) => {
+    const roleKey = Number(role) as keyof typeof ROLE_DETAILS;
+    if (ROLE_DETAILS[roleKey]?.i18n_title) {
+      return t(ROLE_DETAILS[roleKey].i18n_title);
+    }
+    return ROLE[role] ?? "";
+  };
 
   const handleRemoveInvitation = async () => {
     try {
@@ -142,7 +150,7 @@ export const WorkspaceInvitationsListItem = observer(function WorkspaceInvitatio
                     hasRoleChangeAccess ? "" : "text-placeholder"
                   }`}
                 >
-                  {ROLE[invitationDetails.role]}
+                  {getRoleLabel(invitationDetails.role)}
                 </span>
                 {hasRoleChangeAccess && (
                   <span className="grid place-items-center">
@@ -179,7 +187,7 @@ export const WorkspaceInvitationsListItem = observer(function WorkspaceInvitatio
 
               return (
                 <CustomSelect.Option key={key} value={parseInt(key, 10)}>
-                  <>{ROLE[parseInt(key) as keyof typeof ROLE]}</>
+                  <>{getRoleLabel(parseInt(key) as EUserPermissions)}</>
                 </CustomSelect.Option>
               );
             })}

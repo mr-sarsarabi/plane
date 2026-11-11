@@ -21,10 +21,13 @@ export const CustomXAxisTick = React.memo(function CustomXAxisTick({ x, y, paylo
 });
 CustomXAxisTick.displayName = "CustomXAxisTick";
 
-export const CustomYAxisTick = React.memo(function CustomYAxisTick({ x, y, payload }: any) {
+export const CustomYAxisTick = React.memo(function CustomYAxisTick({ x, y, payload, isRTL }: any) {
+  const isRtl =
+    isRTL ??
+    (typeof document !== "undefined" && (document.documentElement.dir === "rtl" || document.dir === "rtl"));
   return (
     <g transform={`translate(${x},${y})`}>
-      <text dx={-10} textAnchor="middle" className={AXIS_TICK_CLASSNAME}>
+      <text dx={isRtl ? 10 : -10} textAnchor="middle" className={AXIS_TICK_CLASSNAME}>
         {payload.value}
       </text>
     </g>

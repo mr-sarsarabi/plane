@@ -12,10 +12,15 @@ import { processAssetDuplication } from "@/helpers/paste-asset";
 
 type TArgs = {
   editorClassName: string;
+  dir?: "ltr" | "rtl" | "auto";
 };
 
 export const CoreEditorProps = (props: TArgs): EditorProps => {
-  const { editorClassName } = props;
+  const { editorClassName, dir } = props;
+
+  const isRTL =
+    typeof document !== "undefined" &&
+    (document.documentElement.dir === "rtl" || document.dir === "rtl");
 
   return {
     attributes: {
@@ -23,6 +28,7 @@ export const CoreEditorProps = (props: TArgs): EditorProps => {
         "prose-brand prose-headings:font-display font-default max-w-full prose focus:outline-none",
         editorClassName
       ),
+      dir: dir ?? (isRTL ? "rtl" : "auto"),
     },
     handleDOMEvents: {
       keydown: (_view, event) => {

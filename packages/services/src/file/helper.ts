@@ -103,8 +103,8 @@ const validateAndDetectFileType = async (file: File): Promise<string> => {
     console.warn("Error detecting file type from signature:", _error);
   }
 
-  // fallback for unknown files
-  return "";
+  // fallback to browser-provided MIME type, or standard fallback
+  return file.type || "application/octet-stream";
 };
 
 /**

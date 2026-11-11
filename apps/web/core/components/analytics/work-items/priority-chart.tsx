@@ -139,14 +139,14 @@ const PriorityChart = observer(function PriorityChart(props: Props) {
     return parsedBars;
   }, [chart_model, group_by, parsedData, resolvedTheme, workspaceStates, x_axis, y_axis]);
 
-  const yAxisLabel = useMemo(
-    () => ANALYTICS_Y_AXIS_VALUES.find((item) => item.value === props.y_axis)?.label ?? props.y_axis,
-    [props.y_axis]
-  );
-  const xAxisLabel = useMemo(
-    () => ANALYTICS_X_AXIS_VALUES.find((item) => item.value === props.x_axis)?.label ?? props.x_axis,
-    [props.x_axis]
-  );
+  const yAxisLabel = useMemo(() => {
+    const option = ANALYTICS_Y_AXIS_VALUES.find((item) => item.value === props.y_axis);
+    return option ? (option.i18nKey ? t(option.i18nKey) : option.label) : props.y_axis;
+  }, [props.y_axis, t]);
+  const xAxisLabel = useMemo(() => {
+    const option = ANALYTICS_X_AXIS_VALUES.find((item) => item.value === props.x_axis);
+    return option ? (option.i18nKey ? t(option.i18nKey) : option.label) : props.x_axis;
+  }, [props.x_axis, t]);
 
   const defaultColumns: ColumnDef<TChartDatum>[] = useMemo(
     () => [
@@ -163,8 +163,8 @@ const PriorityChart = observer(function PriorityChart(props: Props) {
       },
       {
         accessorKey: "count",
-        header: () => <div className="text-right">Count</div>,
-        cell: ({ row }) => <div className="text-right">{row.original.count}</div>,
+        header: () => <div className="text-end">{t("common.count") || "Count"}</div>,
+        cell: ({ row }) => <div className="text-end">{row.original.count}</div>,
         meta: {
           export: {
             key: "Count",
@@ -174,7 +174,7 @@ const PriorityChart = observer(function PriorityChart(props: Props) {
         },
       },
     ],
-    [xAxisLabel]
+    [t, xAxisLabel]
   );
 
   const columns: ColumnDef<TChartDatum>[] = useMemo(
@@ -182,8 +182,8 @@ const PriorityChart = observer(function PriorityChart(props: Props) {
       parsedData
         ? Object.keys(parsedData?.schema ?? {}).map((key) => ({
             accessorKey: key,
-            header: () => <div className="text-right">{parsedData.schema[key]}</div>,
-            cell: ({ row }) => <div className="text-right">{row.original[key]}</div>,
+            header: () => <div className="text-end">{parsedData.schema[key]}</div>,
+            cell: ({ row }) => <div className="text-end">{row.original[key]}</div>,
             meta: {
               export: {
                 key,

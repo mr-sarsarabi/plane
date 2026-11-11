@@ -40,7 +40,7 @@ export const EditorUserMention = observer(function EditorUserMention(props: Prop
   if (!userDetails) {
     return (
       <div className="not-prose inline rounded-sm bg-layer-1 px-1 py-0.5 text-tertiary no-underline">
-        @suspended user
+        <bdi dir="ltr">@suspended user</bdi>
       </div>
     );
   }
@@ -56,7 +56,9 @@ export const EditorUserMention = observer(function EditorUserMention(props: Prop
     >
       <Popover delay={100} openOnHover>
         <Popover.Button>
-          <Link to={profileLink}>@{userDetails?.display_name}</Link>
+          <Link to={profileLink}>
+            <bdi dir="ltr">@{userDetails?.display_name}</bdi>
+          </Link>
         </Popover.Button>
         <Popover.Panel side="bottom" align="start">
           <div className="w-60 rounded-lg border-[0.5px] border-strong bg-surface-1 p-3 shadow-raised-200">

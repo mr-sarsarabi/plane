@@ -10,6 +10,7 @@ import { observer } from "mobx-react";
 import { stringToEmoji } from "@plane/propel/emoji-icon-picker";
 import { EmojiReactionGroup, EmojiReactionPicker } from "@plane/propel/emoji-reaction";
 import type { EmojiReactionType } from "@plane/propel/emoji-reaction";
+import { useTranslation } from "@plane/i18n";
 import type { TCommentsOperations, TIssueComment } from "@plane/types";
 // helpers
 // local imports
@@ -22,6 +23,7 @@ export type TProps = {
 
 export const CommentReactions = observer(function CommentReactions(props: TProps) {
   const { comment, activityOperations, disabled = false } = props;
+  const { t } = useTranslation();
   // state
   const [isPickerOpen, setIsPickerOpen] = useState(false);
 
@@ -78,12 +80,15 @@ export const CommentReactions = observer(function CommentReactions(props: TProps
         handleToggle={setIsPickerOpen}
         onChange={handleEmojiSelect}
         disabled={disabled}
+        searchPlaceholder={t("search", "Search")}
         label={
           <EmojiReactionGroup
             reactions={reactions}
             onReactionClick={handleReactionClick}
             showAddButton={showAddButton}
             onAddReaction={() => setIsPickerOpen(true)}
+            addButtonTooltip={t("add_reaction", "Add reaction")}
+            moreUsersText={(count) => t("and_more", { count, defaultValue: `and ${count} more` })}
           />
         }
         placement="bottom-start"

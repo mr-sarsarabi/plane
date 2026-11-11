@@ -6,6 +6,7 @@
 
 import { observer } from "mobx-react";
 // Plane
+import { useTranslation } from "@plane/i18n";
 import { Row } from "@plane/ui";
 // components
 import { cn } from "@plane/utils";
@@ -22,6 +23,7 @@ type Props = {
 
 export const ModulesSidebarBlock = observer(function ModulesSidebarBlock(props: Props) {
   const { blockId, isDragging } = props;
+  const { t } = useTranslation();
   // store hooks
   const { getBlockById, updateActiveBlockId, isBlockActive, getNumberOfDaysFromPosition } = useTimeLineChartStore();
   const block = getBlockById(blockId);
@@ -42,7 +44,7 @@ export const ModulesSidebarBlock = observer(function ModulesSidebarBlock(props: 
       <Row
         id={`sidebar-block-${block.id}`}
         className={cn(
-          "group flex w-full items-center gap-2 bg-layer-transparent pr-4 hover:bg-layer-transparent-hover",
+          "group flex w-full items-center gap-2 bg-layer-transparent pe-4 hover:bg-layer-transparent-hover",
           {
             "bg-transparent-hover": isBlockActive(block.id),
           }
@@ -57,7 +59,7 @@ export const ModulesSidebarBlock = observer(function ModulesSidebarBlock(props: 
           </div>
           {duration !== undefined && (
             <div className="flex-shrink-0 text-13 text-secondary">
-              {duration} day{duration > 1 ? "s" : ""}
+              {t("workspace.days_count", { days: duration })}
             </div>
           )}
         </div>

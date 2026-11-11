@@ -55,6 +55,7 @@ export const AuthEmailForm = observer(function AuthEmailForm(props: TAuthEmailFo
           {t("auth.common.email.label")}
         </label>
         <div
+          dir="ltr"
           className={cn(
             `relative flex items-center rounded-md border bg-surface-1`,
             !isFocused && Boolean(emailError?.email) ? `border-danger-strong` : `border-strong`
@@ -70,10 +71,11 @@ export const AuthEmailForm = observer(function AuthEmailForm(props: TAuthEmailFo
             id="email"
             name="email"
             type="email"
+            dir="ltr"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder={t("auth.common.email.placeholder")}
-            className={`h-10 w-full border-0 disable-autofill-style placeholder:text-placeholder autofill:bg-danger-primary focus:bg-none active:bg-transparent`}
+            className={`h-10 w-full border-0 pe-10 text-start font-mono disable-autofill-style placeholder:font-sans placeholder:text-placeholder autofill:bg-danger-primary focus:bg-none active:bg-transparent`}
             autoComplete="off"
             autoFocus
             ref={inputRef}
@@ -85,7 +87,7 @@ export const AuthEmailForm = observer(function AuthEmailForm(props: TAuthEmailFo
                 setEmail("");
                 inputRef.current?.focus();
               }}
-              className="absolute right-3 grid size-5 place-items-center"
+              className="absolute end-3 grid size-5 place-items-center"
               aria-label={t("aria_labels.auth_forms.clear_email")}
               tabIndex={-1}
             >

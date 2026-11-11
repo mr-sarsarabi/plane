@@ -47,3 +47,11 @@
   pointer-events: none;
   height: 0;
 }
+
+/* RTL Placeholder */
+[dir="rtl"] .page-title-editor .ProseMirror h1.is-editor-empty:first-child::before,
+[dir="rtl"] .page-title-editor .ProseMirror h1.is-empty::before,
+.page-title-editor .ProseMirror[dir="rtl"] h1.is-editor-empty:first-child::before,
+.page-title-editor .ProseMirror[dir="rtl"] h1.is-empty::before {
+  float: right;
+}

@@ -11,6 +11,7 @@ import { useTranslation } from "@plane/i18n";
 import { PriorityIcon } from "@plane/propel/icons";
 import type { TIssuePriorities } from "@plane/types";
 import { cn } from "@plane/utils";
+import { getPriorityTitle } from "@/components/dropdowns/priority";
 
 export type TReadonlyPriorityProps = {
   className?: string;
@@ -28,7 +29,9 @@ export const ReadonlyPriority = observer(function ReadonlyPriority(props: TReado
   return (
     <div className={cn("flex items-center gap-1 text-body-xs-regular", className)}>
       {!hideIcon && <PriorityIcon priority={value ?? "none"} size={12} className="flex-shrink-0" withContainer />}
-      <span className="flex-grow truncate">{priorityDetails?.title ?? placeholder ?? t("common.none")}</span>
+      <span className="flex-grow truncate">
+        {getPriorityTitle(priorityDetails?.key, t, priorityDetails?.title) ?? placeholder ?? t("common.none")}
+      </span>
     </div>
   );
 });

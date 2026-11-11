@@ -45,6 +45,7 @@ body {
 
 @utility vertical-lr {
   writing-mode: vertical-lr;
+  text-orientation: sideways;
   width: fit-content;
 }
 

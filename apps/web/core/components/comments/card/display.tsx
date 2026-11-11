@@ -108,7 +108,7 @@ export const CommentCardDisplay = observer(function CommentCardDisplay(props: TC
   return (
     <div id={commentBlockId} className="relative flex flex-col gap-2">
       {showAccessSpecifier && (
-        <div className="absolute top-2.5 right-2.5 z-[1] text-tertiary">
+        <div className="absolute top-2.5 end-2.5 z-[1] text-tertiary">
           {comment.access === EIssueCommentAccessSpecifier.INTERNAL ? (
             <LockIcon className="size-3" />
           ) : (

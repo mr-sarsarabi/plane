@@ -110,6 +110,63 @@
       "label": "Xóa khỏi bộ sưu tập",
       "success_message": "Đã xóa trang khỏi bộ sưu tập.",
       "error_message": "Không thể xóa trang khỏi bộ sưu tập. Vui lòng thử lại."
+    },
+    "lock": "Lock",
+    "unlock": "Unlock",
+    "locked": "Locked",
+    "unlocked": "Unlocked",
+    "make_private": "Make private",
+    "make_public": "Make public",
+    "open_in_new_tab": "Open in new tab",
+    "copy_link": "Copy link",
+    "make_a_copy": "Make a copy",
+    "duplicate": "Duplicate",
+    "archive": "Archive",
+    "restore": "Restore",
+    "delete": "Delete",
+    "move": "Move",
+    "full_screen": "Full width",
+    "sticky_toolbar": "Sticky toolbar",
+    "copy_markdown": "Copy markdown",
+    "version_history": "Version history",
+    "export": "Export",
+    "toasts": {
+      "success_title": "Success!",
+      "error_title": "Error!",
+      "copy_markdown_success": "Markdown copied to clipboard."
+    },
+    "export_modal": {
+      "title": "Export page",
+      "export_format": "Export format",
+      "include_content": "Include content",
+      "page_format": "Page format",
+      "cancel": "Cancel",
+      "export": "Export",
+      "exporting": "Exporting",
+      "content_variety": {
+        "everything": "Everything",
+        "no_assets": "No images"
+      },
+      "toasts": {
+        "success_title": "Success!",
+        "success_message": "Page exported successfully.",
+        "error_title": "Error!",
+        "error_message": "Page could not be exported. Please try again later."
+      }
+    },
+    "delete_modal": {
+      "title": "Delete page",
+      "content_prefix": "Are you sure you want to delete page- ",
+      "content_suffix": " ? The Page will be deleted permanently. This action cannot be undone.",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "deleting": "Deleting",
+      "toasts": {
+        "success_title": "Success!",
+        "success_message": "Page deleted successfully.",
+        "error_title": "Error!",
+        "error_message": "Page could not be deleted. Please try again."
+      }
     }
   }
 }

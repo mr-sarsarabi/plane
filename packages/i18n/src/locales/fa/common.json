@@ -43,6 +43,7 @@
   "change_cover": "تغییر تصویر روی جلد",
   "language": "زبان",
   "saving": "در حال ذخیره",
+  "saved": "ذخیره شد",
   "save_changes": "ذخیره تغییرات",
   "deactivate_account": "غیرفعال‌سازی حساب",
   "deactivate_account_description": "با غیرفعال‌سازی حساب، تمام داده‌ها و منابع موجود در آن به‌طور دائمی حذف شده و قابل بازیابی نخواهند بود.",
@@ -73,6 +74,9 @@
   "select_or_customize_your_interface_color_scheme": "رنگ‌بندی رابط کاربری خود را انتخاب یا سفارشی‌سازی کنید.",
   "timezone_setting": "تنظیم منطقه زمانی جاری.",
   "language_setting": "زبان مورد استفاده در رابط کاربری را انتخاب کنید.",
+  "first_day_of_the_week": "اولین روز هفته",
+  "first_day_of_the_week_description": "این تنظیم نحوه نمایش تقویم‌ها را در کل برنامه تغییر می‌دهد.",
+  "first_day_of_the_week_updated": "اولین روز هفته با موفقیت به‌روزرسانی شد.",
   "settings_moved_to_preferences": "تنظیمات منطقه زمانی و زبان به بخش تنظیمات شخصی منتقل شده‌اند.",
   "go_to_preferences": "رفتن به تنظیمات شخصی",
   "select_the_cursor_motion_style_that_feels_right_for_you": "سبک حرکت مکان‌نما که برای شما مناسب است را انتخاب کنید.",
@@ -283,6 +287,7 @@
   "duplicate_issue_found": "تسک تکراری یافت شد",
   "duplicate_issues_found": "تسک‌های تکراری یافت شدند",
   "no_matching_results": "نتیجه‌ای یافت نشد",
+  "search_results_in_project": "نتایج جستجو برای «{searchTerm}» در پروژه:",
   "title_is_required": "عنوان الزامی است",
   "title": "عنوان",
   "state": "وضعیت",
@@ -402,21 +407,11 @@
       }
     }
   },
-  "link": {
-    "modal": {
-      "url": {
-        "text": "آدرس URL",
-        "required": "آدرس URL نامعتبر است",
-        "placeholder": "آدرس URL را تایپ یا پیست کنید"
-      },
-      "title": {
-        "text": "عنوان نمایشی",
-        "placeholder": "عنوانی که می‌خواهید برای این لینک نمایش داده شود"
-      }
-    }
-  },
+  "link": "پیوند",
   "common": {
     "all": "همه",
+    "count": "تعداد",
+    "no_value": "بدون مقدار",
     "no_items_in_this_group": "موردی در این گروه وجود ندارد",
     "drop_here_to_move": "اینجا رها کنید تا منتقل شود",
     "states": "وضعیت‌ها",
@@ -448,6 +443,20 @@
     "completed_at": "تکمیل‌شده در",
     "layout": "چیدمان",
     "filters": "فیلترها",
+    "filter_operators": {
+      "is": "هست",
+      "is_any_of": "یکی از",
+      "between": "بین"
+    },
+    "filter_configuration_error": "خطای پیکربندی فیلتر",
+    "filter_configuration_error_message": "این فیلتر به درستی پیکربندی نشده است و نمی‌تواند اعمال شود",
+    "all_filters_applied": "همه فیلترها اعمال شده‌اند",
+    "save_view": "ذخیره نما",
+    "update_view": "به‌روزرسانی نما",
+    "confirming": "در حال تأیید",
+    "remove_filter": "حذف فیلتر",
+    "n_more": "+{count} مورد دیگر",
+    "options_selected": "{count} گزینه انتخاب شد",
     "display": "نمایش",
     "load_more": "بارگذاری بیشتر",
     "activity": "فعالیت",
@@ -504,7 +513,8 @@
     "archive": "بایگانی",
     "access": {
       "public": "عمومی",
-      "private": "خصوصی"
+      "private": "خصوصی",
+      "label": "دسترسی"
     },
     "done": "انجام شد",
     "sub_work_items": "زیرتسک‌ها",
@@ -578,6 +588,10 @@
     "week": "هفته",
     "month": "ماه",
     "quarter": "فصل",
+    "from_prefix": "از",
+    "till_prefix": "تا",
+    "to": "تا",
+    "update_dates_error": "خطا در به‌روزرسانی تاریخ‌های تسک، لطفاً بعداً دوباره تلاش کنید",
     "press_for_commands": "برای دستورات '/' بزنید",
     "click_to_add_description": "برای افزودن توضیحات کلیک کنید",
     "on_track": "در مسیر",
@@ -624,7 +638,6 @@
     "name": "نام",
     "discard": "دور انداختن",
     "confirm": "تأیید",
-    "confirming": "در حال تأیید",
     "read_the_docs": "مطالعه مستندات",
     "default": "پیش‌فرض",
     "active": "فعال",
@@ -776,10 +789,19 @@
   "view": {
     "label": "{count, plural, one {نما} other {نماها}}",
     "create": {
-      "label": "ایجاد نما"
+      "label": "ایجاد نما",
+      "success": "نما با موفقیت ایجاد شد.",
+      "error": "ایجاد نما با خطا مواجه شد. لطفاً دوباره تلاش کنید."
     },
     "update": {
-      "label": "به‌روزرسانی نما"
+      "label": "به‌روزرسانی نما",
+      "success": "نما با موفقیت به‌روزرسانی شد.",
+      "error": "به‌روزرسانی نما با خطا مواجه شد. لطفاً دوباره تلاش کنید."
+    },
+    "delete": {
+      "label": "حذف نما",
+      "success": "نما با موفقیت حذف شد.",
+      "error": "حذف نما با خطا مواجه شد. لطفاً دوباره تلاش کنید."
     }
   },
   "role_details": {
@@ -794,6 +816,10 @@
     "admin": {
       "title": "مدیر",
       "description": "تمام مجوزها در فضای کاری فعال است."
+    },
+    "suspended": {
+      "title": "معلق",
+      "description": "دسترسی کاربر به فضای کاری معلق شده است."
     }
   },
   "user_roles": {
@@ -867,5 +893,137 @@
       "description": "تسک‌ها را به فایل JSON خروجی بگیرید.",
       "short_description": "خروجی به صورت JSON"
     }
-  }
+  },
+  "search_commands": "جستجوی دستورات...",
+  "then": "سپس",
+  "customize_navigation_description": "موارد انتخاب‌شده همیشه در نوار کناری شما نمایش داده می‌شوند. سایر موارد را می‌توانید در هر زمان از منوی «بیشتر» پیدا کنید. این تغییرات مختص شماست و روی سایر اعضای فضای کاری تأثیری ندارد.",
+  "accordion_navigation_control_description": "زبانه‌های امکانات به صورت موارد تو‌در‌تو زیر پروژه نمایش داده می‌شوند و به صورت آکاردئونی عمل می‌کنند.",
+  "horizontal_navigation_bar_description": "زبانه‌های امکانات به صورت زبانه‌های افقی درون پروژه نمایش داده می‌شوند.",
+  "minimum_value_is_1": "حداقل مقدار ۱ است",
+  "icon_only": "فقط آیکون",
+  "icon_with_name": "آیکون با نام",
+  "dock_app_rail": "ثابت کردن اپ‌ریل",
+  "undock_app_rail": "شناور کردن اپ‌ریل",
+  "submitting": "در حال ارسال...",
+  "notification_events": {
+    "duplicate_created": "این تسک را به عنوان تکراری علامت‌گذاری کرد",
+    "duplicate_removed": "علامت تکراری بودن این تسک را برداشت",
+    "added_assignee": "مسئول اضافه کرد",
+    "removed_assignee": "مسئول را حذف کرد",
+    "set_start_date": "تاریخ شروع را تعیین کرد",
+    "removed_start_date": "تاریخ شروع را حذف کرد",
+    "set_due_date": "مهلت انجام را تعیین کرد",
+    "removed_due_date": "مهلت انجام را حذف کرد",
+    "added_label": "برچسب اضافه کرد",
+    "removed_label": "برچسب را حذف کرد",
+    "added_parent": "والد اضافه کرد",
+    "removed_parent": "والد را حذف کرد",
+    "relates_to": "این تسک را مرتبط با تسک دیگر علامت‌گذاری کرد",
+    "commented": "دیدگاه ثبت کرد",
+    "restored_work_item": "تسک را بازیابی کرد",
+    "archived_work_item": "تسک را بایگانی کرد",
+    "none_value": "تسک را ایجاد و به شما واگذار کرد.",
+    "attachment_value": "تسک",
+    "to": "به"
+  },
+  "notification_snooze_modal": {
+    "title": "سفارشی‌سازی زمان تعویق",
+    "pick_date": "انتخاب تاریخ",
+    "select_date": "انتخاب تاریخ",
+    "date_required": "لطفاً یک تاریخ انتخاب کنید",
+    "pick_time": "انتخاب زمان",
+    "select_time": "انتخاب زمان",
+    "time_required": "لطفاً یک زمان انتخاب کنید",
+    "no_available_time": "هیچ زمان در دسترسی برای این تاریخ وجود ندارد."
+  },
+  "snooze_modal": {
+    "title": "سفارشی‌سازی زمان تعویق",
+    "pick_date": "انتخاب تاریخ",
+    "select_date": "انتخاب تاریخ",
+    "date_required": "لطفاً یک تاریخ انتخاب کنید",
+    "pick_time": "انتخاب زمان",
+    "select_time": "انتخاب زمان",
+    "time_required": "لطفاً یک زمان انتخاب کنید",
+    "no_available_time": "هیچ زمان در دسترسی برای این تاریخ وجود ندارد."
+  },
+  "marked that this work item is a duplicate of": "این تسک را به عنوان تکراری علامت‌گذاری کرد",
+  "marked that this work item is not a duplicate": "علامت تکراری بودن این تسک را برداشت",
+  "added assignee": "مسئول اضافه کرد",
+  "removed assignee": "مسئول را حذف کرد",
+  "set start date": "تاریخ شروع را تعیین کرد",
+  "removed the start date": "تاریخ شروع را حذف کرد",
+  "set due date": "مهلت انجام را تعیین کرد",
+  "removed the due date": "مهلت انجام را حذف کرد",
+  "added label": "برچسب اضافه کرد",
+  "removed label": "برچسب را حذف کرد",
+  "added parent": "والد اضافه کرد",
+  "removed parent": "والد را حذف کرد",
+  "marked that this work item is related to": "این تسک را مرتبط با تسک دیگر علامت‌گذاری کرد",
+  "commented": "دیدگاه ثبت کرد",
+  "restored the work item": "تسک را بازیابی کرد",
+  "archived the work item": "تسک را بایگانی کرد",
+  "the work item and assigned it to you.": "تسک را ایجاد و به شما واگذار کرد.",
+  "the work item": "تسک",
+  "Customize Snooze Time": "سفارشی‌سازی زمان تعویق",
+  "Pick a date": "انتخاب تاریخ",
+  "Select date": "انتخاب تاریخ",
+  "Please select a date": "لطفاً یک تاریخ انتخاب کنید",
+  "Pick a time": "انتخاب زمان",
+  "Select a time": "انتخاب زمان",
+  "Please select a time": "لطفاً یک زمان انتخاب کنید",
+  "No available time for this date.": "هیچ زمان در دسترسی برای این تاریخ وجود ندارد.",
+  "set_the_state_to": "وضعیت را تغییر داد به",
+  "added_a_new_assignee": "مسئول جدید اضافه کرد:",
+  "removed_the_assignee": "مسئول را حذف کرد:",
+  "set_the_due_date_to": "مهلت انجام را تعیین کرد:",
+  "removed_the_due_date": "مهلت انجام را حذف کرد",
+  "set_the_start_date_to": "تاریخ شروع را تعیین کرد:",
+  "removed_the_start_date": "تاریخ شروع را حذف کرد",
+  "set_the_priority_to": "اولویت را تنظیم کرد روی",
+  "added_a_new_label": "برچسب جدید اضافه کرد:",
+  "removed_the_label": "برچسب را حذف کرد:",
+  "added_this_work_item_to_the_cycle": "این تسک را به دوره اضافه کرد:",
+  "set_the_cycle_to": "دوره را تنظیم کرد روی:",
+  "removed_the_work_item_from_the_cycle": "این تسک را از دوره حذف کرد:",
+  "added_this_work_item_to_the_module": "این تسک را به ماژول اضافه کرد:",
+  "set_the_module_to": "ماژول را تنظیم کرد روی:",
+  "removed_the_work_item_from_the_module": "این تسک را از ماژول حذف کرد:",
+  "set_the_parent_to": "والد را تعیین کرد:",
+  "removed_the_parent": "والد را حذف کرد",
+  "uploaded_a_new_attachment": "پیوست جدیدی بارگذاری کرد",
+  "removed_an_attachment": "یک پیوست را حذف کرد",
+  "added_link": "اضافه کرد:",
+  "updated_the_link": "به‌روزرسانی کرد:",
+  "removed_this_link": "حذف کرد:",
+  "set_the_name_to": "نام را تغییر داد به",
+  "updated_the_description": "توضیحات را به‌روزرسانی کرد",
+  "set_the_estimate_point_to": "امتیاز تخمین را تعیین کرد روی:",
+  "removed_the_estimate_point": "امتیاز تخمین را حذف کرد",
+  "restored_the_work_item": "تسک را بازیابی کرد",
+  "archived_the_work_item": "تسک را بایگانی کرد",
+  "declined_from_intake": "این تسک را از اینتیک رد کرد.",
+  "snoozed_work_item": "این تسک را به تعویق انداخت.",
+  "accepted_from_intake": "این تسک را از اینتیک پذیرفت.",
+  "declined_intake_duplicate": "این تسک را با علامت‌گذاری به عنوان تکراری، از اینتیک رد کرد.",
+  "updated_intake_status": "وضعیت تسک اینتیک را به‌روزرسانی کرد.",
+  "created_the_work_item_via": "تسک را ایجاد کرد از طریق",
+  "created_the_work_item": "تسک را ایجاد کرد.",
+  "deleted_a_work_item": "یک تسک را حذف کرد.",
+  "marked_blocking": "این تسک را مسدودکننده تسک دیگر علامت‌گذاری کرد:",
+  "removed_blocking": "مسدودکنندگی تسک دیگر را حذف کرد:",
+  "marked_blocked_by": "این تسک را مسدود شده توسط تسک دیگر علامت‌گذاری کرد:",
+  "removed_blocked_by": "مسدود بودن توسط تسک دیگر را حذف کرد:",
+  "marked_duplicate": "این تسک را تکراری از تسک دیگر علامت‌گذاری کرد:",
+  "removed_duplicate": "تکراری بودن از تسک دیگر را حذف کرد:",
+  "marked_relates_to": "این تسک را مرتبط با تسک دیگر علامت‌گذاری کرد:",
+  "removed_relates_to": "ارتباط با تسک دیگر را حذف کرد:",
+  "for": "برای",
+  "from": "از",
+  "of": "مربوط به",
+  "add_reaction": "افزودن واکنش",
+  "reaction_created_successfully": "واکنش با موفقیت ثبت شد",
+  "reaction_creation_failed": "ثبت واکنش با خطا مواجه شد",
+  "reaction_removed_successfully": "واکنش با موفقیت حذف شد",
+  "reaction_remove_failed": "حذف واکنش با خطا مواجه شد",
+  "and_more": "و {count} نفر دیگر"
 }
